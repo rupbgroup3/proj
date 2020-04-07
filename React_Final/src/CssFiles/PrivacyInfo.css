@@ -1,0 +1,84 @@
+
+.display-nowrap{
+  width:100%;
+}
+.privacyList{
+  float: right;
+  border-bottom: double;
+  
+}
+.form-group_col-sm-3{
+text-align: right;
+float:right;
+margin:30px}
+.form-control{
+float: right;
+}
+
+.form{
+  margin:100px
+}
+#editDiv{
+  margin-left: auto;
+    margin-right: auto;
+    display: table;
+}
+#newBTN{
+float: left;
+}
+#saveBTN{
+  float: left;
+}
+#cancelSaveBTN{
+  float: left;
+  margin-top: 20px;
+}
+
+.modal {
+	display:none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.4);
+}
+
+/* Modal Content Box */
+.modal-content {
+    background-color: #b5a8f09c;
+    margin: 2% auto 2% auto;
+    border: 1px solid #888;
+    width: 40%; 
+	  padding-bottom: 10px;
+}
+
+.animate {
+    animation: zoom 0.6s
+}
+@keyframes zoom {
+    from {transform: scale(0)} 
+    to {transform: scale(1)}
+}
+
+.col {
+  align-items: center;
+}
+
+.row {
+  flex-direction: row-reverse;
+}
+.dropdown-content {
+  text-align: right;
+  align-items: right;
+  }
+
+  select { width: 400px; text-align-last:right; }
+  option {
+    text-align-last:right;
+  }
+ 
+
+

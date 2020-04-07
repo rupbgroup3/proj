@@ -1,0 +1,28 @@
+.btnData{
+    font-size: 50px;
+    
+}
+.dataTable th{
+    text-align: center;
+    width: 50px;
+    font-size: 20px;
+}
+
+.dataTable td{
+    text-align: center;
+    width: 50px;
+    font-size: medium;
+}
+.actionsDiv tr{
+    width:80px;
+    
+}
+#IDMDBBTN{
+   font-size: 15px;
+}
+#MDBBTH_DELET_EDIT{
+    font-size: 15px;
+
+    
+   
+}
