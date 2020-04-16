@@ -53,12 +53,13 @@ class CCEquipmentType extends React.Component {
 
   deleteChoose = async EquipmentName => {
     await this.props.DeleteEquipmentType(EquipmentName);
-    await this.props.GetEquipmentTable();
+   
 
     const index = this.state.rows.findIndex(user => user.Name == EquipmentName);
     console.log(index);
     const newRows = this.state.rows.filter((person, key) => key !== index);
     this.setState({ rows: newRows });
+    await this.props.GetEquipmentTable();
   };
   editUser = data => {
     for (let index = 0; index < this.props.EquipmentVar.length; index++) {
@@ -213,7 +214,7 @@ class CCEquipmentType extends React.Component {
         pathname:'/EventTypes'
       })
     }
-    else if(this.props.PrevLocation=="/EventTypes"){
+    else if(this.props.PrevLocation=="/EventTypes"&&this.props.location.state!=undefined){
       this.props.MyPreviousLocation(window.location.pathname);
       this.props.history.push({
         pathname:'/EventTypes',
@@ -221,7 +222,7 @@ class CCEquipmentType extends React.Component {
           EquipClickedArr: this.props.location.state.EquipClickedArr,
           EventNameEntered:this.props.location.state.EventNameEntered,
           TasksTypeVar:this.props.location.state.TasksTypeVar,
-          EquipmentVar: this.props.location.state.EquipmentVar }
+          EquipmentVar: this.props.EquipmentVar }
       })
     }
     else if(this.props.PrevLocation==="/EquipAndTaskInActualEvent"&&this.props.location.state!=undefined){
@@ -231,7 +232,7 @@ class CCEquipmentType extends React.Component {
         state:{TaskClickedArr: this.props.location.state.TaskClickedArr,
           EquipClickedArr: this.props.location.state.EquipClickedArr,
           TasksTypeVar: this.props.location.state.TasksTypeVar,
-          EquipmentVar: this.props.location.state.EquipmentVar,
+          EquipmentVar: this.props.EquipmentVar,
           EventName:this.props.location.state.EventName }
       })
     }
@@ -241,6 +242,18 @@ class CCEquipmentType extends React.Component {
         pathname:'/'     
       })
     }
+  }
+
+  MoveBack=()=>{
+    this.props.MyPreviousLocation(window.location.pathname);
+    this.props.history.push({
+      pathname:'/EquipAndTaskInActualEvent',
+      state:{TaskClickedArr: this.props.location.state.TaskClickedArr,
+        EquipClickedArr: this.props.location.state.EquipClickedArr,
+        TasksTypeVar: this.props.location.state.TasksTypeVar,
+        EquipmentVar: this.props.EquipmentVar,
+        EventName:this.props.location.state.EventName }
+    })
   }
   LogOutClicked=()=>{
     if(this.props.PrevLocation=="/EquipAndTaskInActualEvent" && this.props.location.state!=undefined){
@@ -284,6 +297,26 @@ class CCEquipmentType extends React.Component {
   DeleteActualEvent=(Barcode)=>{
 
     this.props.DeleteActualEvent(Barcode);
+  }
+
+  MoveBackToEventType=()=>{
+    if(this.props.PrevLocation=="/EventTypes"&&this.props.location.state==undefined ){
+      this.props.MyPreviousLocation(window.location.pathname);
+      this.props.history.push({
+        pathname:'/EventTypes'
+      })
+    }
+    else if(this.props.PrevLocation=="/EventTypes"&&this.props.location.state!=undefined){
+      this.props.MyPreviousLocation(window.location.pathname);
+      this.props.history.push({
+        pathname:'/EventTypes',
+        state:{TaskClickedArr: this.props.location.state.TaskClickedArr,
+          EquipClickedArr: this.props.location.state.EquipClickedArr,
+          EventNameEntered:this.props.location.state.EventNameEntered,
+          TasksTypeVar:this.props.location.state.TasksTypeVar,
+          EquipmentVar: this.props.EquipmentVar }
+      })
+    }
   }
 
   HomeClicked=()=>{
@@ -402,7 +435,7 @@ class CCEquipmentType extends React.Component {
                   <div className="form-group row">
                     <div className="form-group_col-sm-3">
                       <label for="FirstName">
-                        <span className="red-star">★ </span>שם ציוד
+                        <span className="red-star">שם ציוד </span> 
                       </label>
                       <input
                         placeholder="הזן שם ציוד"
@@ -417,7 +450,7 @@ class CCEquipmentType extends React.Component {
                     </div>
                     <div className="form-group_col-sm-3">
                       <label for="LastName">
-                        <span className="red-star">★ </span> כמות
+                        <span className="red-star">כמות </span> 
                       </label>
                       <input
                         type="tel"
@@ -431,7 +464,7 @@ class CCEquipmentType extends React.Component {
                       />
                     </div>
                   </div>
-                  <div>
+                  <div id="foterBTN">
                     <button
                       style={{ margin: 20 }}
                       type="submit"
@@ -454,6 +487,24 @@ class CCEquipmentType extends React.Component {
           </div>
         ) : (
           <div style={{ padding: "0%" }}>
+        {
+          this.props.PrevLocation=="/EquipAndTaskInActualEvent"&&this.props.location.state!=undefined?
+          <MDBBtn id="IDMDBBTN"
+              onClick={this.MoveBack}
+              color="info"
+            >
+              חזור לאירוע
+            </MDBBtn> :""
+        }
+                {
+          this.props.PrevLocation=="/EventTypes"?
+          <MDBBtn id="IDMDBBTN"
+              onClick={this.MoveBackToEventType}
+              color="info"
+            >
+              חזור לסוג אירוע
+            </MDBBtn> :""
+        }
             <MDBBtn id="IDMDBBTN"
               onClick={() => this.addNewUser("Ashton Cox")}
               color="success"

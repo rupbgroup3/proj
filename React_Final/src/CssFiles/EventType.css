@@ -7,6 +7,7 @@
 #IdSpan{
  align-items: center;
  font-size: 25px;
+ margin-left: 20px;
 
 }
 #idDivInput{
@@ -96,6 +97,8 @@ margin: 20px;
 }
 #idMDBBtn{
 font-size: 15px;
+padding-left: 40px;
+padding-right: 40px;
 }
 #idMDBBtnSave{
  float: left;
@@ -113,10 +116,13 @@ font-size: 15px;
 
 height: 100%;
 }
+div#upperRight {
+  height: 100%;
+}
 #intupTask{
 margin-top: 10px;
 width: 140px;
-text-align:center;
+text-align:right;
 font-size: 12px;
 }
 #idInputSearchEq{
@@ -144,4 +150,23 @@ font-size: 12px;
 }
 .DivOfBtn{
   display: block;
+}
+table.table.table-bordered.table-hover.table-striped.dataTable {
+    
+  font-family: sans-serif;
+}
+#IDMDBBTNn{
+  font-size: 15px;
+  
+  
+}
+#input_checkbox{
+  font-size: 10px;
+  margin-left: 10px;
+}
+#label_checkbox{
+  font-size: 15px;
+}
+#IDH2{
+  text-align: right;
 }

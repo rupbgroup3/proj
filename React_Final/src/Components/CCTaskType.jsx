@@ -54,12 +54,13 @@ class CCTaskType extends React.Component {
 
   deleteChoose= async(TaskName)=>{
     await this.props.DeleteTaskType(TaskName);
-    await this.props.GetTasks();
+    
     
   const index = this.state.rows.findIndex((user)=>user.TaskName==TaskName);
   console.log(index);
   const newRows = this.state.rows.filter((person,key)=>key!==index);
   this.setState({rows:newRows}); 
+  await this.props.GetTasks();
   }
   editUser = data => {
     for (let index = 0; index < this.props.TasksTypeVar.length; index++) {
@@ -171,6 +172,18 @@ class CCTaskType extends React.Component {
   DescriptionChanged=(e)=>{
     this.setState({Description: e.target.value})
   }
+
+  MoveBack=()=>{
+    this.props.MyPreviousLocation(window.location.pathname);
+    this.props.history.push({
+      pathname:'/EquipAndTaskInActualEvent',
+      state:{TaskClickedArr: this.props.location.state.TaskClickedArr,
+        EquipClickedArr: this.props.location.state.EquipClickedArr,
+        TasksTypeVar: this.props.TasksTypeVar,
+        EquipmentVar: this.props.location.state.EquipmentVar,
+        EventName:this.props.location.state.EventName }
+    })
+  }
   BackClicked=()=>{
     if(this.props.PrevLocation=="/EventTypes"&&this.props.location.state==undefined ){
       this.props.MyPreviousLocation(window.location.pathname);
@@ -178,14 +191,14 @@ class CCTaskType extends React.Component {
         pathname:'/EventTypes'
       })
     }
-    else if(this.props.PrevLocation=="/EventTypes"){
+    else if(this.props.PrevLocation=="/EventTypes"&&this.props.location.state!=undefined){
       this.props.MyPreviousLocation(window.location.pathname);
       this.props.history.push({
         pathname:'/EventTypes',
         state:{TaskClickedArr: this.props.location.state.TaskClickedArr,
           EquipClickedArr: this.props.location.state.EquipClickedArr,
           EventNameEntered:this.props.location.state.EventNameEntered,
-          TasksTypeVar:this.props.location.state.TasksTypeVar,
+          TasksTypeVar:this.props.TasksTypeVar,
           EquipmentVar: this.props.location.state.EquipmentVar }
       })
     }
@@ -316,6 +329,25 @@ class CCTaskType extends React.Component {
       })
     }
   }
+  MoveBackToEventType=()=>{
+    if(this.props.PrevLocation=="/EventTypes"&&this.props.location.state==undefined ){
+      this.props.MyPreviousLocation(window.location.pathname);
+      this.props.history.push({
+        pathname:'/EventTypes'
+      })
+    }
+    else if(this.props.PrevLocation=="/EventTypes"&&this.props.location.state!=undefined){
+      this.props.MyPreviousLocation(window.location.pathname);
+      this.props.history.push({
+        pathname:'/EventTypes',
+        state:{TaskClickedArr: this.props.location.state.TaskClickedArr,
+          EquipClickedArr: this.props.location.state.EquipClickedArr,
+          EventNameEntered:this.props.location.state.EventNameEntered,
+          TasksTypeVar:this.props.TasksTypeVar,
+          EquipmentVar: this.props.location.state.EquipmentVar }
+      })
+    }
+  }
   render() {
     const columns = [
       {
@@ -380,7 +412,7 @@ class CCTaskType extends React.Component {
               <div id="header-Privacy">
                 {this.state.editMode?
                 <h3 className="privacyList">עריכת סוג משימה קיים </h3>:
-                <h3 className="privacyList">הוספת סוג משימה חדש </h3>
+                <h3 className="privacyList">הוספת סוג משימה חדשה </h3>
                 }
                 <br /> <br />
               </div>
@@ -393,7 +425,7 @@ class CCTaskType extends React.Component {
                   <div className="form-group row">
                     <div className="form-group_col-sm-3">
                       <label for="FirstName">
-                        <span className="red-star">★ </span>שם משימה
+                        <span className="red-star">שם משימה </span>
                       </label>
                       <input
                         placeholder="הזן שם משימה"
@@ -407,7 +439,7 @@ class CCTaskType extends React.Component {
                     </div>
                     <div className="form-group_col-sm-3">
                       <label for="LastName">
-                        <span className="red-star">★ </span> תיאור
+                        <span className="red-star">תיאור </span> 
                       </label>
                       <input
                         placeholder="הזן תיאור משימה"
@@ -420,8 +452,8 @@ class CCTaskType extends React.Component {
                       />
                     </div>
                   </div>
-                  <div>
-                    <button
+                  <div id="foterBTN">
+                    <button 
                       style={{ margin: 20 }}
                       type="submit"
                       className="btn btn-primary btn-lg"
@@ -429,7 +461,7 @@ class CCTaskType extends React.Component {
                     >
                       שמור
                     </button>
-                    <input
+                    <input 
                       type="button"
                       className="btn btn-warning btn-lg"
                       id="cancelSaveBTN"
@@ -451,6 +483,26 @@ class CCTaskType extends React.Component {
             </div>
           </div>
         </nav>
+        {
+          this.props.PrevLocation=="/EquipAndTaskInActualEvent"&&this.props.location.state!=undefined?
+          <MDBBtn id="IDMDBBTN"
+          onClick={this.MoveBack}
+          color="info"
+        >
+         חזור לאירוע 
+        </MDBBtn> : ""
+        }
+                        {
+          this.props.PrevLocation=="/EventTypes"?
+          <MDBBtn id="IDMDBBTN"
+              onClick={this.MoveBackToEventType}
+              color="info"
+            >
+              חזור לסוג אירוע
+            </MDBBtn> :""
+        }
+       
+
             <MDBBtn id="IDMDBBTN"
               onClick={() => this.addNewUser("Ashton Cox")}
               color="success"

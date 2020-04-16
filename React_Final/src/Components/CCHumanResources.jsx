@@ -3,6 +3,7 @@ import { MDBDataTable,MDBBtn } from 'mdbreact';
 import { Switch, Route, Link, withRouter, Redirect } from "react-router-dom";
 import Swal from "sweetalert2";
 import Agodit from "../image/Agodit.png";
+
 const Toast = Swal.mixin({
   toast: true,
   position: 'center',
@@ -296,7 +297,7 @@ constructor(props) {
                             
                 <MDBBtn onClick={()=>this.editUser(data)} color="warning"><img src="https://img.icons8.com/android/25/000000/edit.png"/></MDBBtn>
                 <MDBBtn onClick={()=>this.deleteUser(data.Email)} color="danger"> <img src="https://img.icons8.com/material/25/000000/delete--v1.png"/></MDBBtn>
-                        </div>
+                <MDBBtn onClick={()=>this.TotalHours(data)} color="info"> <img src="https://img.icons8.com/material/25/000000/clock--v1.png"/></MDBBtn>                        </div>
               }
               ))}) 
 
@@ -416,7 +417,7 @@ constructor(props) {
                               
                   <MDBBtn onClick={()=>this.editUser(data)} color="warning"><img src="https://img.icons8.com/android/25/000000/edit.png"/></MDBBtn>
                   <MDBBtn onClick={()=>this.deleteUser(data.Email)} color="danger"> <img src="https://img.icons8.com/material/25/000000/delete--v1.png"/></MDBBtn>
-                          </div>
+                  <MDBBtn onClick={()=>this.TotalHours(data)} color="info"> <img src="https://img.icons8.com/material/25/000000/clock--v1.png"/></MDBBtn>                          </div>
                 }
                 ))
              
@@ -460,18 +461,27 @@ constructor(props) {
                 ActiveTillYear: data.ActiveTillYear,
                 StudyingStartyear: data.StudyingStartyear,
                 ISEMPLOYEE: data.IsEmployee==0? "מתנדב": "עובד",
-                actions: <div style={{textAlign:'center'}}>
+                actions: <div id="colAction">
                             
-                            <MDBBtn onClick={()=>this.editUser(data)} color="warning"><img src="https://img.icons8.com/android/25/000000/edit.png"/></MDBBtn>
-                            <MDBBtn onClick={()=>this.deleteUser(data.Email)} color="danger"> <img src="https://img.icons8.com/material/25/000000/delete--v1.png"/></MDBBtn>
+                            <MDBBtn id="BTN3_table"  onClick={()=>this.editUser(data)} color="warning"><img src="https://img.icons8.com/android/20/000000/edit.png"/></MDBBtn>
+                            <MDBBtn id="BTN3_table"  onClick={()=>this.deleteUser(data.Email)} color="danger"> <img src="https://img.icons8.com/material/20/000000/delete--v1.png"/></MDBBtn>
+                            <MDBBtn id="BTN3_table"  onClick={()=>this.TotalHours(data)} color="info"> <img src="https://img.icons8.com/material/20/000000/clock--v1.png"/></MDBBtn>
+                           
                         </div>
               }
               ))}) 
         }
         .bind(this),
         1500
-    );
-   
+    );  
+    }
+
+    TotalHours=(data)=>{
+      this.props.history.push({
+        pathname:'/TotalHours',
+        state:{ data: data
+        }
+      })
     }
 
     LogOutClicked=()=>{
@@ -486,23 +496,29 @@ constructor(props) {
         pathname:'/login'
       })
     }
+
+    TotalHoursReport=()=>{
+      this.props.history.push({
+        pathname:'/AllEmpsHoursReport'
+      })
+    }
     
     render(){
       const columns =  [
         {
-          label: 'עובד או מתנדב',
+          label: ' עובד/מתנדב ',
           field: 'ISEMPLOYEE',
           sort: 'asc',
           width: 150
           },
         {
-          label: 'תחילת שנת הלימודים',
+          label: 'שנת תחילת הלימודים',
           field: 'StudyingStartyear',
           sort: 'asc',
           width: 150
           },
         {
-          label: 'פעיל עד תאריך',
+          label: 'סיום פעילות  ',
           field: 'ActiveTillYear',
           sort: 'asc',
           width: 150
@@ -514,19 +530,19 @@ constructor(props) {
             width: 150
             },
         {
-        label: 'האם פעיל?',
+        label: 'סטטוס פעילות',
         field: 'IsActive',
         sort: 'asc',
         width: 150
         },
         {
-        label: 'כתובת דוא"ל',
+        label: 'מייל',
         field: 'Email',
         sort: 'asc',
         width: 270
         },
         {
-        label: 'טלפון סלולרי',
+        label: 'טלפון ',
         field: 'cellPhone',
         sort: 'asc',
         width: 200
@@ -548,8 +564,8 @@ constructor(props) {
           field:'actions',
           sort:'asc',
           width:130
-        }]
-        return(
+        }]   
+         return(
           <div>
             <div className="header">   
             <Link to={"/"}>
@@ -604,10 +620,13 @@ constructor(props) {
               <div id="editDiv">
              
                 <form  class="modal-content animate" action="/action_page.php" onSubmit={this.submitted}>
+                  <card id="idCard1">
                   <div className="form-group row">
+                    
                   <div className="form-group_col-sm-3">
+                    <h1 id="h1Titele">פרטים אישיים</h1>
                       <label for="FirstName">
-                        <span className="red-star">★ </span>שם פרטי
+                        <span className="red-star">שם פרטי </span>
                       </label>
                       <input
                         type="text"
@@ -620,7 +639,7 @@ constructor(props) {
                     </div>
                     <div className="form-group_col-sm-3">
                       <label for="LastName">
-                        <span className="red-star">★ </span>שם משפחה
+                        <span className="red-star"> שם משפחה</span> 
                       </label>
                       <input
                         type="text"
@@ -633,7 +652,7 @@ constructor(props) {
                     </div>
                   <div className="form-group_col-sm-3">
                       <label for="year">
-                        <span className="red-star">★ </span>נייד
+                        <span className="red-star"> טלפון</span>
                       </label>
                       <input
                         type="tel"
@@ -649,7 +668,7 @@ constructor(props) {
                       </div>
                       <div className="form-group_col-sm-3">
                       <label for="color">
-                        <span className="red-star">★ </span>אימייל
+                        <span className="red-star">מייל </span>
                       </label>
                       <input
                          type="email"
@@ -662,11 +681,14 @@ constructor(props) {
                       />    
                     </div>                                                                     
                   </div>
-    
+                  </card >
+
+                  <card id="idCard">
                   <div className="form-group row">
                     <div className="form-group_col-sm-3">
+                    <h1 id="h1Titele">פרטים נוספים</h1>
                       <label for="color">
-                        <span className="red-star">★ </span>האם פעיל?
+                        <span className="red-star">סטטוס פעילות </span> 
                       </label>
                       <select
                        placeholder="בחר אפשרות"
@@ -683,7 +705,7 @@ constructor(props) {
     
                     <div className="form-group_col-sm-3">
                       <label for="color">
-                        <span className="red-star">★ </span>מחלקה
+                        <span className="red-star">מחלקה </span>
                       </label>
                       <select
                        placeholder="בחר מחלקה"
@@ -705,7 +727,7 @@ constructor(props) {
     
                     <div className="form-group_col-sm-3">
                       <label>
-                        <span className="red-star">★ </span>פעיל עד שנה  
+                        <span className="red-star">סיום פעילות </span>    
                       </label>
                       <input
                       title="חייב להיות בן 4 ספרות"
@@ -722,7 +744,7 @@ constructor(props) {
     
                     <div className="form-group_col-sm-3">
                       <label>
-                        <span className="red-star">★ </span>שנת תחילת הלימודים
+                        <span className="red-star">שנת תחילת הלימודים </span>  
                       </label>
                       <input
                       title="חייב להיות בן 4 ספרות"
@@ -740,7 +762,7 @@ constructor(props) {
                   <div className="form-group row">
                   <div className="form-group_col-sm-3">
                       <label for="color">
-                        <span className="red-star">★ </span>עובד או מתנדב?
+                        <span className="red-star"> עובד/מתנדב </span>
                       </label>
                       <select
                        placeholder="אנא בחר אפשרות"
@@ -759,7 +781,7 @@ constructor(props) {
              
               <div className="form-group_col-sm-3">
                       <label for="color" >
-                        <span className="red-star">★ </span>תפקיד עובד 
+                        <span className="red-star">תפקיד עובד </span>  
                       </label>
                       <select
                        placeholder="אנא בחר תפקיד"
@@ -788,7 +810,7 @@ constructor(props) {
               className="form-group_col-sm-3"
             >
                    <label for="color" id="RoleId">
-                        <span className="red-star">★ </span>תיאור תפקיד  
+                        <span className="red-star">תיאור תפקיד </span>   
                       </label>
                         <textarea
                         placeholder="אנא תאר בקצרה את התפקיד הנבחר"
@@ -800,12 +822,17 @@ constructor(props) {
                           onChange={this.RoleDescriptionChanged}
                       >     
                       </textarea> 
-            </div> :""
+                      
+            </div> 
+            
+            :""
             }
 
 
                   </div>
-                  <div>
+                  </card >
+                  <div className="Fotterdiv2BTN">
+                    
                     <button
                       style={{ margin: 20 }}
                       type="submit"
@@ -828,6 +855,7 @@ constructor(props) {
             </div>
           </div>:          <div style={{padding:'0%'}}>
                 <MDBBtn id="IDMDBBTN" onClick={()=>this.addNewUser()} color="success">הוסף אדם חדש</MDBBtn>
+                <MDBBtn id="IDMDBBTNRRight" onClick={()=>this.TotalHoursReport()} color="info">הפק דו"ח שעות כולל</MDBBtn>
                 <MDBDataTable
                 
                 theadColor="#B5DBF8"
@@ -849,4 +877,3 @@ constructor(props) {
     }
 }
 export default withRouter (CCHumanResources)
-

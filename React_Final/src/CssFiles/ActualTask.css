@@ -2,9 +2,12 @@ form{
     
     padding:100;
    text-align: center;
+   
 }
-#container{
+div#container{
+    padding: 50px;
     display: inline-grid;
+    border: solid 2px gray;
 }
 #H1Header{
     margin-bottom: 50px;
@@ -69,3 +72,10 @@ form{
     color:black;
     border: solid 2px black;
   }
+  table.table.table-bordered.table-hover.table-striped.dataTable {
+    
+    font-family: sans-serif;
+}
+#deleteFromTask{
+    font-size: 15px;
+}

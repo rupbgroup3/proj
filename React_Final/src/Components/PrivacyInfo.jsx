@@ -317,7 +317,7 @@ class PrivacyInfo extends Component {
               <div className="form-group row">
                 <div className="form-group_col-sm-3">
                   <label for="price">
-                    <span className="red-star">★ </span>שם מלא
+                    <span className="red-star">שם מלא </span>
                   </label>
                   <input
                     type="text"
@@ -329,7 +329,7 @@ class PrivacyInfo extends Component {
 
                 <div className="form-group_col-sm-3">
                   <label for="model">
-                    <span className="red-star">★ </span>ת"ז
+                    <span className="red-star">ת"ז </span>
                   </label>
                   <input
                     type="text"
@@ -341,7 +341,7 @@ class PrivacyInfo extends Component {
 
                 <div className="form-group_col-sm-3">
                   <label for="manufacturer">
-                    <span className="red-star">★ </span>סוג
+                    <span className="red-star">סוג </span>
                   </label>
                   <input
                     type="text"
@@ -353,7 +353,7 @@ class PrivacyInfo extends Component {
 
                 <div className="form-group_col-sm-3">
                   <label for="year">
-                    <span className="red-star">★ </span>נייד
+                    <span className="red-star">נייד </span>
                   </label>
                   <input
                     type="number"
@@ -375,7 +375,7 @@ class PrivacyInfo extends Component {
               <div className="form-group row">
                 <div className="form-group_col-sm-3">
                   <label for="color">
-                    <span className="red-star">★ </span>מייל
+                    <span className="red-star">מייל </span>
                   </label>
                   <input
                     type="text"
@@ -396,7 +396,7 @@ class PrivacyInfo extends Component {
 
                 <div className="form-group_col-sm-3">
                   <label for="hand">
-                    <span className="red-star">★ </span>פעיל עד תאריך
+                    <span className="red-star">פעיל עד תאריך </span>
                   </label>
                   <input
                     type="text"
@@ -417,7 +417,7 @@ class PrivacyInfo extends Component {
 
                 <div className="form-group_col-sm-3">
                   <label>
-                    <span className="red-star">★ </span>שנת תחילת הלימודים
+                    <span className="red-star">שנת תחילת הלימודים</span>
                   </label>
                   <input
                     type="number"
@@ -429,7 +429,7 @@ class PrivacyInfo extends Component {
 
                 <div className="form-group_col-sm-3">
                   <label>
-                    <span className="red-star">★ </span>סטטוס
+                    <span className="red-star">סטטוס </span>
                   </label>
                   <input
                     type="number"
@@ -442,7 +442,7 @@ class PrivacyInfo extends Component {
               <div className="form-group row">
                 <div className="form-group_col-sm-3">
                   <label>
-                    <span className="red-star">★ </span>מחלקה
+                    <span className="red-star">מחלקה </span>
                   </label>
                   <input
                     type="number"

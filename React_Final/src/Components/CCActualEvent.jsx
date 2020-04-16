@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { Switch, Route, Link, withRouter } from "react-router-dom";
 import { MDBDataTable, MDBBtn } from "mdbreact";
 import Agodit from "../image/Agodit.png";
-import "react-datepicker/dist/react-datepicker.css";
+import "../CssFiles/ActualEvent.css";
+
 import Swal from "sweetalert2";
 
 class CCActualEvent extends Component {
@@ -23,16 +24,18 @@ class CCActualEvent extends Component {
           }
     }
     componentDidMount(){
+      this.props.GetEmpInfoRoles();
       this.props.GetActualTask();
       this.props.GetPerson_plan_TasksInEvent();
       this.props.GetActualEvent();
-      this.props.GetEmpInfoRoles();
+     
         let today = new Date(),
     date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
     let TodayDate= (date.toString()).split('-');
     let years= TodayDate[0];
     let month="";
     let day= "";
+
     if (TodayDate[1]<10) {
       month= "0"+TodayDate[1];
     }
@@ -61,44 +64,95 @@ class CCActualEvent extends Component {
      else{
       hours= (today.getHours().toString());
      }
-    let FullCurrenttime= (hours.toString())+":"+(mins.toString());
-    console.log(FullCurrenttime)   
-    setTimeout(
-      function() {
-        this.setState({today: FullCurrentDate})
-        this.setState({DateEx:FullCurrentDate })
-        this.setState({StartHour: FullCurrenttime,
-        FinishHour: FullCurrenttime})
-      }
-      .bind(this),
-      1000
-  );
-  setTimeout(
-    function() {
-        this.setState({rows: this.props.EmpInfoRoles.map(data => (    
-                   
-          {   
-            EmpCode: data.EmpCode,
-            EmpFirstName: data.EmpFirstName,
-            EmpLastName: data.EmpLastName,
-            cellPhone: data.cellPhone,
-            Email:data.Email,
-            DepartmnetDepartmentCode: data.DepartmnetDepartmentCode ==1? "הנדסה": data.DepartmnetDepartmentCode ==2?"כלכלה ומנהל עסקים":data.DepartmnetDepartmentCode ==3? "מדעי החברה והקהילה":
-            data.DepartmnetDepartmentCode ==4? "מדעי הים":data.DepartmnetDepartmentCode ==5? "הנדסאים- המכללה הטכנולוגית": data.DepartmnetDepartmentCode ==6? "מכינות" :"אחר" ,   
-           RoleName: data.RoleName,
-            actions: <div style={{textAlign:'center'}}>
-                        
-                        <MDBBtn onClick={()=>this.AddPersonToActualEvent(data)} color="warning">שבץ לאירוע</MDBBtn>
-                    </div>
-          }
-         
-          ))}) 
-    }
-    .bind(this),
-    1000
-);
 
+     if(this.props.PrevLocation=='/Calendar'){
+      setTimeout(
+        function() {
+          let data= this.props.location.state.data;
+          let EmpCodesArr= [];
+          EmpCodesArr.push(data.EmployeeEmpCode);
+          this.setState({
+           StartHour: (Math.trunc(data.FromHour/60)) <10 && Math.trunc((data.FromHour-(Math.trunc(data.FromHour)))*60)!=0? "0"+ (Math.trunc(data.FromHour/60))+ ":"+Math.round( Math.trunc((data.FromHour-(Math.trunc(data.FromHour)))*60)): (Math.trunc(data.FromHour/60)) <10 && Math.trunc((data.FromHour-(Math.trunc(data.FromHour)))*60)==0? "0"+ (Math.trunc(data.FromHour/60))+ ":"+ Math.round(Math.trunc((data.FromHour/60-(Math.trunc(data.FromHour/60)))*60)): (Math.trunc(data.FromHour/60)) >9 && Math.trunc((data.FromHour-(Math.trunc(data.FromHour)))*60)==0? (Math.trunc(data.FromHour/60))+ ":"+Math.round( Math.trunc((data.FromHour/60-(Math.trunc(data.FromHour/60)))*60)) : (Math.trunc(data.FromHour/60)) >9 && Math.trunc((data.FromHour-(Math.trunc(data.FromHour)))*60)!=0? (Math.trunc(data.FromHour/60))+ ":"+Math.round( Math.trunc((data.FromHour-(Math.trunc(data.FromHour)))*60)) :"",
+           FinishHour: (Math.trunc(data.ToHour/60)) <10 && Math.trunc((data.ToHour-(Math.trunc(data.ToHour)))*60)!=0? "0"+ (Math.trunc(data.ToHour/60))+ ":"+ Math.round(Math.trunc((data.ToHour-(Math.trunc(data.ToHour)))*60)): (Math.trunc(data.ToHour/60)) <10 && Math.trunc((data.ToHour-(Math.trunc(data.ToHour)))*60)==0? "0"+ (Math.trunc(data.ToHour/60))+ ":"+Math.round( Math.trunc((data.ToHour/60-(Math.trunc(data.ToHour/60)))*60)): (Math.trunc(data.ToHour/60)) >9 && Math.trunc((data.ToHour-(Math.trunc(data.ToHour)))*60)==0? (Math.trunc(data.ToHour/60))+ ":"+ Math.round(Math.trunc((data.ToHour/60-(Math.trunc(data.ToHour/60)))*60)) : (Math.trunc(data.ToHour/60)) >9 && Math.trunc((data.ToHour-(Math.trunc(data.ToHour)))*60)!=0? (Math.trunc(data.ToHour/60))+ ":"+Math.round( Math.trunc((data.ToHour-(Math.trunc(data.ToHour)))*60)) :"",
+           DateEx: data.date ,
+           Event_TypeEventCode: data.Event_TypeEventCode,
+           Location: data.Location,
+           EmpCodesArr: EmpCodesArr,
+           rows: this.props.EmpInfoRoles.map(data => (    
+            this.props.location.state.data.EmployeeEmpCode== data.EmpCode?    
+            {   
+              EmpCode: data.EmpCode,
+              EmpFirstName: data.EmpFirstName,
+              EmpLastName: data.EmpLastName,
+              cellPhone: data.cellPhone,
+              Email:data.Email,
+              DepartmnetDepartmentCode: data.DepartmnetDepartmentCode ==1? "הנדסה": data.DepartmnetDepartmentCode ==2?"כלכלה ומנהל עסקים":data.DepartmnetDepartmentCode ==3? "מדעי החברה והקהילה":
+              data.DepartmnetDepartmentCode ==4? "מדעי הים":data.DepartmnetDepartmentCode ==5? "הנדסאים- המכללה הטכנולוגית": data.DepartmnetDepartmentCode ==6? "מכינות" :"אחר" ,   
+             RoleName: data.RoleName,
+              actions: <div style={{textAlign:'center'}}>
+                           <MDBBtn id="deleteFromEvent" onClick={()=>this.deleteFromEvent(data)} color="danger">הסר שיבוץ מאירוע</MDBBtn>
+   
+                      </div>
+            }:
+            {
+              EmpCode: data.EmpCode,
+              EmpFirstName: data.EmpFirstName,
+              EmpLastName: data.EmpLastName,
+              cellPhone: data.cellPhone,
+              Email:data.Email,
+              DepartmnetDepartmentCode: data.DepartmnetDepartmentCode ==1? "הנדסה": data.DepartmnetDepartmentCode ==2?"כלכלה ומנהל עסקים":data.DepartmnetDepartmentCode ==3? "מדעי החברה והקהילה":
+              data.DepartmnetDepartmentCode ==4? "מדעי הים":data.DepartmnetDepartmentCode ==5? "הנדסאים- המכללה הטכנולוגית": data.DepartmnetDepartmentCode ==6? "מכינות" :"אחר" ,   
+             RoleName: data.RoleName,
+              actions: <div style={{textAlign:'center'}}>
+          
+                          <MDBBtn onClick={()=>this.AddPersonToActualEvent(data)} color="warning">שבץ לאירוע</MDBBtn>
+                      </div>
+            }
+           
+            ))     
+         })
+        }
+        .bind(this),
+        1000
+    );
     
+ 
+     }
+     else{
+      let FullCurrenttime= (hours.toString())+":"+(mins.toString());
+
+      setTimeout(
+        function() {
+          this.setState({rows: this.props.EmpInfoRoles.map(data => (    
+                     
+            {   
+              EmpCode: data.EmpCode,
+              EmpFirstName: data.EmpFirstName,
+              EmpLastName: data.EmpLastName,
+              cellPhone: data.cellPhone,
+              Email:data.Email,
+              DepartmnetDepartmentCode: data.DepartmnetDepartmentCode ==1? "הנדסה": data.DepartmnetDepartmentCode ==2?"כלכלה ומנהל עסקים":data.DepartmnetDepartmentCode ==3? "מדעי החברה והקהילה":
+              data.DepartmnetDepartmentCode ==4? "מדעי הים":data.DepartmnetDepartmentCode ==5? "הנדסאים- המכללה הטכנולוגית": data.DepartmnetDepartmentCode ==6? "מכינות" :"אחר" ,   
+             RoleName: data.RoleName,
+              actions: <div style={{textAlign:'center'}}>
+                          
+                          <MDBBtn onClick={()=>this.AddPersonToActualEvent(data)} color="warning">שבץ לאירוע</MDBBtn>
+                      </div>
+            }
+           
+            )),
+            today: FullCurrentDate,
+            DateEx:FullCurrentDate,
+            StartHour: FullCurrenttime,
+            FinishHour: FullCurrenttime
+    
+          }) 
+        }
+        .bind(this),
+        1000
+    );
+    
+     }       
     }
     SaveActualEvent=(evt)=>{
       evt.preventDefault();
@@ -125,54 +179,104 @@ class CCActualEvent extends Component {
                     // את המשתנה הבא נכניס בפוסט בתור שעת סיום בתוך הג'ייסון
                      FinishTimeToSQL= Finishhoursmanip+Finishminsmanip;
 
-         for (let index1 = 0; index1 < this.props.Actual_Event.length; index1++) {
-           const element = this.props.Actual_Event[index1];
-           for (let index2 = 0; index2 < this.state.EmpCodesArr.length; index2++) {
-             const element2 = this.state.EmpCodesArr[index2];
-             for (let index3 = 0; index3 < this.props.ActualTaskVar.length; index3++) {
-               const element3 = this.props.ActualTaskVar[index3];
-               for (let index4 = 0; index4 < this.props.Person_plan_TasksInEvent.length; index4++) {
-                 const element4 = this.props.Person_plan_TasksInEvent[index4];
-                 if ((((element.date.toString())==(this.state.DateEx.toString()))&& (element2==element.EmployeeEmpCode)&&(element.ToHour> FinishTimeToSQL)&& (element.FromHour>StartTimeToSQL)&& (element.ToHour>StartTimeToSQL)&&(element.FromHour< FinishTimeToSQL)) 
-                 ||(((element.date.toString())==(this.state.DateEx.toString()))&&(element2==element.EmployeeEmpCode)&&(element.ToHour< FinishTimeToSQL)&& (element.FromHour>StartTimeToSQL)&& (element.ToHour>StartTimeToSQL)&&(element.FromHour< FinishTimeToSQL))
-                 ||(((element.date.toString())==(this.state.DateEx.toString()))&&(element2==element.EmployeeEmpCode)&&(element.ToHour> FinishTimeToSQL)&& (element.FromHour<StartTimeToSQL) &&(element.ToHour>StartTimeToSQL)&&(element.FromHour< FinishTimeToSQL))
-                 ||(((element.date.toString())==(this.state.DateEx.toString()))&&(element2==element.EmployeeEmpCode)&&(element.ToHour< FinishTimeToSQL)&& (element.FromHour<StartTimeToSQL) && (element.ToHour>StartTimeToSQL)&& (element.FromHour< FinishTimeToSQL))            
-                 )  {
+        if(this.props.PrevLocation!='/Calendar'){
+          for (let index1 = 0; index1 < this.props.Actual_Event.length; index1++) {
+            const element = this.props.Actual_Event[index1];
+            for (let index2 = 0; index2 < this.state.EmpCodesArr.length; index2++) {
+              const element2 = this.state.EmpCodesArr[index2];
+              for (let index3 = 0; index3 < this.props.ActualTaskVar.length; index3++) {
+                const element3 = this.props.ActualTaskVar[index3];
+                for (let index4 = 0; index4 < this.props.Person_plan_TasksInEvent.length; index4++) {
+                  const element4 = this.props.Person_plan_TasksInEvent[index4];
+                  if ((((element.date.toString())==(this.state.DateEx.toString()))&& (element2==element.EmployeeEmpCode)&&(element.ToHour> FinishTimeToSQL)&& (element.FromHour>StartTimeToSQL)&& (element.ToHour>StartTimeToSQL)&&(element.FromHour< FinishTimeToSQL)) 
+                  ||(((element.date.toString())==(this.state.DateEx.toString()))&&(element2==element.EmployeeEmpCode)&&(element.ToHour< FinishTimeToSQL)&& (element.FromHour>StartTimeToSQL)&& (element.ToHour>StartTimeToSQL)&&(element.FromHour< FinishTimeToSQL))
+                  ||(((element.date.toString())==(this.state.DateEx.toString()))&&(element2==element.EmployeeEmpCode)&&(element.ToHour> FinishTimeToSQL)&& (element.FromHour<StartTimeToSQL) &&(element.ToHour>StartTimeToSQL)&&(element.FromHour< FinishTimeToSQL))
+                  ||(((element.date.toString())==(this.state.DateEx.toString()))&&(element2==element.EmployeeEmpCode)&&(element.ToHour< FinishTimeToSQL)&& (element.FromHour<StartTimeToSQL) && (element.ToHour>StartTimeToSQL)&& (element.FromHour< FinishTimeToSQL))            
+                  )  {
+                    counter++;
+                    Swal.fire({
+                      icon: 'error',                                             
+                      title: 'פעיל אגודה זה משובץ בתור אחראי לאירוע חופף' ,
+                      text: 'אנא בחר בטווח שעות/ תאריך שונה או שבץ אחראי אחר לאירוע' ,
+                    })
+                    return;
+                  }
+ 
+                  else if((((element3.exceutionDate.toString())==(this.state.DateEx.toString()))&& (element2==element3.PersonEmpCode)&&(element3.ToHour> FinishTimeToSQL)&& (element3.FromHour>StartTimeToSQL)&& (element3.ToHour>StartTimeToSQL)&&(element3.FromHour< FinishTimeToSQL)) 
+                  ||(((element3.exceutionDate.toString())==(this.state.DateEx.toString()))&&(element2==element3.PersonEmpCode)&&(element3.ToHour< FinishTimeToSQL)&& (element3.FromHour>StartTimeToSQL)&& (element3.ToHour>StartTimeToSQL)&&(element3.FromHour< FinishTimeToSQL))
+                  ||(((element3.exceutionDate.toString())==(this.state.DateEx.toString()))&&(element2==element3.PersonEmpCode)&&(element3.ToHour> FinishTimeToSQL)&& (element3.FromHour<StartTimeToSQL) &&(element3.ToHour>StartTimeToSQL)&&(element3.FromHour< FinishTimeToSQL))
+                  ||(((element3.exceutionDate.toString())==(this.state.DateEx.toString()))&&(element2==element3.PersonEmpCode)&&(element3.ToHour< FinishTimeToSQL)&& (element3.FromHour<StartTimeToSQL) && (element3.ToHour>StartTimeToSQL)&& (element3.FromHour< FinishTimeToSQL))            
+                  
+                  ||(((element4.executionDate.toString())==(this.state.DateEx.toString()))&& (element2==element4.PersonEmpCode)&&(element4.ToHour> FinishTimeToSQL)&& (element4.FromHour>StartTimeToSQL)&& (element4.ToHour>StartTimeToSQL)&&(element4.FromHour< FinishTimeToSQL))
+                  ||(((element4.executionDate.toString())==(this.state.DateEx.toString()))&& (element2==element4.PersonEmpCode) &&(element4.ToHour< FinishTimeToSQL)&& (element4.FromHour>StartTimeToSQL)&& (element4.ToHour>StartTimeToSQL)&&(element4.FromHour< FinishTimeToSQL))
+                  ||(((element4.executionDate.toString())==(this.state.DateEx.toString()))&& (element2==element4.PersonEmpCode) &&(element4.ToHour> FinishTimeToSQL)&& (element4.FromHour<StartTimeToSQL) &&(element4.ToHour>StartTimeToSQL)&&(element4.FromHour< FinishTimeToSQL))  
+                  ||(((element4.executionDate.toString())==(this.state.DateEx.toString()))&& (element2==element4.PersonEmpCode)&&(element4.ToHour< FinishTimeToSQL)&& (element4.FromHour<StartTimeToSQL) && (element4.ToHour>StartTimeToSQL)&& (element4.FromHour< FinishTimeToSQL))   
+                  
+                  
+                  ) {
+ 
                    counter++;
                    Swal.fire({
                      icon: 'error',                                             
-                     title: 'פעיל אגודה זה משובץ בתור אחראי לאירוע חופף' ,
+                     title: 'פעיל אגודה זה משובץ למשימות/ אירועים באותו טווח שעות ותאריך' ,
                      text: 'אנא בחר בטווח שעות/ תאריך שונה או שבץ אחראי אחר לאירוע' ,
                    })
                    return;
-                 }
+ 
+                 } 
+                }
+              }
+            }
+          }
+        }
+        else{
 
-                 else if((((element3.exceutionDate.toString())==(this.state.DateEx.toString()))&& (element2==element3.PersonEmpCode)&&(element3.ToHour> FinishTimeToSQL)&& (element3.FromHour>StartTimeToSQL)&& (element3.ToHour>StartTimeToSQL)&&(element3.FromHour< FinishTimeToSQL)) 
-                 ||(((element3.exceutionDate.toString())==(this.state.DateEx.toString()))&&(element2==element3.PersonEmpCode)&&(element3.ToHour< FinishTimeToSQL)&& (element3.FromHour>StartTimeToSQL)&& (element3.ToHour>StartTimeToSQL)&&(element3.FromHour< FinishTimeToSQL))
-                 ||(((element3.exceutionDate.toString())==(this.state.DateEx.toString()))&&(element2==element3.PersonEmpCode)&&(element3.ToHour> FinishTimeToSQL)&& (element3.FromHour<StartTimeToSQL) &&(element3.ToHour>StartTimeToSQL)&&(element3.FromHour< FinishTimeToSQL))
-                 ||(((element3.exceutionDate.toString())==(this.state.DateEx.toString()))&&(element2==element3.PersonEmpCode)&&(element3.ToHour< FinishTimeToSQL)&& (element3.FromHour<StartTimeToSQL) && (element3.ToHour>StartTimeToSQL)&& (element3.FromHour< FinishTimeToSQL))            
-                 
-                 ||(((element4.executionDate.toString())==(this.state.DateEx.toString()))&& (element2==element4.PersonEmpCode)&&(element4.ToHour> FinishTimeToSQL)&& (element4.FromHour>StartTimeToSQL)&& (element4.ToHour>StartTimeToSQL)&&(element4.FromHour< FinishTimeToSQL))
-                 ||(((element4.executionDate.toString())==(this.state.DateEx.toString()))&& (element2==element4.PersonEmpCode) &&(element4.ToHour< FinishTimeToSQL)&& (element4.FromHour>StartTimeToSQL)&& (element4.ToHour>StartTimeToSQL)&&(element4.FromHour< FinishTimeToSQL))
-                 ||(((element4.executionDate.toString())==(this.state.DateEx.toString()))&& (element2==element4.PersonEmpCode) &&(element4.ToHour> FinishTimeToSQL)&& (element4.FromHour<StartTimeToSQL) &&(element4.ToHour>StartTimeToSQL)&&(element4.FromHour< FinishTimeToSQL))  
-                 ||(((element4.executionDate.toString())==(this.state.DateEx.toString()))&& (element2==element4.PersonEmpCode)&&(element4.ToHour< FinishTimeToSQL)&& (element4.FromHour<StartTimeToSQL) && (element4.ToHour>StartTimeToSQL)&& (element4.FromHour< FinishTimeToSQL))   
-                 
-                 
-                 ) {
+          for (let index1 = 0; index1 < this.props.Actual_Event.length; index1++) {
+            const element = this.props.Actual_Event[index1];
+            for (let index2 = 0; index2 < this.state.EmpCodesArr.length; index2++) {
+              const element2 = this.state.EmpCodesArr[index2];
+              for (let index3 = 0; index3 < this.props.ActualTaskVar.length; index3++) {
+                const element3 = this.props.ActualTaskVar[index3];
+                for (let index4 = 0; index4 < this.props.Person_plan_TasksInEvent.length; index4++) {
+                  const element4 = this.props.Person_plan_TasksInEvent[index4];
 
-                  counter++;
-                  Swal.fire({
-                    icon: 'error',                                             
-                    title: 'פעיל אגודה זה משובץ למשימות/ אירועים באותו טווח שעות ותאריך' ,
-                    text: 'אנא בחר בטווח שעות/ תאריך שונה או שבץ אחראי אחר לאירוע' ,
-                  })
-                  return;
+                  // if (((this.props.location.state.data.EmployeeEmpCode!=element.EmployeeEmpCode)&&(element2==element.EmployeeEmpCode)&&(element.date.toString()==this.state.DateEx.toString()))         
+                  // )  {
+                  //   counter++;
+                  //   Swal.fire({
+                  //     icon: 'error',                                             
+                  //     title: 'פעיל אגודה זה משובץ בתור אחראי לאירוע חופף' ,
+                  //     text: 'אנא בחר בטווח שעות/ תאריך שונה או שבץ אחראי אחר לאירוע' ,
+                  //   })
+                  //   return;
+                  // }
+ 
+                   if((((element3.exceutionDate.toString())==(this.state.DateEx.toString()))&& (element2==element3.PersonEmpCode)&&(element3.ToHour> FinishTimeToSQL)&& (element3.FromHour>StartTimeToSQL)&& (element3.ToHour>StartTimeToSQL)&&(element3.FromHour< FinishTimeToSQL)) 
+                  ||(((element3.exceutionDate.toString())==(this.state.DateEx.toString()))&&(element2==element3.PersonEmpCode)&&(element3.ToHour< FinishTimeToSQL)&& (element3.FromHour>StartTimeToSQL)&& (element3.ToHour>StartTimeToSQL)&&(element3.FromHour< FinishTimeToSQL))
+                  ||(((element3.exceutionDate.toString())==(this.state.DateEx.toString()))&&(element2==element3.PersonEmpCode)&&(element3.ToHour> FinishTimeToSQL)&& (element3.FromHour<StartTimeToSQL) &&(element3.ToHour>StartTimeToSQL)&&(element3.FromHour< FinishTimeToSQL))
+                  ||(((element3.exceutionDate.toString())==(this.state.DateEx.toString()))&&(element2==element3.PersonEmpCode)&&(element3.ToHour< FinishTimeToSQL)&& (element3.FromHour<StartTimeToSQL) && (element3.ToHour>StartTimeToSQL)&& (element3.FromHour< FinishTimeToSQL))            
+                  
+                  ||(((element4.executionDate.toString())==(this.state.DateEx.toString()))&& (element2==element4.PersonEmpCode)&&(element4.ToHour> FinishTimeToSQL)&& (element4.FromHour>StartTimeToSQL)&& (element4.ToHour>StartTimeToSQL)&&(element4.FromHour< FinishTimeToSQL))
+                  ||(((element4.executionDate.toString())==(this.state.DateEx.toString()))&& (element2==element4.PersonEmpCode) &&(element4.ToHour< FinishTimeToSQL)&& (element4.FromHour>StartTimeToSQL)&& (element4.ToHour>StartTimeToSQL)&&(element4.FromHour< FinishTimeToSQL))
+                  ||(((element4.executionDate.toString())==(this.state.DateEx.toString()))&& (element2==element4.PersonEmpCode) &&(element4.ToHour> FinishTimeToSQL)&& (element4.FromHour<StartTimeToSQL) &&(element4.ToHour>StartTimeToSQL)&&(element4.FromHour< FinishTimeToSQL))  
+                  ||(((element4.executionDate.toString())==(this.state.DateEx.toString()))&& (element2==element4.PersonEmpCode)&&(element4.ToHour< FinishTimeToSQL)&& (element4.FromHour<StartTimeToSQL) && (element4.ToHour>StartTimeToSQL)&& (element4.FromHour< FinishTimeToSQL))   
+                                 
+                  ) {
+ 
+                   counter++;
+                   Swal.fire({
+                     icon: 'error',                                             
+                     title: 'פעיל אגודה זה משובץ למשימות/ אירועים באותו טווח שעות ותאריך' ,
+                     text: 'אנא בחר בטווח שעות/ תאריך שונה או שבץ אחראי אחר לאירוע' ,
+                   })
+                   return;
+                 } 
+                }
+              }
+            }
+          }
+        }
 
-                } 
-               }
-             }
-           }
-         }
     }
       .bind(this),
       800);  
@@ -205,42 +309,84 @@ class CCActualEvent extends Component {
             evt.preventDefault();
            }
            else if(counter<1){
-            this.props.GetEquipmentTable();
-            this.props.GetTasks();
-            this.props.GetEvents();
-            this.props.GetEvent_Type_EquipmentType();      
-                for (let index = 0; index < this.state.EmpCodesArr.length; index++) {
-                  const element = this.state.EmpCodesArr[index];
-                  console.log(element)
-                  let Actual_Event={
-                    date: this.state.DateEx.toString(),
-                    FromHour: StartTimeToSQL,
-                    ToHour: FinishTimeToSQL,
-                    Event_TypeEventCode:  this.props.location.state.data.EventCode,
-                    Location: this.state.Location,
-                    EmployeeEmpCode: element,                                     
-                }
-              
-                  this.props.PostActualEvent(Actual_Event);
-                } 
 
-                 this.props.GetEvent_Type_Task();
-                
-
-                this.props.MyPreviousLocation('/ActualEvent');
-                this.props.history.push({
-                  pathname:'/EquipAndTaskInActualEvent',
-                  state: {EventCode: this.props.location.state.data.EventCode,
-                  EventName: this.props.location.state.data.EventName}
-                })          
+            if(this.props.PrevLocation=='/Calendar'){
         
-          Swal.fire({
-            position: 'center',
-          icon: 'success',
-          title: 'השלב הראשון של תזמון האירוע התבצע בהצלחה',
-          showConfirmButton: false,
-          timer: 1800
-         });
+              this.props.GetEquipmentTable();
+              this.props.GetTasks();
+              this.props.GetEvents();
+              this.props.GetEvent_Type_EquipmentType();      
+                  for (let index = 0; index < this.state.EmpCodesArr.length; index++) {
+  
+                    const element = this.state.EmpCodesArr[index];
+                    console.log(element)
+                    let Actual_Event={
+                      date: this.state.DateEx.toString(),
+                      FromHour: StartTimeToSQL,
+                      ToHour: FinishTimeToSQL,
+                      Location: this.state.Location,
+                      EmployeeEmpCode: element,
+                      Barcode: this.props.location.state.data.Barcode                                     
+                  }
+                
+                    this.props.PutActual_Event(Actual_Event);
+                  } 
+
+                   this.props.GetEvent_Type_Task();
+                  
+                  this.props.MyPreviousLocation('/ActualEvent');
+                  this.props.history.push({
+                    pathname:'/Calendar'
+                  })          
+          
+            Swal.fire({
+              position: 'center',
+            icon: 'success',
+            title: 'עדכון אירוע התבצע בהצלחה',
+            showConfirmButton: false,
+            timer: 1200
+           });
+
+            }
+            else{
+              this.props.GetEquipmentTable();
+              this.props.GetTasks();
+              this.props.GetEvents();
+              this.props.GetEvent_Type_EquipmentType();      
+                  for (let index = 0; index < this.state.EmpCodesArr.length; index++) {
+                    const element = this.state.EmpCodesArr[index];
+                    console.log(element)
+                    let Actual_Event={
+                      date: this.state.DateEx.toString(),
+                      FromHour: StartTimeToSQL,
+                      ToHour: FinishTimeToSQL,
+                      Event_TypeEventCode:  this.props.location.state.data.EventCode,
+                      Location: this.state.Location,
+                      EmployeeEmpCode: element,                                     
+                  }
+                
+                    this.props.PostActualEvent(Actual_Event);
+                  } 
+  
+                   this.props.GetEvent_Type_Task();
+                  
+  
+                  this.props.MyPreviousLocation('/ActualEvent');
+                  this.props.history.push({
+                    pathname:'/EquipAndTaskInActualEvent',
+                    state: {EventCode: this.props.location.state.data.EventCode,
+                    EventName: this.props.location.state.data.EventName}
+                  })          
+          
+            Swal.fire({
+              position: 'center',
+            icon: 'success',
+            title: 'השלב הראשון של תזמון האירוע התבצע בהצלחה',
+            showConfirmButton: false,
+            timer: 1800
+           });
+            }
+
            }   
 
     }
@@ -278,12 +424,9 @@ class CCActualEvent extends Component {
                           </div>
                 }
                 newRows.push(SpecificPerson)
-    
-                let EmpCodesArrNew= this.state.EmpCodesArr;
-                const index3 = EmpCodesArrNew.findIndex((user)=>user===data.EmpCode);
-                console.log(index3);
-                const EmpCodesArrNewToState = EmpCodesArrNew.filter((person,key)=>key!==index);
-                this.setState({ EmpCodesArr : EmpCodesArrNewToState})
+
+                let newempcode= [];
+                this.setState({ EmpCodesArr : newempcode})
                 this.setState({rows:newRows
                   })}           
               } 
@@ -323,7 +466,7 @@ class CCActualEvent extends Component {
                      RoleName: data.RoleName,
                     actions: <div style={{textAlign:'center'}}>
                                               
-                                <MDBBtn onClick={()=>this.deleteFromEvent(data)} color="danger">הסר שיבוץ מאירוע</MDBBtn>
+                                <MDBBtn id="deleteFromEvent" onClick={()=>this.deleteFromEvent(data)} color="danger">הסר שיבוץ מאירוע</MDBBtn>
                             </div>
                   }
                   newRows.unshift(SpecificPerson)         
@@ -393,6 +536,29 @@ BackClicked=()=>{
       }
     }) 
   }
+  else if(this.props.PrevLocation=="/Calendar"){
+    Swal.fire({
+      title: "?האם לבטל את התהליך שהתחלת",
+      text: "בלחיצה על כפתור חזור תהליך עדכון אירוע בפועל יבוטל ולא יישמר",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'כן',
+      cancelButtonText: "לא"
+    }).then((result) => {
+      if (result.value) {
+         Swal.fire(
+          '!בוטל',
+          'תהליך עדכון אירוע בפועל בוטל',
+          'success'
+        ) 
+         this.props.history.push({
+          pathname:'/Calendar'
+        })       
+      }
+    }) 
+  }
   else{
     this.props.history.push({
       pathname:'/ManageActivities'
@@ -423,6 +589,29 @@ HomeClicked=()=>{
       }
     }) 
   }
+  else if(this.props.PrevLocation=="/Calendar"){
+    Swal.fire({
+      title: "?האם לבטל את התהליך שהתחלת",
+      text: "בלחיצה על כפתור הבית תהליך עדכון אירוע בפועל יבוטל ולא יישמר",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'כן',
+      cancelButtonText: "לא"
+    }).then((result) => {
+      if (result.value) {
+         Swal.fire(
+          '!בוטל',
+          'תהליך עדכון אירוע בפועל בוטל',
+          'success'
+        ) 
+         this.props.history.push({
+          pathname:'/'
+        })       
+      }
+    }) 
+  }
   else{
     this.props.MyPreviousLocation(window.location.pathname);
     this.props.history.push({
@@ -443,14 +632,51 @@ LogOutClicked=()=>{
       cancelButtonText: "לא"
     }).then((result) => {
       if (result.value) {
-         Swal.fire(
-           'התנתקות',
-           'התנתקת מהמערכת בהצלחה',
-           'success'
-         )
+        Swal.fire(
+          '!בוטל',
+          'תהליך תזמון אירוע בפועל בוטל',
+          'success'
+        ) 
          this.props.history.push({
           pathname:'/login'
-        })       
+        })
+        Swal.fire({
+          position: 'center',
+          icon: 'success',
+          title: 'התנתקת מהמערכת בהצלחה',
+          showConfirmButton: false,
+          timer: 1200
+        })                  
+      }
+    }) 
+  }
+  else if(this.props.PrevLocation=="/Calendar"){
+    Swal.fire({
+      title: "?האם לבטל את התהליך שהתחלת",
+      text: "בלחיצה על כפתור התנתק תהליך עדכון אירוע בפועל יבוטל ולא יישמר",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'כן',
+      cancelButtonText: "לא"
+    }).then((result) => {
+      if (result.value) {
+         Swal.fire(
+          '!בוטל',
+          'תהליך עדכון אירוע בפועל בוטל',
+          'success'
+        ) 
+         this.props.history.push({
+          pathname:'/login'
+        })   
+        Swal.fire({
+          position: 'center',
+          icon: 'success',
+          title: 'התנתקת מהמערכת בהצלחה',
+          showConfirmButton: false,
+          timer: 1200
+        })      
       }
     }) 
   }
@@ -569,7 +795,8 @@ LogOutClicked=()=>{
           </div>
         </nav>
     <div style={{padding:'0%'}}>
-                <MDBBtn onClick={()=>this.MoveBackToActualEvent()} color="success">  חזרה לתזמון אירוע  </MDBBtn>
+
+                <MDBBtn id="IDMDBBTNn" onClick={()=>this.MoveBackToActualEvent()} color="success">  חזרה לתזמון אירוע  </MDBBtn>
                 <MDBDataTable
                 
                 theadColor="#B5DBF8"
@@ -593,46 +820,51 @@ LogOutClicked=()=>{
 
                 :
                 <form style={{padding:100}} style={{textAlign:"center"}} onSubmit={this.SaveActualEvent}>
-  
- אירוע בפועל- {this.props.location.state== undefined?"":
-  this.props.location.state.data.EventName}
-<br/>
-<br/>
-<br/>
+ <div id="container">
+  <h1 id="H1Header"> אירוע בפועל- {this.props.location.state== undefined?"":
+  this.props.location.state.data.EventName}</h1>
+
 <label>
-<input type="date" name="Date" min={this.state.today} onChange={this.DateChanged} value={this.state.DateEx} required />
-:תאריך ביצוע
+<input className="inputActualTask" type="date" name="Date" min={this.state.today} onChange={this.DateChanged} value={this.state.DateEx} required />
+<img className="ImgActual" src="https://img.icons8.com/office/30/000000/overtime.png"/>
+<h3 className="H3Actual">תאריך ביצוע</h3>
+</label>
+
+
+<label>
+<input className="inputActualTask" type="time" name="FromHour" onChange={this.StartHour} value={this.state.StartHour} required />
+<img  className="ImgActual" src="https://img.icons8.com/office/30/000000/hourglass-sand-top.png"/>
+<h3 className="H3Actual">שעת התחלה</h3>
 
 </label>
-<br/>
 
-<br/>
 <label>
-<input type="time" name="FromHour" onChange={this.StartHour} value={this.state.StartHour} required />
-       :שעת התחלה
-
+<input className="inputActualTask" type="time" name="ToHour" onChange={this.FinishHour} value={this.state.FinishHour} required/>
+<img className="ImgActual" src="https://img.icons8.com/office/30/000000/hourglass-sand-bottom.png"/>
+<h3 className="H3Actual">שעת סיום</h3>
 </label>
-<br/>
 
-<br/>
+
 <label>
-<input type="time" name="ToHour" onChange={this.FinishHour} value={this.state.FinishHour} required/>
-:שעת סיום
+<input id="LocationInput" className="inputActualTask" type="text" name="Location" onChange={this.Location} value={this.state.Location}/>
+<img className="ImgActual" src="https://img.icons8.com/office/30/000000/worldwide-location.png"/>
+<h3 className="H3Actual">מיקום</h3>
 </label>
-<br/>
+{
+     this.props.PrevLocation=='/Calendar'?
+     <button id="BTNActualTask" onClick={this.ChooseEventRules}>שנה אחראי אירוע</button>:
+<button id="BTNActualTask" onClick={this.ChooseEventRules}>בחר אחראי אירוע</button> 
+}
 
-<button onClick={this.ChooseEventRules}
->בחר אחראי אירוע</button> 
 <br/>
-<br/>
-<label>
-<input type="text" name="Location" onChange={this.Location} value={this.state.Location}/>
-:מיקום
-</label>
-<br/>
+{
+  this.props.PrevLocation=='/Calendar'?
+  <MDBBtn  id="MDBBtnActualTask_save" type="submit" value="Submit" color="success">עדכן אירוע</MDBBtn>:
+<MDBBtn  id="MDBBtnActualTask_save" type="submit" value="Submit" color="success">  שמור והמשך</MDBBtn>
+}
 
-<MDBBtn  type="submit" value="Submit" color="success">  המשך</MDBBtn>
 
+</div>
 </form>
 
 }

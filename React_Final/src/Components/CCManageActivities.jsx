@@ -6,9 +6,11 @@ import Agodit from "../image/Agodit.png";
 import Swal from "sweetalert2";
 import { MDBDataTable, MDBBtn } from "mdbreact";
 
+
 const buttonHome = { margin: 30 };
 
 class CCManageActivities extends Component {
+  
   constructor(props) {
     super(props);
 
@@ -120,15 +122,16 @@ this.setState({searchedEnter:e.target.value})
             </div>
           </div>
         </nav>
+
+        <div id="containerr">
         <div id="btnsManAct">
 
-
-          <button  id="btnTest" onClick={this.changeHandler1}>
-            משימות
+          <button  id="btnTestaTsk" onClick={this.changeHandler1}>
+            משימות <img id="imgIcon"  src="https://img.icons8.com/offices/30/000000/copy-2.png"/>
           </button>
 
-          <button  id="btnTest" onClick={this.changeHandler2}>
-            אירועים
+          <button  id="btnTestEvent" onClick={this.changeHandler2}>
+            אירועים <img id="imgIcon"  src="https://img.icons8.com/offices/30/000000/org-unit.png"/>
             {/* className="btn btn-success" */}
           </button>
 
@@ -137,8 +140,10 @@ this.setState({searchedEnter:e.target.value})
         <div id="btnsManAct">
           
           
-          <MDBBtn onClick={this.MoveToTaskType} color="warning" id="NewTaskType">הוסף סוג משימה חדש</MDBBtn>
-          <MDBBtn onClick={this.MoveToEventType} color="success" id="NewEventType">הוסף סוג אירוע חדש</MDBBtn>
+          {/* <MDBBtn  onClick={this.MoveToTaskType} color="success"  id="NewTaskType"><img  onClick={this.MoveToTaskType} src="https://img.icons8.com/color/60/000000/plus--v1.png"/></MDBBtn> */}
+          <img id="NewTaskPlas" onClick={this.MoveToTaskType}  src="https://img.icons8.com/material-outlined/30/000000/plus.png"/>
+          {/* <MDBBtn  onClick={this.MoveToEventType} color="success" id="NewEventType">הוסף סוג אירוע חדש</MDBBtn> */}
+          <img id="NewEventPlas" onClick={this.MoveToEventType}   src="https://img.icons8.com/material-outlined/30/000000/plus.png"/>
           </div>
           <br/>
         <div id="SearchManageActDiv">
@@ -146,7 +151,7 @@ this.setState({searchedEnter:e.target.value})
         <img src="https://img.icons8.com/material-outlined/20/000000/search.png" />
         </div>
 
-
+        </div>
          <div className="row">        
         <div className="TasksEventsDiv">
           {this.state.TasksClicked
@@ -164,7 +169,13 @@ this.setState({searchedEnter:e.target.value})
                   >
                     {" "}
                     {data.TaskName}
+                    <br/>
+                   
+                    <img id="imgIcon" src="https://img.icons8.com/offices/30/000000/copy-2.png"/>
+                   
                   </button>
+
+                  
                
                 </div>:""
               ))
@@ -181,8 +192,11 @@ this.setState({searchedEnter:e.target.value})
                     variant="success"
                   >
                     {" "}
+                    
                     {data.EventName}
+                    <img id="imgIcon"  src="https://img.icons8.com/offices/30/000000/org-unit.png"/>
                   </button>
+                 
                
                 </div>:""
               ))}

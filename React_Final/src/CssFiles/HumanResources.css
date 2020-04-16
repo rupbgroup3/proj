@@ -4,8 +4,8 @@
 }
 .dataTable th{
     text-align: center;
-    width: 50px;
-    font-size: 20px;
+    width: 40px;
+    font-size: 15px;
 }
 
 .dataTable td{
@@ -19,10 +19,27 @@
 }
 #IDMDBBTN{
    font-size: 15px;
+   
 }
 #MDBBTH_DELET_EDIT{
-    font-size: 15px;
-
+    font-size: 15px; 
     
-   
+    
+}
+#IDMDBBTNRRight{
+    float: right;
+    font-size: 15px; 
+    
+}
+#foterBTN {
+    margin: auto;
+}
+#BTN3_table{
+border-radius: 100px;
+}
+#colAction{
+    
+    display: flex;
+    
+
 }

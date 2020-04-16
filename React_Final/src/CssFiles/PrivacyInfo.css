@@ -3,8 +3,8 @@
   width:100%;
 }
 .privacyList{
-  float: right;
-  border-bottom: double;
+ text-align: center;
+  font-size: 25px;
   
 }
 .form-group_col-sm-3{
@@ -79,6 +79,59 @@ float: left;
   option {
     text-align-last:right;
   }
- 
+  table.table.table-bordered.table-hover.table-striped.dataTable {
+    
+    font-family: sans-serif;
+}
 
+
+table.table.table-bordered.table-hover.table-striped.dataTable {
+    
+  font-family: sans-serif;
+}
+.form-group.row {
+  display: grid;
+  font-size: 15px;
+  padding-left: 50px;
+  padding-right: 50px;
+}
+input#FirstName,input#FullName,input#PhoneNum,input#Mail,select#color,input#ActiveTillYear,input#StudyingStartyear,input#EquipName,input#Quantity {
+  width: 180px;
+  float: left;
+  font-size: 15px;
+  margin-right: 70px;
+ 
+}
+
+
+
+
+
+.Root {
+  background-color: deepskyblue;
+}
+
+card {
+  border: solid 2px darkgrey;
+  display: grid;
+  margin: 50px;
+}
+/* #idCard1{
+
+} */
+/* form.modal-content.animate {
+  display: -webkit-inline-box;
+} */
+.Fotterdiv2BTN{
+  margin: auto;
+}
+input#cancelSaveBTN,button#saveBTN {
+  font-size: 20px;
+}
+#h1Titele{
+  margin-bottom: 20px;;
+}
+#foterBTN {
+  margin: auto;
+}
 

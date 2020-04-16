@@ -33,6 +33,8 @@ class CCEquipAndTaskInActualEvent extends Component {
     console.log(this.state.PrevLocation)
     setTimeout(
       function(){
+        this.props.GetEquipmentTable();
+        this.props.GetTasks();        
         this.props.GetActualEvent();
         this.props.GetEvent_Type_EquipmentType();
         this.props.GetEvent_Type_Task();
@@ -487,6 +489,54 @@ this.setState({TasksTypeVar:newTasksTypeVar})
         }
       }) 
     }
+    else if(this.props.PrevLocation=="/EquipmentType"){
+      Swal.fire({
+        title: "?האם לבטל את התהליך שהתחלת",
+        text: "בלחיצה על כפתור חזור תהליך תזמון האירוע שהתחלת יבוטל ולא יישמר משום שלא שוייכו לו משימות בפועל וציוד, כדי להמשיך את התהליך לחץ על לא",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'כן',
+        cancelButtonText: "לא"
+      }).then((result) => {
+        if (result.value) { 
+          this.DeleteActualEvent(this.props.Actual_Event[this.props.Actual_Event.length-1].Barcode);
+           Swal.fire(
+            '!בוטל',
+            'תהליך תזמון האירוע ושיוך משימות וציוד בוטל',
+            'success'
+          ) 
+           this.props.history.push({
+            pathname:'/ManageActivities'
+          })       
+        }
+      }) 
+    }
+    else if(this.props.PrevLocation=="/TasksType"){
+      Swal.fire({
+        title: "?האם לבטל את התהליך שהתחלת",
+        text: "בלחיצה על כפתור חזור תהליך תזמון האירוע שהתחלת יבוטל ולא יישמר משום שלא שוייכו לו משימות בפועל וציוד, כדי להמשיך את התהליך לחץ על לא",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'כן',
+        cancelButtonText: "לא"
+      }).then((result) => {
+        if (result.value) { 
+          this.DeleteActualEvent(this.props.Actual_Event[this.props.Actual_Event.length-1].Barcode);
+           Swal.fire(
+            '!בוטל',
+            'תהליך תזמון האירוע ושיוך משימות וציוד בוטל',
+            'success'
+          ) 
+           this.props.history.push({
+            pathname:'/ManageActivities'
+          })       
+        }
+      }) 
+    }
     else{
       this.props.history.push({
         pathname:'/ManageActivities'
@@ -495,6 +545,55 @@ this.setState({TasksTypeVar:newTasksTypeVar})
   }
   Homeclicked=()=>{
     if(this.props.PrevLocation=="/ActualEvent"){
+      Swal.fire({
+        title: "?האם לבטל את התהליך שהתחלת",
+        text: "בלחיצה על כפתור הבית תהליך תזמון האירוע שהתחלת יבוטל ולא יישמר משום שלא שוייכו לו משימות בפועל וציוד, כדי להמשיך את התהליך לחץ על לא",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'כן',
+        cancelButtonText: "לא"
+      }).then((result) => {
+        if (result.value) {
+          this.DeleteActualEvent(this.props.Actual_Event[this.props.Actual_Event.length-1].Barcode);
+           Swal.fire(
+             '!בוטל',
+             'תהליך תזמון האירוע ושיוך משימות וציוד בוטל',
+             'success'
+           ) 
+           this.props.history.push({
+            pathname:'/'
+          })      
+        }
+      }) 
+    }
+
+    else if(this.props.PrevLocation=="/EquipmentType"){
+      Swal.fire({
+        title: "?האם לבטל את התהליך שהתחלת",
+        text: "בלחיצה על כפתור הבית תהליך תזמון האירוע שהתחלת יבוטל ולא יישמר משום שלא שוייכו לו משימות בפועל וציוד, כדי להמשיך את התהליך לחץ על לא",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'כן',
+        cancelButtonText: "לא"
+      }).then((result) => {
+        if (result.value) {
+          this.DeleteActualEvent(this.props.Actual_Event[this.props.Actual_Event.length-1].Barcode);
+           Swal.fire(
+             '!בוטל',
+             'תהליך תזמון האירוע ושיוך משימות וציוד בוטל',
+             'success'
+           ) 
+           this.props.history.push({
+            pathname:'/'
+          })      
+        }
+      }) 
+    }
+    else if(this.props.PrevLocation=="/TasksType"){
       Swal.fire({
         title: "?האם לבטל את התהליך שהתחלת",
         text: "בלחיצה על כפתור הבית תהליך תזמון האירוע שהתחלת יבוטל ולא יישמר משום שלא שוייכו לו משימות בפועל וציוד, כדי להמשיך את התהליך לחץ על לא",
@@ -527,6 +626,54 @@ this.setState({TasksTypeVar:newTasksTypeVar})
   }
   Logoutclicked=()=>{
     if(this.props.PrevLocation=="/ActualEvent"){
+      Swal.fire({
+        title: "?האם לבטל את התהליך שהתחלת",
+        text: "בלחיצה על כפתור התנתק תהליך תזמון האירוע שהתחלת יבוטל ולא יישמר משום שלא שוייכו לו משימות בפועל וציוד, כדי להמשיך את התהליך לחץ על לא",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'כן',
+        cancelButtonText: "לא"
+      }).then((result) => {
+        if (result.value) {
+          this.DeleteActualEvent(this.props.Actual_Event[this.props.Actual_Event.length-1].Barcode);
+           Swal.fire(
+             'התנתקות',
+             'התנתקת מהמערכת בהצלחה',
+             'success'
+           )
+           this.props.history.push({
+            pathname:'/login'
+          })       
+        }
+      }) 
+    }
+    else if(this.props.PrevLocation=="/EquipmentType"){
+      Swal.fire({
+        title: "?האם לבטל את התהליך שהתחלת",
+        text: "בלחיצה על כפתור התנתק תהליך תזמון האירוע שהתחלת יבוטל ולא יישמר משום שלא שוייכו לו משימות בפועל וציוד, כדי להמשיך את התהליך לחץ על לא",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'כן',
+        cancelButtonText: "לא"
+      }).then((result) => {
+        if (result.value) {
+          this.DeleteActualEvent(this.props.Actual_Event[this.props.Actual_Event.length-1].Barcode);
+           Swal.fire(
+             'התנתקות',
+             'התנתקת מהמערכת בהצלחה',
+             'success'
+           )
+           this.props.history.push({
+            pathname:'/login'
+          })       
+        }
+      }) 
+    }
+    else if(this.props.PrevLocation=="/TasksType"){
       Swal.fire({
         title: "?האם לבטל את התהליך שהתחלת",
         text: "בלחיצה על כפתור התנתק תהליך תזמון האירוע שהתחלת יבוטל ולא יישמר משום שלא שוייכו לו משימות בפועל וציוד, כדי להמשיך את התהליך לחץ על לא",
@@ -695,7 +842,7 @@ this.setState({TasksTypeVar:newTasksTypeVar})
                          <h2>סוגי ציוד</h2>
                         
                            <MDBBtn rounded outline id="idMDBBtn" color="success" onClick={this.MoveToEquipTable}>
-                            ערוך ציוד קיים/ הוסף חדש
+                            ערוך ציוד / הוסף חדש
                            </MDBBtn>
                      
                          <br></br>
@@ -703,13 +850,14 @@ this.setState({TasksTypeVar:newTasksTypeVar})
                          <img src="https://img.icons8.com/material-outlined/20/000000/search.png" />
                          <div id="selectedEq">
                            {" "}
-                           <h2>סוגי ציוד שנבחרו:</h2>
+                           <h2>סוגי ציוד שנבחרו</h2>
                            {this.state.EquipClickedArr.map(data =>
                              data.Code == "" ? (
                                ""
                              ) : (
                                <div>
-                                 <input
+                                    <label id="label_checkbox">{data.Name}</label>
+                                 <input  id="input_checkbox"
                                    value={data.Code}
                                    checked
                                    type="checkbox"
@@ -717,7 +865,7 @@ this.setState({TasksTypeVar:newTasksTypeVar})
                                    label={data}
                                    onChange={this.UncheckedEquip}
                                  ></input>
-                                 <label>{data.Name}</label>
+                              
                                </div>
                              )
                            )}
@@ -748,7 +896,7 @@ this.setState({TasksTypeVar:newTasksTypeVar})
                          <h2>סוגי משימות</h2>
                       
                            <MDBBtn rounded outline id="idMDBBtn" color="success" onClick={this.MoveToTasksTable}>
-                         ערוך משימה קיימת/ הוסף חדשה
+                         ערוך משימה / הוסף חדשה
                            </MDBBtn>
                          
                          <br></br>
@@ -756,13 +904,14 @@ this.setState({TasksTypeVar:newTasksTypeVar})
                          <img src="https://img.icons8.com/material-outlined/20/000000/search.png" />
                          <div id="selectedEq">
                            {" "}
-                           <h2 id="IDH2">סוגי משימות שנבחרו:</h2>
+                           <h2 id="IDH2">סוגי משימות שנבחרו</h2>
                            {this.state.TaskClickedArr.map(data =>
                              data.TaskNo == "" ? (
                                ""
                              ) : (
                                <div>
-                                 <input
+                                   <label id="label_checkbox">{data.TaskName}</label>
+                                 <input id="input_checkbox"
                                    value={data.TaskNo}
                                    checked
                                    type="checkbox"
@@ -770,7 +919,7 @@ this.setState({TasksTypeVar:newTasksTypeVar})
                                    label={data}
                                    onChange={this.UncheckedTasks}
                                  ></input>
-                                 <label>{data.TaskName}</label>
+                               
                                </div>
                              )
                            )}
@@ -799,9 +948,8 @@ this.setState({TasksTypeVar:newTasksTypeVar})
                    </tr>
                  </table>
                </div>
-             </div>}
-
-          }
+             </div>
+        
   
       </div>
     );

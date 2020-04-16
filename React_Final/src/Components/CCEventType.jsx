@@ -89,8 +89,8 @@ class CCEventType extends Component {
             this.setState({TaskClickedArr:this.props.location.state.TaskClickedArr,
                            EquipClickedArr:this.props.location.state.EquipClickedArr,
                            EventNameEntered:this.props.location.state.EventNameEntered,
-                           TasksTypeVar:this.props.location.state.TasksTypeVar,
-                           EquipmentVar: this.props.location.state.EquipmentVar
+                           TasksTypeVar:this.props.TasksTypeVar,
+                           EquipmentVar: this.props.EquipmentVar
             })
           }
       }.bind(this),
@@ -777,7 +777,7 @@ this.setState({TasksTypeVar:newTasksTypeVar})
         {this.state.EditTableShow?
            <div style={{padding:'0%'}}>
                         
-           <MDBBtn onClick={this.addNewEventType} color="success">הוסף סוג אירוע חדש</MDBBtn>
+           <MDBBtn id="IDMDBBTNn" onClick={this.addNewEventType} color="success">הוסף סוג אירוע חדש</MDBBtn>
            <MDBDataTable
            theadColor="#B5DBF8"
            paging={true}
@@ -795,7 +795,7 @@ this.setState({TasksTypeVar:newTasksTypeVar})
        </div>:     
 
       <div id="ManActDiv">
-        <br />
+        
         <nav className="navbar navbar-default">
           <div className="container-fluid">
             <div className="navbar-header">
@@ -811,9 +811,7 @@ this.setState({TasksTypeVar:newTasksTypeVar})
             onChange={this.EventNameChanged}
           ></input>{" "}
           <span id="IdSpan">שם סוג האירוע</span>
-          <br />
-          <br />
-          <br />
+        
           <MDBBtn
           onClick={this.EditTableShow}
             id="idMDBBtnEditEvents"
@@ -852,21 +850,22 @@ this.setState({TasksTypeVar:newTasksTypeVar})
                   <h2>סוגי ציוד</h2>
                  
                     <MDBBtn rounded outline id="idMDBBtn" color="success" onClick={this.MoveToEquipTable}>
-                     ערוך ציוד קיים/ הוסף חדש
+                    הוספה/עריכה
                     </MDBBtn>
               
-                  <br></br>
+                 
                   <input id="idInputSearchEq" onChange={this.searchedEquipment} placeholder="הזן סוג ציוד לחיפוש"></input>{" "}
                   <img src="https://img.icons8.com/material-outlined/20/000000/search.png" />
                   <div id="selectedEq">
                     {" "}
-                    <h2>סוגי ציוד שנבחרו:</h2>
+                    <h2>סוגי ציוד שנבחרו</h2>
                     {this.state.EquipClickedArr.map(data =>
                       data.Code == "" ? (
                         ""
                       ) : (
                         <div>
-                          <input
+                          <label id="label_checkbox">{data.Name}</label>
+                          <input id="input_checkbox"
                             value={data.Code}
                             checked
                             type="checkbox"
@@ -874,7 +873,7 @@ this.setState({TasksTypeVar:newTasksTypeVar})
                             label={data}
                             onChange={this.UncheckedEquip}
                           ></input>
-                          <label>{data.Name}</label>
+                          
                         </div>
                       )
                     )}
@@ -905,21 +904,22 @@ this.setState({TasksTypeVar:newTasksTypeVar})
                   <h2>סוגי משימות</h2>
                
                     <MDBBtn rounded outline id="idMDBBtn" color="success" onClick={this.MoveToTasksTable}>
-                  ערוך משימה קיימת/ הוסף חדשה
+                  הוספה/עריכה
                     </MDBBtn>
                   
-                  <br></br>
+                  
                   <input id="intupTask" onChange={this.searchedTasks} placeholder="הזן סוג משימה לחיפוש"></input>{" "}
                   <img src="https://img.icons8.com/material-outlined/20/000000/search.png" />
                   <div id="selectedEq">
                     {" "}
-                    <h2 id="IDH2">סוגי משימות שנבחרו:</h2>
+                    <h2 id="IDH2">סוגי משימות שנבחרו</h2>
                     {this.state.TaskClickedArr.map(data =>
                       data.TaskNo == "" ? (
                         ""
                       ) : (
                         <div>
-                          <input
+                           <label id="label_checkbox">{data.TaskName}</label>
+                          <input id="input_checkbox"
                             value={data.TaskNo}
                             checked
                             type="checkbox"
@@ -927,7 +927,7 @@ this.setState({TasksTypeVar:newTasksTypeVar})
                             label={data}
                             onChange={this.UncheckedTasks}
                           ></input>
-                          <label>{data.TaskName}</label>
+                         
                         </div>
                       )
                     )}

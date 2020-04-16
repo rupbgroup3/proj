@@ -4,7 +4,7 @@ import CCManageActivities from "./CCManageActivities";
 import Agodit from "../image/Agodit.png";
 import Swal from "sweetalert2";
 
-import 'react-day-picker/lib/style.css';
+
 const buttonHome = { margin: 30 };
 
 class CCHome extends Component {
@@ -76,7 +76,7 @@ class CCHome extends Component {
         <br />
         <br />
         <br />
-       
+       <Link to='/Calendar'>
         <button
           className="buttonHome"
           style={buttonHome}
@@ -85,9 +85,9 @@ class CCHome extends Component {
           variant="brand"
         >
           {" "}
-          דוחות
+          לוח שנה
         </button>
-
+        </Link>
        
           <button
           onClick={this.Toresources}
