@@ -11,10 +11,10 @@ const Toast = Swal.mixin({
   showConfirmButton: false,
   timer: 2500,
   timerProgressBar: true,
-  onOpen: toast => {
+  onOpen: (toast) => {
     toast.addEventListener("mouseenter", Swal.stopTimer);
     toast.addEventListener("mouseleave", Swal.resumeTimer);
-  }
+  },
 });
 
 //הגדרת העמודות מראש
@@ -29,343 +29,348 @@ class CCTaskType extends React.Component {
     modal: false,
     editMode: false,
     TaskNo: "",
-    TaskName:"",
-    Description: "אין תיאור"
+    TaskName: "",
+    Description: "אין תיאור",
   };
   deleteUser = async (TaskName) => {
     Swal.fire({
       title: "? האם אתה בטוח שברצונך למחוק",
       text: "לא תהיה אפשרות לשחזור",
-      icon: 'warning',
+      icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'כן',
-      cancelButtonText: "לא"
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "כן",
+      cancelButtonText: "לא",
     }).then((result) => {
       if (result.value) {
-        Swal.fire(
-          '!נמחק',
-          'סוג המשימה נמחק',
-          'success'
-        )
+        Swal.fire("!נמחק", "סוג המשימה נמחק", "success");
         this.deleteChoose(TaskName);
       }
-    })
-  };
-
-  deleteChoose= async(TaskName)=>{
-    await this.props.DeleteTaskType(TaskName);
-    
-    
-  const index = this.state.rows.findIndex((user)=>user.TaskName==TaskName);
-  console.log(index);
-  const newRows = this.state.rows.filter((person,key)=>key!==index);
-  this.setState({rows:newRows}); 
-  await this.props.GetTasks();
-  }
-  editUser = data => {
-    for (let index = 0; index < this.props.TasksTypeVar.length; index++) {
-      const element = this.props.TasksTypeVar[index];
-      if (element.TaskNo==data.TaskNo) {
-        this.setState({TaskNo: element.TaskNo})
-      }        
-    }
-    this.setState({editMode: true})  
-    this.setState({modal:true});
-    this.setState({TaskName: data.TaskName,
-                   Description: data.Description
     });
   };
+
+  deleteChoose = async (TaskName) => {
+    await this.props.DeleteTaskType(TaskName);
+
+    const index = this.state.rows.findIndex(
+      (user) => user.TaskName == TaskName
+    );
+    console.log(index);
+    const newRows = this.state.rows.filter((person, key) => key !== index);
+    this.setState({ rows: newRows });
+    await this.props.GetTasks();
+  };
+  editUser = (data) => {
+    for (let index = 0; index < this.props.TasksTypeVar.length; index++) {
+      const element = this.props.TasksTypeVar[index];
+      if (element.TaskNo == data.TaskNo) {
+        this.setState({ TaskNo: element.TaskNo });
+      }
+    }
+    this.setState({ editMode: true });
+    this.setState({ modal: true });
+    this.setState({ TaskName: data.TaskName, Description: data.Description });
+  };
   addNewUser = () => {
-    this.setState({modal:true});
-    this.setState({TaskName: "",
-    Description: ""}) 
+    this.setState({ modal: true });
+    this.setState({ TaskName: "", Description: "" });
   };
 
-  submitted= async()=>{
-    this.setState({modal:false});  
-    if (!this.state.editMode) {   
-    const Task = {
-      TaskName: this.state.TaskName,
-      Description: this.state.Description          
-     }
-     await this.props.PostTaskType(Task);
-     await this.props.GetTasks();
-     setTimeout(
-      function() {
-          this.setState({     rows: this.props.TasksTypeVar.map(data => ({
-            TaskName: data.TaskName,
-            Description: data.Description,
-    
-            actions: (
-              <div style={{ textAlign: "center" }}>
-                  <MDBBtn id="MDBBTH_DELET_EDIT" onClick={()=>this.editUser(data)} color="warning"><img src="https://img.icons8.com/android/25/000000/edit.png"/></MDBBtn>
-                    <MDBBtn
-                      onClick={() => this.deleteUser(data.TaskName)}
-                      color="danger"
-                    >
-                      <img src="https://img.icons8.com/material/25/000000/delete--v1.png"/>
-                    </MDBBtn>
-              </div>
-            )
-          }))
-        });
-      }
-      .bind(this),
-      1500
-  );   
-    Toast.fire({
-      icon: 'success',
-      title: 'הזנת סוג משימה חדש התבצעה בהצלחה'
-    })        
-    }    
-    else{      
+  submitted = async () => {
+    this.setState({ modal: false });
+    if (!this.state.editMode) {
+      const Task = {
+        TaskName: this.state.TaskName,
+        Description: this.state.Description,
+      };
+      await this.props.PostTaskType(Task);
+      await this.props.GetTasks();
+      setTimeout(
+        function () {
+          this.setState({
+            rows: this.props.TasksTypeVar.map((data) => ({
+              TaskName: data.TaskName,
+              Description: data.Description,
+
+              actions: (
+                <div style={{ textAlign: "center" }}>
+                  <MDBBtn
+                    id="MDBBTH_DELET_EDIT"
+                    onClick={() => this.editUser(data)}
+                    color="warning"
+                  >
+                    <img src="https://img.icons8.com/android/25/000000/edit.png" />
+                  </MDBBtn>
+                  <MDBBtn
+                    onClick={() => this.deleteUser(data.TaskName)}
+                    color="danger"
+                  >
+                    <img src="https://img.icons8.com/material/25/000000/delete--v1.png" />
+                  </MDBBtn>
+                </div>
+              ),
+            })),
+          });
+        }.bind(this),
+        1500
+      );
+      Toast.fire({
+        icon: "success",
+        title: "הזנת סוג משימה חדש התבצעה בהצלחה",
+      });
+    } else {
       const Task2 = {
         TaskNo: this.state.TaskNo,
         TaskName: this.state.TaskName,
-        Description: this.state.Description
-       }
-        await this.props.UpdateTask(Task2);
-        await this.props.GetTasks();
-        setTimeout(
-          function() {
-              this.setState({     rows: this.props.TasksTypeVar.map(data => ({
-                TaskName: data.TaskName,
-                Description: data.Description,
-        
-                actions: (
-                  <div style={{ textAlign: "center" }}>
-                    <MDBBtn id="MDBBTH_DELET_EDIT" onClick={()=>this.editUser(data)} color="warning"><img src="https://img.icons8.com/android/25/000000/edit.png"/></MDBBtn>
-                    <MDBBtn
-                      onClick={() => this.deleteUser(data.TaskName)}
-                      color="danger"
-                    >
-                      <img src="https://img.icons8.com/material/25/000000/delete--v1.png"/>
-                    </MDBBtn>
-                  </div>
-                )
-              }))
-            });
-          }
-          .bind(this),
-          1500
+        Description: this.state.Description,
+      };
+      await this.props.UpdateTask(Task2);
+      await this.props.GetTasks();
+      setTimeout(
+        function () {
+          this.setState({
+            rows: this.props.TasksTypeVar.map((data) => ({
+              TaskName: data.TaskName,
+              Description: data.Description,
+
+              actions: (
+                <div style={{ textAlign: "center" }}>
+                  <MDBBtn
+                    id="MDBBTH_DELET_EDIT"
+                    onClick={() => this.editUser(data)}
+                    color="warning"
+                  >
+                    <img src="https://img.icons8.com/android/25/000000/edit.png" />
+                  </MDBBtn>
+                  <MDBBtn
+                    onClick={() => this.deleteUser(data.TaskName)}
+                    color="danger"
+                  >
+                    <img src="https://img.icons8.com/material/25/000000/delete--v1.png" />
+                  </MDBBtn>
+                </div>
+              ),
+            })),
+          });
+        }.bind(this),
+        1500
       );
-      
-        Toast.fire({
-          icon: 'success',
-          title: 'עדכון סוג משימה חדש התבצע בהצלחה'
-        })           
-      this.setState({editMode: false})
-    }
-  }
 
-  modalClosed=()=>{
-    this.setState({modal:false});
+      Toast.fire({
+        icon: "success",
+        title: "עדכון סוג משימה חדש התבצע בהצלחה",
+      });
+      this.setState({ editMode: false });
+    }
+  };
+
+  modalClosed = () => {
+    this.setState({ modal: false });
     if (this.state.editMode) {
-      this.setState({editMode: false});        
+      this.setState({ editMode: false });
     }
-  }
+  };
 
-  TaskNameChanged=(e)=>{
-    this.setState({TaskName: e.target.value })
-  }
+  TaskNameChanged = (e) => {
+    this.setState({ TaskName: e.target.value });
+  };
 
-  DescriptionChanged=(e)=>{
-    this.setState({Description: e.target.value})
-  }
+  DescriptionChanged = (e) => {
+    this.setState({ Description: e.target.value });
+  };
 
-
-  BackClicked=()=>{
-    if(this.props.PrevLocation=="/EventTypes"&&this.props.location.state==undefined ){
+  BackClicked = () => {
+    if (
+      this.props.PrevLocation == "/EventTypes" &&
+      this.props.location.state == undefined
+    ) {
       this.props.MyPreviousLocation(window.location.pathname);
       this.props.history.push({
-        pathname:'/EventTypes'
-      })
-    }
-    else if(this.props.PrevLocation=="/EventTypes"&&this.props.location.state!=undefined){
+        pathname: "/EventTypes",
+      });
+    } else if ( this.props.PrevLocation == "/EventTypes" &&
+    this.props.location.state != undefined) {
       this.props.MyPreviousLocation(window.location.pathname);
       this.props.history.push({
-        pathname:'/EventTypes',
-        state:{TaskClickedArr: this.props.location.state.TaskClickedArr,
+        pathname: "/EventTypes",
+        state: {
+          TaskClickedArr: this.props.location.state.TaskClickedArr,
           EquipClickedArr: this.props.location.state.EquipClickedArr,
-          EventNameEntered:this.props.location.state.EventNameEntered,
-          TasksTypeVar:this.props.TasksTypeVar,
-          EquipmentVar: this.props.location.state.EquipmentVar }
-      })
-    }
-    else if(this.props.PrevLocation=="/ManageActivities"){
+          EventNameEntered: this.props.location.state.EventNameEntered,
+          TasksTypeVar: this.props.TasksTypeVar,
+          EquipmentVar: this.props.location.state.EquipmentVar,
+        },
+      });
+    } else if (this.props.PrevLocation == "/ManageActivities") {
       this.props.MyPreviousLocation(window.location.pathname);
       this.props.history.push({
-        pathname:'/ManageActivities'
-      })
-    }
-    else{
+        pathname: "/ManageActivities",
+      });
+    } else {
       this.props.MyPreviousLocation(window.location.pathname);
       this.props.history.push({
-        pathname:'/'     
-      })
+        pathname: "/Resources",
+      });
     }
-  }
+  };
   componentDidMount() {
-    
     setTimeout(
-      function() {
-          this.setState({     rows: this.props.TasksTypeVar.map(data => ({
+      function () {
+        this.setState({
+          rows: this.props.TasksTypeVar.map((data) => ({
             TaskName: data.TaskName,
             Description: data.Description,
-    
+
             actions: (
               <div style={{ textAlign: "center" }}>
-                <MDBBtn id="MDBBTH_DELET_EDIT" onClick={()=>this.editUser(data)} color="warning"><img src="https://img.icons8.com/android/25/000000/edit.png"/></MDBBtn>
+                <MDBBtn
+                  id="MDBBTH_DELET_EDIT"
+                  onClick={() => this.editUser(data)}
+                  color="warning"
+                >
+                  <img src="https://img.icons8.com/android/25/000000/edit.png" />
+                </MDBBtn>
                 <MDBBtn
                   onClick={() => this.deleteUser(data.TaskName)}
                   color="danger"
                 >
-                 <img src="https://img.icons8.com/material/25/000000/delete--v1.png"/>
+                  <img src="https://img.icons8.com/material/25/000000/delete--v1.png" />
                 </MDBBtn>
               </div>
-            )
-          }))
+            ),
+          })),
         });
-      }
-      .bind(this),
+      }.bind(this),
       1500
-  );
+    );
   }
-  LogOutClicked=()=>{
-      this.props.history.push({
-        pathname:'/'
-      })
-      Swal.fire({
-        position: 'center',
-        icon: 'success',
-        title: 'התנתקת מהמערכת בהצלחה',
-        showConfirmButton: false,
-        timer: 1200
-      })
-      
-  }
+  LogOutClicked = () => {
+    this.props.history.push({
+      pathname: "/",
+    });
+    Swal.fire({
+      position: "center",
+      icon: "success",
+      title: "התנתקת מהמערכת בהצלחה",
+      showConfirmButton: false,
+      timer: 1200,
+    });
+  };
 
+  HomeClicked = () => {
+    this.props.MyPreviousLocation(window.location.pathname);
+    this.props.history.push({
+      pathname: "/home",
+    });
+  };
 
-  HomeClicked=()=>{
+  ManageActivitiesClicked = () => {
+    this.props.MyPreviousLocation(window.location.pathname);
+    this.props.history.push({
+      pathname: "/ManageActivities",
+    });
+  };
+  ResourcesClicked = () => {
+    this.props.MyPreviousLocation(window.location.pathname);
+    this.props.history.push({
+      pathname: "/Resources",
+    });
+  };
+  CalendarClicked = () => {
+    this.props.MyPreviousLocation(window.location.pathname);
+    this.props.history.push({
+      pathname: "/Calendar",
+    });
+  };
 
+  MoveBackToEventType = () => {
+    if (
+      this.props.PrevLocation == "/EventTypes" &&
+      this.props.location.state == undefined
+    ) {
       this.props.MyPreviousLocation(window.location.pathname);
       this.props.history.push({
-        pathname:'/home'
-      })
-    
-  }
-
-  ManageActivitiesClicked=()=>{
-
+        pathname: "/EventTypes",
+      });
+    } else if (
+      this.props.PrevLocation == "/EventTypes" &&
+      this.props.location.state != undefined
+    ) {
       this.props.MyPreviousLocation(window.location.pathname);
       this.props.history.push({
-        pathname:'/ManageActivities'
-      })
-    
-  }
-  ResourcesClicked=()=>{
-      this.props.MyPreviousLocation(window.location.pathname);
-      this.props.history.push({
-        pathname:'/Resources'
-      })
-   
-  }
-  CalendarClicked=()=>{ 
-      this.props.MyPreviousLocation(window.location.pathname);
-      this.props.history.push({
-        pathname:'/Calendar'
-      })
-    
-  }
-
-  MoveBackToEventType=()=>{
-    if(this.props.PrevLocation=="/EventTypes"&&this.props.location.state==undefined ){
-      this.props.MyPreviousLocation(window.location.pathname);
-      this.props.history.push({
-        pathname:'/EventTypes'
-      })
-    }
-    else if(this.props.PrevLocation=="/EventTypes"&&this.props.location.state!=undefined){
-      this.props.MyPreviousLocation(window.location.pathname);
-      this.props.history.push({
-        pathname:'/EventTypes',
-        state:{TaskClickedArr: this.props.location.state.TaskClickedArr,
+        pathname: "/EventTypes",
+        state: {
+          TaskClickedArr: this.props.location.state.TaskClickedArr,
           EquipClickedArr: this.props.location.state.EquipClickedArr,
-          EventNameEntered:this.props.location.state.EventNameEntered,
-          TasksTypeVar:this.props.TasksTypeVar,
-          EquipmentVar: this.props.location.state.EquipmentVar }
-      })
+          EventNameEntered: this.props.location.state.EventNameEntered,
+          TasksTypeVar: this.props.TasksTypeVar,
+          EquipmentVar: this.props.location.state.EquipmentVar,
+        },
+      });
     }
-  }
+  };
   render() {
     const columns = [
       {
         label: "תיאור",
         field: "Description",
         sort: "asc",
-        width: 100
+        width: 100,
       },
 
       {
         label: "שם משימה",
         field: "TaskName",
         sort: "asc",
-        width: 130
+        width: 130,
       },
       {
         label: "פעולות",
         field: "actions",
         sort: "asc",
-        width: 130
-      }
+        width: 130,
+      },
     ];
     return (
       <div>
+        <div className="header">
+          <Menu disableAutoFocus right>
+            <a className="menu-item" onClick={this.HomeClicked}>
+              <i id="homei" class="fas fa-home">
+                {" "}
+              </i>
+              מסך הבית
+            </a>
 
-<div className="header">   
-<Menu disableAutoFocus right >
+            <a className="menu-item" onClick={this.ManageActivitiesClicked}>
+              <i id="manageactivitiesi" class="fas fa-bell"></i>
+              פעילויות
+            </a>
 
-<a className="menu-item"  onClick={this.HomeClicked}>
-<i id="homei" class="fas fa-home"> </i>
-  מסך הבית
-</a>
+            <a className="menu-item" onClick={this.ResourcesClicked}>
+              <i id="resourcesi" class="fas fa-globe"></i>
+              משאבים
+            </a>
 
+            <a className="menu-item" onClick={this.CalendarClicked}>
+              <i id="calendari" class="far fa-calendar-alt"></i>
+              לוח שנה
+            </a>
 
-<a className="menu-item" onClick={this.ManageActivitiesClicked}>
-<i id="manageactivitiesi" class="fas fa-bell"></i>
-  פעילויות
-</a>
+            <a className="menu-item" onClick={this.LogOutClicked}>
+              <i id="logouti" class="fas fa-sign-out-alt"></i>
+              התנתק
+            </a>
+          </Menu>
+          <button className="back" onClick={this.BackClicked}></button>
 
-
-<a className="menu-item" onClick={this.ResourcesClicked}>
-<i id="resourcesi" class="fas fa-globe"></i>
-  משאבים
-</a>
-
-
-<a className="menu-item" onClick={this.CalendarClicked}>
-<i id="calendari" class="far fa-calendar-alt"></i>
-  לוח שנה
-</a>
-
-<a className="menu-item" onClick={this.LogOutClicked}>
-<i id="logouti" class="fas fa-sign-out-alt"></i>
-  התנתק
-</a>
-
-</Menu>
-              <button className="back" onClick={this.BackClicked}></button>
-         
-            <div className="LogoDiv">
-          <img className="Agodit" src={Agodit}></img>
-          <h1 className="AgoditText">אגודית</h1>
+          <div className="LogoDiv">
+            <img className="Agodit" src={Agodit}></img>
+            <h1 className="AgoditText">אגודית</h1>
+          </div>
         </div>
 
-            </div>
-
-        
         {this.state.modal ? (
           <div className="Root">
             <br />
@@ -373,10 +378,11 @@ class CCTaskType extends React.Component {
             <br /> <br />
             <div className="container">
               <div id="header-Privacy">
-                {this.state.editMode?
-                <h3 className="privacyList">עריכת סוג משימה קיים </h3>:
-                <h3 className="privacyList">הוספת סוג משימה חדשה </h3>
-                }
+                {this.state.editMode ? (
+                  <h3 className="privacyList">עריכת סוג משימה קיים </h3>
+                ) : (
+                  <h3 className="privacyList">הוספת סוג משימה חדשה </h3>
+                )}
                 <br /> <br />
               </div>
               <div id="editDiv">
@@ -402,7 +408,7 @@ class CCTaskType extends React.Component {
                     </div>
                     <div className="form-group_col-sm-3">
                       <label for="LastName">
-                        <span className="red-star">תיאור </span> 
+                        <span className="red-star">תיאור </span>
                       </label>
                       <input
                         placeholder="הזן תיאור משימה"
@@ -416,7 +422,7 @@ class CCTaskType extends React.Component {
                     </div>
                   </div>
                   <div id="foterBTN">
-                    <button 
+                    <button
                       style={{ margin: 20 }}
                       type="submit"
                       className="btn btn-primary btn-lg"
@@ -424,7 +430,7 @@ class CCTaskType extends React.Component {
                     >
                       שמור
                     </button>
-                    <input 
+                    <input
                       type="button"
                       className="btn btn-warning btn-lg"
                       id="cancelSaveBTN"
@@ -438,45 +444,46 @@ class CCTaskType extends React.Component {
           </div>
         ) : (
           <div style={{ padding: "0%" }}>
-             <br/>
+            <br />
             <nav className="navbar navbar-default">
-          <div className="container-fluid">
-            <div className="navbar-header">
-              <h1>סוגי משימות</h1>
-            </div>
-          </div>
-        </nav>
+              <div className="container-fluid">
+                <div className="navbar-header">
+                  <h1>סוגי משימות</h1>
+                </div>
+              </div>
+            </nav>
 
-                        {
-          this.props.PrevLocation=="/EventTypes"?
-          <MDBBtn id="IDMDBBTN"
-              onClick={this.MoveBackToEventType}
-              color="info"
-            >
-              חזור לסוג אירוע
-            </MDBBtn> :""
-        }
-       
+            {this.props.PrevLocation == "/EventTypes" ? (
+              <MDBBtn
+                id="IDMDBBTN"
+                onClick={this.MoveBackToEventType}
+                color="info"
+              >
+                חזור לסוג אירוע
+              </MDBBtn>
+            ) : (
+              ""
+            )}
 
-            <MDBBtn id="IDMDBBTN"
+            <MDBBtn
+              id="IDMDBBTN"
               onClick={() => this.addNewUser("Ashton Cox")}
               color="success"
             >
               הוסף סוג משימה חדש
             </MDBBtn>
-            <MDBDataTable 
-          
+            <MDBDataTable
               theadColor="#B5DBF8"
               paging={true}
               className="dataTable"
-              sortable 
+              sortable
               striped
               bordered
               hover
               paginationLabel={["הקודם", "הבא"]}
               data={{
                 columns: columns,
-                rows: this.state.rows
+                rows: this.state.rows,
               }}
             />
           </div>
@@ -485,4 +492,4 @@ class CCTaskType extends React.Component {
     );
   }
 }
-export default withRouter (CCTaskType)
+export default withRouter(CCTaskType);

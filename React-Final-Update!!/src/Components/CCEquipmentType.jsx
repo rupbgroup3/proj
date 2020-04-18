@@ -229,7 +229,7 @@ class CCEquipmentType extends React.Component {
     else{
       this.props.MyPreviousLocation(window.location.pathname);
       this.props.history.push({
-        pathname:'/home'     
+        pathname:'/Resources'     
       })
     }
   }

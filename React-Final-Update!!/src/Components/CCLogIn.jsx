@@ -107,7 +107,7 @@ class CCLogin extends Component {
           <br />
           <br />
           <div className="form-group">
-            <h4 className="H4class">שם משתמש</h4>
+            <h4 className="H4class">:שם משתמש</h4>
             <input
               type="email"
               className="form-control"
@@ -118,8 +118,10 @@ class CCLogin extends Component {
           </div>
           <br />
           <br />
+          
+          <br />
           <div className="form-group">
-            <h4 className="H4class">סיסמא</h4>
+            <h4 id="H4Pass">:סיסמא</h4>
             <input
               type="password"
               className="form-control"
@@ -131,16 +133,18 @@ class CCLogin extends Component {
           <br />
           <br />
           <div className="form-group">
-            <input
-              type="checkbox"
-              className="custom-control-input"
-              id="customCheck1"
-              onChange={this.toggleRememberMe}
-              checked={this.state.rememberMe}
-            />
-            <label className="custom-control-label" htmlFor="customCheck1">
-              זכור אותי
-            </label>
+            <div className="custom-control custom-checkbox">
+              <input
+                type="checkbox"
+                className="custom-control-input"
+                id="customCheck1"
+                onChange={this.toggleRememberMe}
+                checked={this.state.rememberMe}
+              />
+              <label className="custom-control-label" htmlFor="customCheck1">
+                זכור אותי
+              </label>
+            </div>
           </div>
           <br />
           <br />

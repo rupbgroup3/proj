@@ -223,7 +223,7 @@ class CCTotalHours extends Component {
         </nav>
         {this.state.Modal?
                 <div id="editDiv">          
-                <form  class="modal-content animate" action="/action_page.php" onSubmit={this.submitted}>
+                <form id="TotalHoursToEnter" class="modal-content animate" action="/action_page.php" onSubmit={this.submitted}>
                           <card id="idCard1">
                           <div className="form-group row">
                             
@@ -236,7 +236,7 @@ class CCTotalHours extends Component {
                               placeholder="אנא הכנס תאריך התחלה להפקדת הדוח"
                                type="date"
                                 className="form-control"
-                                id="StartDate"
+                                id="StartDateTotalHours"
                                 required
                                 value={this.state.FromDate}
                                 onChange={this.FromDateChanged}
