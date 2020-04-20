@@ -1,0 +1,145 @@
+.display-nowrap {
+  width: 100%;
+}
+.privacyList {
+  text-align: center;
+  font-size: 25px;
+}
+.form-group_col-sm-3 {
+  text-align: right;
+  float: right;
+  margin: 30px;
+}
+.form-control {
+  float: right;
+}
+
+.form {
+  margin: 100px;
+}
+#editDiv {
+  margin-left: auto;
+  margin-right: auto;
+  display: table;
+}
+#newBTN {
+  float: left;
+}
+#saveBTN {
+  float: left;
+}
+#cancelSaveBTN {
+  float: left;
+  margin-top: 20px;
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+}
+
+/* Modal Content Box */
+
+.animate {
+  animation: zoom 0.6s;
+}
+@keyframes zoom {
+  from {
+    transform: scale(0);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+.col {
+  align-items: center;
+}
+
+.row {
+  flex-direction: row-reverse;
+}
+.dropdown-content {
+  text-align: right;
+  align-items: right;
+}
+
+select {
+  width: 400px;
+  text-align-last: right;
+}
+option {
+  text-align-last: right;
+}
+table.table.table-bordered.table-hover.table-striped.dataTable {
+  font-family: sans-serif;
+}
+
+table.table.table-bordered.table-hover.table-striped.dataTable {
+  font-family: sans-serif;
+}
+.form-group.row {
+  display: grid;
+  font-size: 15px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+input#FirstName,
+input#FullName,
+input#PhoneNum,
+input#Mail,
+select#color,
+input#ActiveTillYear,
+input#StudyingStartyear,
+input#EquipName,
+input#Quantity {
+  /* width: 180px; */
+  float: left;
+  font-size: 15px;
+  margin-right: 10px;
+}
+
+.Root {
+  background-color: #5da260;
+  height: -webkit-fill-available;
+}
+
+card {
+  border: solid 2px darkgrey;
+  display: grid;
+  margin: 50px;
+}
+/* #idCard1{
+
+} */
+/* form.modal-content.animate {
+  display: -webkit-inline-box;
+} */
+.Fotterdiv2BTN {
+  margin: auto;
+}
+input#cancelSaveBTN,
+button#saveBTN {
+  font-size: 20px;
+}
+#h1Titele {
+  margin-bottom: 20px;
+  font-size: 22px;
+}
+#foterBTN {
+  margin: auto;
+}
+input#StartDate {
+  margin-right: 22px;
+  width: 80%;
+}
+input#EndDate {
+  margin-right: 22px;
+  width: 80%;
+}
