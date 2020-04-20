@@ -181,25 +181,14 @@ class CCTaskType extends React.Component {
   };
 
   BackClicked = () => {
-    if (
-      this.props.PrevLocation == "/EventTypes" &&
-      this.props.location.state == undefined
-    ) {
-      this.props.MyPreviousLocation(window.location.pathname);
-      this.props.history.push({
-        pathname: "/EventTypes",
-      });
-    } else if ( this.props.PrevLocation == "/EventTypes" &&
-    this.props.location.state != undefined) {
-      this.props.MyPreviousLocation(window.location.pathname);
+    if (this.props.PrevLocation == "/EventTypes") {
+      this.props.MyPreviousLocation("/TasksType");
       this.props.history.push({
         pathname: "/EventTypes",
         state: {
           TaskClickedArr: this.props.location.state.TaskClickedArr,
           EquipClickedArr: this.props.location.state.EquipClickedArr,
-          EventNameEntered: this.props.location.state.EventNameEntered,
-          TasksTypeVar: this.props.TasksTypeVar,
-          EquipmentVar: this.props.location.state.EquipmentVar,
+          EventNameEntered: this.props.location.state.EventNameEntered
         },
       });
     } else if (this.props.PrevLocation == "/ManageActivities") {
@@ -285,27 +274,14 @@ class CCTaskType extends React.Component {
   };
 
   MoveBackToEventType = () => {
-    if (
-      this.props.PrevLocation == "/EventTypes" &&
-      this.props.location.state == undefined
-    ) {
-      this.props.MyPreviousLocation(window.location.pathname);
-      this.props.history.push({
-        pathname: "/EventTypes",
-      });
-    } else if (
-      this.props.PrevLocation == "/EventTypes" &&
-      this.props.location.state != undefined
-    ) {
-      this.props.MyPreviousLocation(window.location.pathname);
+    if (this.props.PrevLocation == "/EventTypes") {
+      this.props.MyPreviousLocation("/TasksType");
       this.props.history.push({
         pathname: "/EventTypes",
         state: {
           TaskClickedArr: this.props.location.state.TaskClickedArr,
           EquipClickedArr: this.props.location.state.EquipClickedArr,
-          EventNameEntered: this.props.location.state.EventNameEntered,
-          TasksTypeVar: this.props.TasksTypeVar,
-          EquipmentVar: this.props.location.state.EquipmentVar,
+          EventNameEntered: this.props.location.state.EventNameEntered
         },
       });
     }

@@ -236,7 +236,7 @@ class CCTotalHours extends Component {
                               placeholder="אנא הכנס תאריך התחלה להפקדת הדוח"
                                type="date"
                                 className="form-control"
-                                id="StartDateTotalHours"
+                                id="StartDate"
                                 required
                                 value={this.state.FromDate}
                                 onChange={this.FromDateChanged}

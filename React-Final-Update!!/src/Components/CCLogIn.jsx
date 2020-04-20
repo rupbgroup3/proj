@@ -27,14 +27,15 @@ class CCLogin extends Component {
     localStorage.setItem("rememberMe", rememberMe);
     localStorage.setItem("usernameEntered", rememberMe ? usernameEntered : "");
     localStorage.setItem("PasswordEntered", rememberMe ? PasswordEntered : "");
+    let counter=0;
     for (let index = 0; index < this.props.PersonVar.length; index++) {
       const element = this.props.PersonVar[index];
       if (
         element.Email == this.state.usernameEntered &&
         element.CellPhone == this.state.PasswordEntered
       ) {
+        counter++;
         this.props.NameOfUser(element.EmpFirstName);
-        this.setState({ redirected: true });
         Swal.fire({
           position: "center",
           icon: "success",
@@ -42,15 +43,20 @@ class CCLogin extends Component {
           showConfirmButton: false,
           timer: 1700,
         });
-        return;
+        this.props.history.push({
+          pathname: "/home",
+        });
       }
     }
     evt.preventDefault();
-    Swal.fire({
-      icon: "error",
-      title: "שגיאה",
-      text: "השם משתמש או הסיסמא אינם נכונים, אנא נסה שוב",
-    });
+    if (counter==0) {
+      Swal.fire({
+        icon: "error",
+        title: "שגיאה",
+        text: "השם משתמש או הסיסמא אינם נכונים, אנא נסה שוב",
+      });
+    }
+    evt.preventDefault();
   };
 
   toggleRememberMe = () => {
@@ -118,7 +124,7 @@ class CCLogin extends Component {
           </div>
           <br />
           <br />
-          
+
           <br />
           <div className="form-group">
             <h4 id="H4Pass">:סיסמא</h4>

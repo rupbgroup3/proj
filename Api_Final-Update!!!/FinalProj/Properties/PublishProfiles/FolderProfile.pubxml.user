@@ -6,7 +6,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <TimeStampOfAssociatedLegacyPublishXmlFile />
-    <_PublishTargetUrl>C:\Users\1993b\Desktop\פאבליש</_PublishTargetUrl>
+    <_PublishTargetUrl>C:\Users\1993b\Desktop\‏‏תיקיה חדשה</_PublishTargetUrl>
   </PropertyGroup>
   <ItemGroup>
     <File Include="ApplicationInsights.config">
@@ -85,10 +85,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>03/09/2020 12:09:48</publishTime>
     </File>
     <File Include="bin/FinalProj.dll">
-      <publishTime>04/18/2020 17:13:06</publishTime>
+      <publishTime>04/18/2020 23:28:42</publishTime>
     </File>
     <File Include="bin/FinalProj.pdb">
-      <publishTime>04/18/2020 17:13:06</publishTime>
+      <publishTime>04/18/2020 23:28:42</publishTime>
     </File>
     <File Include="bin/Microsoft.AI.Agent.Intercept.dll">
       <publishTime>06/27/2017 11:59:34</publishTime>
@@ -403,7 +403,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>03/09/2020 12:09:20</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>04/18/2020 17:13:07</publishTime>
+      <publishTime>04/18/2020 23:28:42</publishTime>
     </File>
   </ItemGroup>
 </Project>

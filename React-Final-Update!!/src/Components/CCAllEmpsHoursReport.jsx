@@ -5,7 +5,6 @@ import Agodit from "../image/Agodit.png";
 import Swal from "sweetalert2";
 import { stack as Menu } from "react-burger-menu";
 
-
 class CCAllEmpsHoursReport extends Component {
   constructor(props) {
     super(props);
@@ -41,119 +40,280 @@ class CCAllEmpsHoursReport extends Component {
 
     await this.props.GetTasksInEventHoursReport(t);
     await this.props.GetTasksHoursReport(t);
-    for (
-      let index = 0;
-      index < this.props.TasksInEventHoursReport.length;
-      index++
-    ) {
-      const element = this.props.TasksInEventHoursReport[index];
-      for (
-        let index2 = 0;
-        index2 < this.props.TasksHoursReport.length;
-        index2++
-      ) {
-        const element2 = this.props.TasksHoursReport[index2];
+    setTimeout(
+      function () {
+        for (
+          let index = 0;
+          index < this.props.TasksInEventHoursReport.length;
+          index++
+        ) {
+          const element = this.props.TasksInEventHoursReport[index];
+          for (
+            let index2 = 0;
+            index2 < this.props.TasksHoursReport.length;
+            index2++
+          ) {
+            const element2 = this.props.TasksHoursReport[index2];
 
-        if (element.PersonEmpCode == element2.PersonEmpCode) {
-          hours = element.TotalTasksInEventHours + element2.TotalTasksHours;
+            if (element.PersonEmpCode == element2.PersonEmpCode) {
+              hours = element.TotalTasksInEventHours + element2.TotalTasksHours;
+              HoursRepArr.push({
+                PersonEmpCode: element.PersonEmpCode,
+                TotalHours: hours,
+                EmpFirstName: element.EmpFirstName,
+                EmpLastName: element.EmpLastName,
+                DepartmentName: element.DepartmentName,
+              });
+            }
+          }
+        }
+
+        let newTasksInEventHoursReport = this.props.TasksInEventHoursReport;
+        for (
+          let index = 0;
+          index < this.props.TasksHoursReport.length;
+          index++
+        ) {
+          const element = this.props.TasksHoursReport[index];
+        }
+        for (
+          let index = 0;
+          index < this.props.TasksInEventHoursReport.length;
+          index++
+        ) {
+          const element = this.props.TasksInEventHoursReport[index];
+          for (let index2 = 0; index2 < HoursRepArr.length; index2++) {
+            const element2 = HoursRepArr[index2];
+            if (element.PersonEmpCode == element2.PersonEmpCode) {
+              const index = newTasksInEventHoursReport.findIndex(
+                (user) => user.PersonEmpCode == element.PersonEmpCode
+              );
+              console.log(index);
+              const newHoursRep = newTasksInEventHoursReport.filter(
+                (person, key) => key !== index
+              );
+              newTasksInEventHoursReport = newHoursRep;
+            }
+          }
+        }
+
+        let newTasksHoursReport = this.props.TasksHoursReport;
+        for (
+          let index = 0;
+          index < this.props.TasksHoursReport.length;
+          index++
+        ) {
+          const element = this.props.TasksHoursReport[index];
+          for (let index2 = 0; index2 < HoursRepArr.length; index2++) {
+            const element2 = HoursRepArr[index2];
+            if (element.PersonEmpCode == element2.PersonEmpCode) {
+              const index = newTasksHoursReport.findIndex(
+                (user) => user.PersonEmpCode == element.PersonEmpCode
+              );
+              console.log(index);
+              const newHoursRep = newTasksHoursReport.filter(
+                (person, key) => key !== index
+              );
+              newTasksHoursReport = newHoursRep;
+            }
+          }
+        }
+
+        for (
+          let index = 0;
+          index < newTasksInEventHoursReport.length;
+          index++
+        ) {
+          const element = newTasksInEventHoursReport[index];
           HoursRepArr.push({
             PersonEmpCode: element.PersonEmpCode,
-            TotalHours: hours,
+            TotalHours: element.TotalTasksInEventHours,
             EmpFirstName: element.EmpFirstName,
             EmpLastName: element.EmpLastName,
             DepartmentName: element.DepartmentName,
           });
         }
-      }
-    }
 
-    let newTasksInEventHoursReport = [];
-    for (
-      let index = 0;
-      index < this.props.TasksInEventHoursReport.length;
-      index++
-    ) {
-      const element = this.props.TasksInEventHoursReport[index];
-      for (let index2 = 0; index2 < HoursRepArr.length; index2++) {
-        const element2 = HoursRepArr[index2];
-        if (element.PersonEmpCode == element2.PersonEmpCode) {
-          const index = this.props.TasksInEventHoursReport.findIndex(
-            (user) => user.PersonEmpCode === element.PersonEmpCode
-          );
-          console.log(index);
-          const newHoursRep = this.props.TasksInEventHoursReport.filter(
-            (person, key) => key !== index
-          );
-          newTasksInEventHoursReport = newHoursRep;
+        for (let index = 0; index < newTasksHoursReport.length; index++) {
+          const element = newTasksHoursReport[index];
+          HoursRepArr.push({
+            PersonEmpCode: element.PersonEmpCode,
+            TotalHours: element.TotalTasksHours,
+            EmpFirstName: element.EmpFirstName,
+            EmpLastName: element.EmpLastName,
+            DepartmentName: element.DepartmentName,
+          });
         }
-      }
-    }
 
-    let newTasksHoursReport = [];
-    for (let index = 0; index < this.props.TasksHoursReport.length; index++) {
-      const element = this.props.TasksHoursReport[index];
-      for (let index2 = 0; index2 < HoursRepArr.length; index2++) {
-        const element2 = HoursRepArr[index2];
-        if (element.PersonEmpCode == element2.PersonEmpCode) {
-          const index = this.props.TasksHoursReport.findIndex(
-            (user) => user.PersonEmpCode === element.PersonEmpCode
-          );
-          console.log(index);
-          const newHoursRep = this.props.TasksHoursReport.filter(
-            (person, key) => key !== index
-          );
-          newTasksHoursReport = newHoursRep;
+        let HoursFRomsql = Math.trunc(TotalHours) / 60;
+        let MinsFromSql = Math.trunc(
+          (TotalHours - Math.trunc(TotalHours)) * 60
+        );
+        if (MinsFromSql < 10) {
+          MinsFromSql = MinsFromSql + "0";
         }
-      }
-    }
+        let InsertToForm = HoursFRomsql;
+        TotalHours = InsertToForm + ":" + MinsFromSql;
 
-    for (let index = 0; index < newTasksInEventHoursReport.length; index++) {
-      const element = newTasksInEventHoursReport[index];
-      HoursRepArr.push({
-        PersonEmpCode: element.PersonEmpCode,
-        TotalHours: element.TotalTasksInEventHours,
-        EmpFirstName: element.EmpFirstName,
-        EmpLastName: element.EmpLastName,
-        DepartmentName: element.DepartmentName,
-      });
-    }
-
-    for (let index = 0; index < newTasksHoursReport.length; index++) {
-      const element = newTasksHoursReport[index];
-      HoursRepArr.push({
-        PersonEmpCode: element.PersonEmpCode,
-        TotalHours: element.TotalTasksHours,
-        EmpFirstName: element.EmpFirstName,
-        EmpLastName: element.EmpLastName,
-        DepartmentName: element.DepartmentName,
-      });
-    }
-
-    let HoursFRomsql = Math.trunc(TotalHours) / 60;
-    let MinsFromSql = Math.trunc((TotalHours - Math.trunc(TotalHours)) * 60);
-    if (MinsFromSql < 10) {
-      MinsFromSql = MinsFromSql + "0";
-    }
-    let InsertToForm = HoursFRomsql;
-    TotalHours = InsertToForm + ":" + MinsFromSql;
-
-    await this.setState({
-      rows: HoursRepArr.map((data) => ({
-        EmpFirstName: data.EmpFirstName,
-        EmpLastName: data.EmpLastName,
-        DepartmentName: data.DepartmentName,
-        TotalHours:
-        (Math.trunc(data.TotalHours/60)) <10 && Math.trunc((data.TotalHours-(Math.trunc(data.TotalHours)))*60)!=0 && Math.trunc((data.TotalHours-(Math.trunc(data.TotalHours)))*60)>9? "0"+ (Math.trunc(data.TotalHours/60))+ ":"+Math.round( Math.trunc((data.TotalHours-(Math.trunc(data.TotalHours)))*60)): (Math.trunc(data.TotalHours/60)) <10 && Math.trunc((data.TotalHours-(Math.trunc(data.TotalHours)))*60)!=0 && Math.trunc((data.TotalHours-(Math.trunc(data.TotalHours)))*60)<10?  "0"+ (Math.trunc(data.TotalHours/60))+ ":0"+Math.round( Math.trunc((data.TotalHours-(Math.trunc(data.TotalHours)))*60)): (Math.trunc(data.TotalHours/60)) <10 && Math.trunc((data.TotalHours-(Math.trunc(data.TotalHours)))*60)==0 &&Math.round(Math.trunc((data.TotalHours/60-(Math.trunc(data.TotalHours/60)))*60))>9? "0"+ (Math.trunc(data.TotalHours/60))+ ":"+ Math.round(Math.trunc((data.TotalHours/60-(Math.trunc(data.TotalHours/60)))*60)): (Math.trunc(data.TotalHours/60)) <10 && Math.trunc((data.TotalHours-(Math.trunc(data.TotalHours)))*60)==0 &&Math.round(Math.trunc((data.TotalHours/60-(Math.trunc(data.TotalHours/60)))*60))<10? "0"+ (Math.trunc(data.TotalHours/60))+ ":0"+ Math.round(Math.trunc((data.TotalHours/60-(Math.trunc(data.TotalHours/60)))*60)): (Math.trunc(data.TotalHours/60)) >9 && Math.trunc((data.TotalHours-(Math.trunc(data.TotalHours)))*60)==0&& Math.round( Math.trunc((data.TotalHours/60-(Math.trunc(data.TotalHours/60)))*60))>9? (Math.trunc(data.TotalHours/60))+ ":"+Math.round( Math.trunc((data.TotalHours/60-(Math.trunc(data.TotalHours/60)))*60)) : (Math.trunc(data.TotalHours/60)) >9 && Math.trunc((data.TotalHours-(Math.trunc(data.TotalHours)))*60)==0&& Math.round( Math.trunc((data.TotalHours/60-(Math.trunc(data.TotalHours/60)))*60))<10? (Math.trunc(data.TotalHours/60))+ ":0"+Math.round( Math.trunc((data.TotalHours/60-(Math.trunc(data.TotalHours/60)))*60)): (Math.trunc(data.TotalHours/60)) >9 && Math.trunc((data.TotalHours-(Math.trunc(data.TotalHours)))*60)!=0&& Math.trunc((data.TotalHours-(Math.trunc(data.TotalHours)))*60)>9? (Math.trunc(data.TotalHours/60))+ ":"+Math.round( Math.trunc((data.TotalHours-(Math.trunc(data.TotalHours)))*60)) : (Math.trunc(data.TotalHours/60)) >9 && Math.trunc((data.TotalHours-(Math.trunc(data.TotalHours)))*60)!=0&& Math.trunc((data.TotalHours-(Math.trunc(data.TotalHours)))*60)<10?  (Math.trunc(data.TotalHours/60))+ ":0"+Math.round( Math.trunc((data.TotalHours-(Math.trunc(data.TotalHours)))*60)):"",
-      })),
-      Modal: false,
-    });
-    Swal.fire({
-      position: "center",
-      icon: "success",
-      title: "הדוח הופק בהצלחה",
-      showConfirmButton: false,
-      timer: 1800,
-    });
+        this.setState({
+          rows: HoursRepArr.map((data) => ({
+            EmpFirstName: data.EmpFirstName,
+            EmpLastName: data.EmpLastName,
+            DepartmentName: data.DepartmentName,
+            TotalHours:
+              Math.trunc(data.TotalHours / 60) < 10 &&
+              Math.trunc(
+                (data.TotalHours - Math.trunc(data.TotalHours)) * 60
+              ) != 0 &&
+              Math.trunc((data.TotalHours - Math.trunc(data.TotalHours)) * 60) >
+                9
+                ? "0" +
+                  Math.trunc(data.TotalHours / 60) +
+                  ":" +
+                  Math.round(
+                    Math.trunc(
+                      (data.TotalHours - Math.trunc(data.TotalHours)) * 60
+                    )
+                  )
+                : Math.trunc(data.TotalHours / 60) < 10 &&
+                  Math.trunc(
+                    (data.TotalHours - Math.trunc(data.TotalHours)) * 60
+                  ) != 0 &&
+                  Math.trunc(
+                    (data.TotalHours - Math.trunc(data.TotalHours)) * 60
+                  ) < 10
+                ? "0" +
+                  Math.trunc(data.TotalHours / 60) +
+                  ":0" +
+                  Math.round(
+                    Math.trunc(
+                      (data.TotalHours - Math.trunc(data.TotalHours)) * 60
+                    )
+                  )
+                : Math.trunc(data.TotalHours / 60) < 10 &&
+                  Math.trunc(
+                    (data.TotalHours - Math.trunc(data.TotalHours)) * 60
+                  ) == 0 &&
+                  Math.round(
+                    Math.trunc(
+                      (data.TotalHours / 60 -
+                        Math.trunc(data.TotalHours / 60)) *
+                        60
+                    )
+                  ) > 9
+                ? "0" +
+                  Math.trunc(data.TotalHours / 60) +
+                  ":" +
+                  Math.round(
+                    Math.trunc(
+                      (data.TotalHours / 60 -
+                        Math.trunc(data.TotalHours / 60)) *
+                        60
+                    )
+                  )
+                : Math.trunc(data.TotalHours / 60) < 10 &&
+                  Math.trunc(
+                    (data.TotalHours - Math.trunc(data.TotalHours)) * 60
+                  ) == 0 &&
+                  Math.round(
+                    Math.trunc(
+                      (data.TotalHours / 60 -
+                        Math.trunc(data.TotalHours / 60)) *
+                        60
+                    )
+                  ) < 10
+                ? "0" +
+                  Math.trunc(data.TotalHours / 60) +
+                  ":0" +
+                  Math.round(
+                    Math.trunc(
+                      (data.TotalHours / 60 -
+                        Math.trunc(data.TotalHours / 60)) *
+                        60
+                    )
+                  )
+                : Math.trunc(data.TotalHours / 60) > 9 &&
+                  Math.trunc(
+                    (data.TotalHours - Math.trunc(data.TotalHours)) * 60
+                  ) == 0 &&
+                  Math.round(
+                    Math.trunc(
+                      (data.TotalHours / 60 -
+                        Math.trunc(data.TotalHours / 60)) *
+                        60
+                    )
+                  ) > 9
+                ? Math.trunc(data.TotalHours / 60) +
+                  ":" +
+                  Math.round(
+                    Math.trunc(
+                      (data.TotalHours / 60 -
+                        Math.trunc(data.TotalHours / 60)) *
+                        60
+                    )
+                  )
+                : Math.trunc(data.TotalHours / 60) > 9 &&
+                  Math.trunc(
+                    (data.TotalHours - Math.trunc(data.TotalHours)) * 60
+                  ) == 0 &&
+                  Math.round(
+                    Math.trunc(
+                      (data.TotalHours / 60 -
+                        Math.trunc(data.TotalHours / 60)) *
+                        60
+                    )
+                  ) < 10
+                ? Math.trunc(data.TotalHours / 60) +
+                  ":0" +
+                  Math.round(
+                    Math.trunc(
+                      (data.TotalHours / 60 -
+                        Math.trunc(data.TotalHours / 60)) *
+                        60
+                    )
+                  )
+                : Math.trunc(data.TotalHours / 60) > 9 &&
+                  Math.trunc(
+                    (data.TotalHours - Math.trunc(data.TotalHours)) * 60
+                  ) != 0 &&
+                  Math.trunc(
+                    (data.TotalHours - Math.trunc(data.TotalHours)) * 60
+                  ) > 9
+                ? Math.trunc(data.TotalHours / 60) +
+                  ":" +
+                  Math.round(
+                    Math.trunc(
+                      (data.TotalHours - Math.trunc(data.TotalHours)) * 60
+                    )
+                  )
+                : Math.trunc(data.TotalHours / 60) > 9 &&
+                  Math.trunc(
+                    (data.TotalHours - Math.trunc(data.TotalHours)) * 60
+                  ) != 0 &&
+                  Math.trunc(
+                    (data.TotalHours - Math.trunc(data.TotalHours)) * 60
+                  ) < 10
+                ? Math.trunc(data.TotalHours / 60) +
+                  ":0" +
+                  Math.round(
+                    Math.trunc(
+                      (data.TotalHours - Math.trunc(data.TotalHours)) * 60
+                    )
+                  )
+                : "",
+          })),
+          Modal: false,
+        });
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "הדוח הופק בהצלחה",
+          showConfirmButton: false,
+          timer: 2500,
+        });
+      }.bind(this),
+      1800
+    );
   };
   componentDidMount() {
     this.props.GetTotalTasksPer();
@@ -198,31 +358,27 @@ class CCAllEmpsHoursReport extends Component {
     });
   };
 
-  HomeClicked=()=>{
+  HomeClicked = () => {
     this.props.history.push({
       pathname: "/home",
     });
-  }
-  ManageActivitiesClicked=()=>{
+  };
+  ManageActivitiesClicked = () => {
     this.props.history.push({
       pathname: "/ManageActivities",
     });
-  }
-  ResourcesClicked=()=>{
+  };
+  ResourcesClicked = () => {
     this.props.history.push({
       pathname: "/Resources",
     });
-  }
+  };
 
-  CalendarClicked=()=>{
+  CalendarClicked = () => {
     this.props.history.push({
       pathname: "/Calendar",
     });
-  }
-
-
-
-
+  };
 
   render() {
     const columns = [
@@ -255,37 +411,34 @@ class CCAllEmpsHoursReport extends Component {
     return (
       <div>
         <div className="header">
-        <Menu disableAutoFocus right >
+          <Menu disableAutoFocus right>
+            <a className="menu-item" onClick={this.HomeClicked}>
+              <i id="homei" class="fas fa-home">
+                {" "}
+              </i>
+              מסך הבית
+            </a>
 
-<a className="menu-item"  onClick={this.HomeClicked}>
-<i id="homei" class="fas fa-home"> </i>
-  מסך הבית
-</a>
+            <a className="menu-item" onClick={this.ManageActivitiesClicked}>
+              <i id="manageactivitiesi" class="fas fa-bell"></i>
+              פעילויות
+            </a>
 
+            <a className="menu-item" onClick={this.ResourcesClicked}>
+              <i id="resourcesi" class="fas fa-globe"></i>
+              משאבים
+            </a>
 
-<a className="menu-item" onClick={this.ManageActivitiesClicked}>
-<i id="manageactivitiesi" class="fas fa-bell"></i>
-  פעילויות
-</a>
+            <a className="menu-item" onClick={this.CalendarClicked}>
+              <i id="calendari" class="far fa-calendar-alt"></i>
+              לוח שנה
+            </a>
 
-
-<a className="menu-item" onClick={this.ResourcesClicked}>
-<i id="resourcesi" class="fas fa-globe"></i>
-  משאבים
-</a>
-
-
-<a className="menu-item" onClick={this.CalendarClicked}>
-<i id="calendari" class="far fa-calendar-alt"></i>
-  לוח שנה
-</a>
-
-<a className="menu-item" onClick={this.LogOutClicked}>
-<i id="logouti" class="fas fa-sign-out-alt"></i>
-  התנתק
-</a>
-
-</Menu>
+            <a className="menu-item" onClick={this.LogOutClicked}>
+              <i id="logouti" class="fas fa-sign-out-alt"></i>
+              התנתק
+            </a>
+          </Menu>
           <Link to="/HumanResources">
             <button className="back"></button>
           </Link>
