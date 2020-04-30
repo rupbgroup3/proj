@@ -1,0 +1,140 @@
+
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.header {
+  width: 100%;
+  text-align: center;
+  display: block;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+ 
+  height: 60px;
+  font-size: 15px;
+  background-color: rgb(106, 180, 218);
+  margin: 0;
+  padding: 0;
+}
+
+.header td{
+  font-size: 15px;
+}
+
+.header button{
+  font-size: 20px;
+}
+
+
+.header th{
+  font-size: 15px;  
+}
+
+.back {
+  margin-top: 10px;
+  height: 45px;
+  width: 60px;
+  float: left;
+  background-image: url(../image/back.png);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 50px;
+  background-color: rgb(60, 168, 101);
+  border-radius: 100%;
+  cursor: hand;
+  cursor: pointer;
+}
+
+.back:hover {
+ 
+  color: white;
+}
+.LogOut {
+  margin-top: 10px;
+  height: 45px;
+  width: 65px;
+  float: left;
+  margin-left: 10px;
+  background-color: rgb(145, 174, 212);
+  border-radius: 40%;
+  color: #ffffff;
+  font-size: 20px;
+  cursor: hand;
+  cursor: pointer;
+}
+
+.LogOut:hover {
+  background-color: rgb(22, 93, 121);
+  color: white;
+}
+
+.home {
+  
+  background-image: url(../image/home.png);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 40px;
+  align-content: center;
+  margin-top: 10px;
+  cursor: hand;
+  cursor: pointer;
+  height: 45px;
+  width: 60px;
+  float: right;
+  margin-right: 20px;
+  background-color: rgb(145, 174, 212);
+  border-radius: 40%;
+}
+
+.home:hover {
+  background-color: rgb(22, 93, 121);
+  color: white;
+}
+
+.Agodit {
+  margin-top: 10px;
+  height: 45px;
+  width: 45px;
+  /* filter: drop-shadow(5px 10px 10px rgb(9, 84, 119)); */
+}
+
+.AgoditText {
+  margin: 0;
+  padding: 0;
+  vertical-align: -13px;
+  line-height: normal;
+  display: inline;
+  text-align: center;
+  font-size: 40px;
+  /* text-shadow: 1px 1px 2px black, 0 0 10px rgb(76, 188, 240),
+    0 0 10px rgb(106, 106, 184); */
+}
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+.LogoDiv {
+  display: block;
+    text-align: center;
+  margin: 0 auto ;
+}
