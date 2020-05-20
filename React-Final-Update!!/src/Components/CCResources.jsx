@@ -96,9 +96,9 @@ class CCResources extends Component {
         </div>
             </div>
         <br />
-        <nav className="navbar navbar-default">
+        <nav  className="navbar navbar-default">
           <div className="container-fluid">
-            <div className="navbar-header">
+            <div  className="navbar-header"  >
               <h1>משאבים</h1>
             </div>
           </div>
@@ -120,7 +120,8 @@ class CCResources extends Component {
           variant="success"
         >
           {" "}
-          כוח אדם
+          <img src="https://img.icons8.com/clouds/100/000000/worker-male.png"/>
+          כוח-אדם
         </button>
 
    
@@ -133,7 +134,8 @@ class CCResources extends Component {
           variant="destructive"
         >
           {" "}
-          סוגי ציוד
+          <img src="https://img.icons8.com/clouds/100/000000/stationery.png"/>
+          סוגי-ציוד
         </button>
      
               
@@ -146,7 +148,8 @@ class CCResources extends Component {
           variant="success"
         >
           {" "}
-          סוגי אירועים
+          <img src="https://img.icons8.com/clouds/100/000000/training.png"/>
+          סוגי-אירועים
         </button>
        
         <button
@@ -158,7 +161,8 @@ class CCResources extends Component {
           variant="success"
         >
           {" "}
-          סוגי משימות
+          <img src="https://img.icons8.com/clouds/100/000000/task.png"/>
+          סוגי-משימות
         </button>
    
         </div>

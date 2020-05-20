@@ -553,7 +553,7 @@ public class DBservices
         catch (Exception ex)
         {
             // write to log
-           throw (ex);
+            throw (ex);
         }
         finally
         {
@@ -1778,7 +1778,218 @@ public class DBservices
 
         return command;
     }
-   
+
+    ///////////ActualEvent//////////////////////////////////////////////////
+    // קריאת כל האירועים בפועל
+    public List<Actual_Event> getActualEvent()
+    {
+        List<Actual_Event> ActualEventList = new List<Actual_Event>();
+        SqlConnection con = null;
+
+        try
+        {
+            con = connect("ConnectionStringName"); // create a connection to the database using the connection String defined in the web config file
+
+            String selectSTR = "SELECT * FROM Actual_Event";
+            SqlCommand cmd = new SqlCommand(selectSTR, con);
+
+            // get a reader
+            SqlDataReader dr = cmd.ExecuteReader(CommandBehavior.CloseConnection); // CommandBehavior.CloseConnection: the connection will be closed after reading has reached the end
+
+            while (dr.Read())
+            {   // Read till the end of the data into a row
+                Actual_Event AE = new Actual_Event();
+                AE.Barcode = (int)dr["Barcode"];
+                AE.date = (string)dr["date"];
+                AE.FromHour = (double)dr["FromHour"];
+                AE.ToHour = (double)dr["ToHour"];
+                AE.Event_TypeEventCode = (int)dr["Event_TypeEventCode"];
+                AE.Location = (string)dr["Location"];
+                AE.EmployeeEmpCode = (int)dr["EmployeeEmpCode"];
+                ActualEventList.Add(AE);
+
+            }
+
+            return ActualEventList;
+        }
+        catch (Exception ex)
+        {
+            // write to log
+            throw (ex);
+        }
+        finally
+        {
+            if (con != null)
+            {
+                con.Close();
+            }
+
+        }
+    }
+    // הכנסת אירוע בפועל חדש
+    public int InsertActual_Event(Actual_Event t)
+    {
+
+        SqlConnection con;
+        SqlCommand cmd;
+
+        try
+        {
+            con = connect("ConnectionStringName"); // create the connection
+        }
+        catch (Exception ex)
+        {
+            // write to log
+            throw (ex);
+        }
+
+        String cStr = BuildInsertCommandActual_Event(t);      // helper method to build the insert string
+
+        cmd = CreateCommand(cStr, con);             // create the command
+
+        try
+        {
+            int numEffected = cmd.ExecuteNonQuery(); // execute the command
+            return numEffected;
+        }
+        catch (Exception ex)
+        {
+            return 0;
+            // write to log
+            throw (ex);
+        }
+
+        finally
+        {
+            if (con != null)
+            {
+                // close the db connection
+                con.Close();
+            }
+        }
+
+    }
+    private String BuildInsertCommandActual_Event(Actual_Event t)
+    {
+        String command;
+
+        StringBuilder sb = new StringBuilder();
+        // use a string builder to create the dynamic string
+        sb.AppendFormat("Values('{0}','{1}', '{2}','{3}','{4}','{5}')", t.date, t.FromHour, t.ToHour, t.Event_TypeEventCode, t.Location, t.EmployeeEmpCode);
+        String prefix = "INSERT INTO Actual_Event " + "(Date, " + "FromHour, " + "ToHour, " + " Event_TypeEventCode, " + " Location, " + " EmployeeEmpCode)";
+        command = prefix + sb.ToString();
+
+        return command;
+    }
+
+    // עדכון אירוע בפועל קיים
+    public int PutActual_Event(Actual_Event AE)
+    {
+
+        SqlConnection con;
+        SqlCommand cmd;
+
+        try
+        {
+            con = connect("ConnectionStringName"); // create the connection
+        }
+        catch (Exception ex)
+        {
+            // write to log
+            throw (ex);
+        }
+
+        String cStr = BuildPutActual_EventCommand(AE);      // helper method to build the insert string
+
+        cmd = CreateCommand(cStr, con);             // create the command
+
+        try
+        {
+            int numEffected = cmd.ExecuteNonQuery(); // execute the command
+            return numEffected;
+        }
+        catch (Exception ex)
+        {
+            return 0;
+            // write to log
+            throw (ex);
+        }
+
+        finally
+        {
+            if (con != null)
+            {
+                // close the db connection
+                con.Close();
+            }
+        }
+
+    }
+
+    private String BuildPutActual_EventCommand(Actual_Event AE)
+    {
+        String command;
+
+        command = @"UPDATE Actual_Event set date= '" + AE.date + "', FromHour= '"+AE.FromHour +"', ToHour='"+AE.ToHour+"', Location= '"+AE.Location+"', EmployeeEmpCode= '"+AE.EmployeeEmpCode + "' WHERE Barcode = '" + AE.Barcode + "'";
+
+        return command;
+    }
+
+    // מחיקת אירוע בפועל על פי קוד אירוע בפועל
+    public int DeleteActualEvent(int ActualEventId)
+    {
+
+        SqlConnection con;
+        SqlCommand cmd;
+
+        try
+        {
+            con = connect("ConnectionStringName"); // create the connection
+        }
+        catch (Exception ex)
+        {
+            // write to log
+            throw (ex);
+        }
+
+        String cStr = BuildDeleteCommandActualEvent(ActualEventId);      // helper method to build the insert string
+
+        cmd = CreateCommand(cStr, con);             // create the command
+
+        try
+        {
+            int numEffected = cmd.ExecuteNonQuery(); // execute the command
+            return numEffected;
+        }
+        catch (Exception ex)
+        {
+            return 0;
+            // write to log
+            throw (ex);
+        }
+
+        finally
+        {
+            if (con != null)
+            {
+                // close the db connection
+                con.Close();
+            }
+        }
+
+    }
+    private String BuildDeleteCommandActualEvent(int ActualEventId)
+    {
+        String command;
+
+        StringBuilder sb = new StringBuilder();
+        // use a string builder to create the dynamic string
+
+        command = @"delete from Actual_Event where Barcode= '" + ActualEventId + "'";
+
+        return command;
+    }
+
     ///////////////EmpInfoRole///////////////////////
 
     // קריאת תפקידי עובדי האגודה עם הפרטים שלהם
@@ -1826,6 +2037,325 @@ public class DBservices
             }
 
         }
+    }
+    /////////////////////////////////////EquipmentActualEvent//////////////////////////////////////////
+
+    // קריאת סוגי ציוד שמשוייכים לאירוע בפועל
+    public List<EquipmentType_Actual_Event> getEquipmentType_Actual_Events()
+
+    {
+        List<EquipmentType_Actual_Event> ETACtualEventList = new List<EquipmentType_Actual_Event>();
+        SqlConnection con = null;
+
+        try
+        {
+            con = connect("ConnectionStringName"); // create a connection to the database using the connection String defined in the web config file
+
+            String selectSTR = "SELECT * FROM EquipmentType_Actual_Event";
+            SqlCommand cmd = new SqlCommand(selectSTR, con);
+
+            // get a reader
+            SqlDataReader dr = cmd.ExecuteReader(CommandBehavior.CloseConnection); // CommandBehavior.CloseConnection: the connection will be closed after reading has reached the end
+
+            while (dr.Read())
+            {   // Read till the end of the data into a row
+                EquipmentType_Actual_Event ETActualEvent = new EquipmentType_Actual_Event();
+                ETActualEvent.EquipmentTypeCode = (int)dr["EquipmentTypeCode"];
+                ETActualEvent.Actual_EventBarcode = (int)dr["Actual_EventBarcode"];
+                ETACtualEventList.Add(ETActualEvent);
+            }
+
+            return ETACtualEventList;
+        }
+        catch (Exception ex)
+        {
+            // write to log
+            throw (ex);
+        }
+        finally
+        {
+            if (con != null)
+            {
+                con.Close();
+            }
+
+        }
+    }
+    //post
+
+    // הכנסת סוג ציוד חדש לאירוע בפועל
+    public int insertEquipmentType_Actual_Events(EquipmentType_Actual_Event t)
+    {
+
+        SqlConnection con;
+        SqlCommand cmd;
+
+        try
+        {
+            con = connect("ConnectionStringName"); // create the connection
+        }
+        catch (Exception ex)
+        {
+            // write to log
+            throw (ex);
+        }
+
+        String cStr = BuildInsertCommandEquipmentType_Actual_Event(t);      // helper method to build the insert string
+
+        cmd = CreateCommand(cStr, con);             // create the command
+
+        try
+        {
+            int numEffected = cmd.ExecuteNonQuery(); // execute the command
+            return numEffected;
+        }
+        catch (Exception ex)
+        {
+            return 0;
+            // write to log
+            throw (ex);
+        }
+
+        finally
+        {
+            if (con != null)
+            {
+                // close the db connection
+                con.Close();
+            }
+        }
+
+    }
+    private String BuildInsertCommandEquipmentType_Actual_Event(EquipmentType_Actual_Event t)
+    {
+        String command;
+
+        StringBuilder sb = new StringBuilder();
+        // use a string builder to create the dynamic string
+        sb.AppendFormat("Values('{0}','{1}')", t.EquipmentTypeCode, t.Actual_EventBarcode);
+        String prefix = "INSERT INTO EquipmentType_Actual_Event " + "(EquipmentTypeCode, " + "Actual_EventBarcode)";
+        command = prefix + sb.ToString();
+
+
+
+
+        return command;
+    }
+
+    // מחיקת סוג ציוד שמשוייך לאירוע בפועל
+    public int DeleteEquipmentType_Actual_Events(EquipmentType_Actual_Event Et)
+    {
+
+        SqlConnection con;
+        SqlCommand cmd;
+
+        try
+        {
+            con = connect("ConnectionStringName"); // create the connection
+        }
+        catch (Exception ex)
+        {
+            // write to log
+            throw (ex);
+        }
+
+        String cStr = BuildUpdateEquipmentType_Actual_EventCommand(Et);      // helper method to build the insert string
+
+        cmd = CreateCommand(cStr, con);             // create the command
+
+        try
+        {
+            int numEffected = cmd.ExecuteNonQuery(); // execute the command
+            return numEffected;
+        }
+        catch (Exception ex)
+        {
+            return 0;
+            // write to log
+            throw (ex);
+        }
+
+        finally
+        {
+            if (con != null)
+            {
+                // close the db connection
+                con.Close();
+            }
+        }
+
+    }
+
+    private String BuildUpdateEquipmentType_Actual_EventCommand(EquipmentType_Actual_Event Et)
+    {
+        String command;
+
+        command = @"DELETE EquipmentType_Actual_Event  WHERE Actual_EventBarcode= '" + Et.Actual_EventBarcode + "'";
+        //DELETE FROM table_name WHERE condition;
+        return command;
+    }
+
+    ////////PersonPlanTaskInEvent//////////////////////////////////////////////////////
+
+    // קריאת משימות בפועל שמשוייכות לאירוע בפועל
+    public List<Person_plan_TasksInEvent> GetPerson_plan_TasksInEvents()
+    {
+        List<Person_plan_TasksInEvent> PersonPlanTaskInEventList = new List<Person_plan_TasksInEvent>();
+        SqlConnection con = null;
+
+        try
+        {
+            con = connect("ConnectionStringName"); // create a connection to the database using the connection String defined in the web config file
+
+            String selectSTR = "SELECT * FROM Person_plan_TasksInEvent";
+            SqlCommand cmd = new SqlCommand(selectSTR, con);
+
+            // get a reader
+
+            SqlDataReader dr = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+            while (dr.Read())
+            {   // Read till the end of the data into a row
+                Person_plan_TasksInEvent PPTInEvent = new Person_plan_TasksInEvent();
+                PPTInEvent.PersonEmpCode = (int)dr["PersonEmpCode"];
+                PPTInEvent.plan_TasksInEventActual_EventBarcode = (int)dr["plan_TasksInEventActual_EventBarcode"];
+                PPTInEvent.plan_TasksInEventTaskTaskNo = (int)dr["plan_TasksInEventTaskTaskNo"];
+                PPTInEvent.FromHour = (double)dr["FromHour"];
+                PPTInEvent.ToHour = (double)dr["ToHour"];
+                PPTInEvent.executionDate = (string)dr["executionDate"];
+
+
+                PersonPlanTaskInEventList.Add(PPTInEvent);
+            }
+
+            return PersonPlanTaskInEventList;
+        }
+        catch (Exception ex)
+        {
+            // write to log
+            throw (ex);
+        }
+        finally
+        {
+            if (con != null)
+            {
+                con.Close();
+            }
+
+        }
+    }
+    // הכנסת משימה בפועל שמשוייכת לאירוע בפועל
+    public int Person_plan_TasksInEventInserts(Person_plan_TasksInEvent t)
+    {
+
+        SqlConnection con;
+        SqlCommand cmd;
+
+        try
+        {
+            con = connect("ConnectionStringName"); // create the connection
+        }
+        catch (Exception ex)
+        {
+            // write to log
+            throw (ex);
+        }
+
+        String cStr = BuildInsertCommandPerson_plan_TasksInEvent(t);      // helper method to build the insert string
+
+        cmd = CreateCommand(cStr, con);             // create the command
+
+        try
+        {
+            int numEffected = cmd.ExecuteNonQuery(); // execute the command
+            return numEffected;
+        }
+        catch (Exception ex)
+        {
+            return 0;
+            // write to log
+            throw (ex);
+        }
+
+        finally
+        {
+            if (con != null)
+            {
+                // close the db connection
+                con.Close();
+            }
+        }
+
+    }
+    private String BuildInsertCommandPerson_plan_TasksInEvent(Person_plan_TasksInEvent t)
+    {
+        String command;
+
+        StringBuilder sb = new StringBuilder();
+        // use a string builder to create the dynamic string
+        sb.AppendFormat("Values('{0}','{1}', '{2}','{3}','{4}','{5}')", t.PersonEmpCode, t.plan_TasksInEventActual_EventBarcode, t.plan_TasksInEventTaskTaskNo, t.FromHour, t.ToHour, t.executionDate);
+        String prefix = "INSERT INTO Person_plan_TasksInEvent " + "(PersonEmpCode, " + "plan_TasksInEventActual_EventBarcode, " + "plan_TasksInEventTaskTaskNo, " + " FromHour, " + " ToHour, " + " executionDate)";
+        command = prefix + sb.ToString();
+
+
+
+
+        return command;
+    }
+
+    // מחיקת משימה בפועל שמשוייכת לאירוע בפועל
+
+    public int DeletePerson_plan_TasksInEvent(Person_plan_TasksInEvent t)
+    {
+
+        SqlConnection con;
+        SqlCommand cmd;
+
+        try
+        {
+            con = connect("ConnectionStringName"); // create the connection
+        }
+        catch (Exception ex)
+        {
+            // write to log
+            throw (ex);
+        }
+
+        String cStr = BuildDeleteCommandPerson_plan_TasksInEvent(t);      // helper method to build the insert string
+
+        cmd = CreateCommand(cStr, con);             // create the command
+
+        try
+        {
+            int numEffected = cmd.ExecuteNonQuery(); // execute the command
+            return numEffected;
+        }
+        catch (Exception ex)
+        {
+            return 0;
+            // write to log
+            throw (ex);
+        }
+
+        finally
+        {
+            if (con != null)
+            {
+                // close the db connection
+                con.Close();
+            }
+        }
+
+    }
+    private String BuildDeleteCommandPerson_plan_TasksInEvent(Person_plan_TasksInEvent t)
+    {
+        String command;
+
+        StringBuilder sb = new StringBuilder();
+        // use a string builder to create the dynamic string
+
+        command = @"delete from Person_plan_TasksInEvent where PersonEmpCode= '" + t.PersonEmpCode + "' and plan_TasksInEventActual_EventBarcode= '" + t.plan_TasksInEventActual_EventBarcode + "' and plan_TasksInEventTaskTaskNo= '" + t.plan_TasksInEventTaskTaskNo + "'";
+
+        return command;
     }
 
     //  נועד לדוח השעות הכולל של כל המתנדבים/ פעילים באגודה ומביא לנו את כל המשימות שאינן משוייכות לאירוע
@@ -1876,7 +2406,7 @@ public class DBservices
 
         }
     }
-
+    
     // נועד לדוח השעות הכולל של כל המתנדבים/ פעילים באגודה ומביא לנו את כל המשימות בתוך אירוע
     public List<TotalTasksInEventPer> GetTotalTasksInEventPer()
     {
@@ -2023,4 +2553,304 @@ public class DBservices
         }
     }
 
+    
+
+    // נועד להציג משימות בתוך אירוע לפי תאריך ספציפי
+    public List<CalendarActualTaskInEvent> GetCalendarActualTaskInEventOneDate(string FromDate)
+    {
+        List<CalendarActualTaskInEvent> CalendarActualTaskInEventList = new List<CalendarActualTaskInEvent>();
+        SqlConnection con = null;
+
+        try
+        {
+            con = connect("ConnectionStringName"); // create a connection to the database using the connection String defined in the web config file
+
+            String selectSTR = "select * from Person_plan_TasksInEvent ppt inner join Task t on ppt.plan_TasksInEventTaskTaskNo= t.TaskNo inner join person p on ppt.PersonEmpCode=p.EmpCode where ppt.executionDate= '"+ FromDate+ "' and t.TaskName!= 'NULL' order by ppt.executionDate";
+            SqlCommand cmd = new SqlCommand(selectSTR, con);
+
+            // get a reader
+
+            SqlDataReader dr = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+            while (dr.Read())
+            {   // Read till the end of the data into a row
+                CalendarActualTaskInEvent CalActualTaskInEvent = new CalendarActualTaskInEvent();
+                CalActualTaskInEvent.TaskName = (string)dr["TaskName"];
+                CalActualTaskInEvent.executionDate = (string)dr["executionDate"];
+                CalActualTaskInEvent.plan_TasksInEventActual_EventBarcode = (int)dr["plan_TasksInEventActual_EventBarcode"];
+                CalActualTaskInEvent.FromHour = (double)dr["FromHour"];
+                CalActualTaskInEvent.ToHour = (double)dr["ToHour"];
+                CalActualTaskInEvent.PersonEmpCode = (int)dr["PersonEmpCode"];
+                CalActualTaskInEvent.EmpFirstName = (string)dr["EmpFirstName"];
+                CalActualTaskInEvent.EmpLastName = (string)dr["EmpLastName"];
+                CalActualTaskInEvent.plan_TasksInEventTaskTaskNo = (int)dr["plan_TasksInEventTaskTaskNo"];
+                CalendarActualTaskInEventList.Add(CalActualTaskInEvent);
+            }
+
+            return CalendarActualTaskInEventList;
+        }
+        catch (Exception ex)
+        {
+            // write to log
+            throw (ex);
+        }
+        finally
+        {
+            if (con != null)
+            {
+                con.Close();
+            }
+
+        }
+    }
+
+
+    // נועד להציג משימות בתוך אירוע לפי תאריך ספציפי
+    public List<CalendarActualTaskInEvent> GetCalendarActualTaskInEventRangeDate(string FromDate, string ToDate)
+    {
+        List<CalendarActualTaskInEvent> CalendarActualTaskInEventList = new List<CalendarActualTaskInEvent>();
+        SqlConnection con = null;
+
+        try
+        {
+            con = connect("ConnectionStringName"); // create a connection to the database using the connection String defined in the web config file
+
+            String selectSTR = "select * from Person_plan_TasksInEvent ppt inner join Task t on ppt.plan_TasksInEventTaskTaskNo= t.TaskNo inner join person p on ppt.PersonEmpCode=p.EmpCode where ppt.executionDate>= '" + FromDate + "' and ppt.executionDate<= '"+ ToDate+ "' and t.TaskName!= 'NULL' order by ppt.executionDate";
+            SqlCommand cmd = new SqlCommand(selectSTR, con);
+
+            // get a reader
+
+            SqlDataReader dr = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+            while (dr.Read())
+            {   // Read till the end of the data into a row
+                CalendarActualTaskInEvent CalActualTaskInEvent = new CalendarActualTaskInEvent();
+                CalActualTaskInEvent.TaskName = (string)dr["TaskName"];
+                CalActualTaskInEvent.executionDate = (string)dr["executionDate"];
+                CalActualTaskInEvent.plan_TasksInEventActual_EventBarcode = (int)dr["plan_TasksInEventActual_EventBarcode"];
+                CalActualTaskInEvent.FromHour = (double)dr["FromHour"];
+                CalActualTaskInEvent.ToHour = (double)dr["ToHour"];
+                CalActualTaskInEvent.PersonEmpCode = (int)dr["PersonEmpCode"];
+                CalActualTaskInEvent.EmpFirstName = (string)dr["EmpFirstName"];
+                CalActualTaskInEvent.EmpLastName = (string)dr["EmpLastName"];
+                CalActualTaskInEvent.plan_TasksInEventTaskTaskNo = (int)dr["plan_TasksInEventTaskTaskNo"];
+                CalendarActualTaskInEventList.Add(CalActualTaskInEvent);
+            }
+
+            return CalendarActualTaskInEventList;
+        }
+        catch (Exception ex)
+        {
+            // write to log
+            throw (ex);
+        }
+        finally
+        {
+            if (con != null)
+            {
+                con.Close();
+            }
+
+        }
+    }
+
+
+    // פונקצייה שקוראת לנו את כל הפרטים של אירוע בפועל כאשר לוחצים בלוח שנה על תאריך ספציפי עם פרטי טבלת סוג אירוע ופרטים של האחראי אירוע מכוח האדם
+    public List<CalendarActualEvent> GetCalendarActualEventOneDate(string FromDate)
+    {
+        List<CalendarActualEvent> CalendarActualEventList = new List<CalendarActualEvent>();
+        SqlConnection con = null;
+
+        try
+        {
+            con = connect("ConnectionStringName"); // create a connection to the database using the connection String defined in the web config file
+
+            String selectSTR = @"select * from Actual_Event ae inner join Event_Type et on ae.Event_TypeEventCode= et.EventCode inner join Person p on p.EmpCode= ae.EmployeeEmpCode where ae.date='"+ FromDate +"'";
+            SqlCommand cmd = new SqlCommand(selectSTR, con);
+
+            // get a reader
+            SqlDataReader dr = cmd.ExecuteReader(CommandBehavior.CloseConnection); // CommandBehavior.CloseConnection: the connection will be closed after reading has reached the end
+
+            while (dr.Read())
+            {   // Read till the end of the data into a row
+                CalendarActualEvent CalActualEvent = new CalendarActualEvent();
+
+                CalActualEvent.Barcode = (int)dr["Barcode"];
+                CalActualEvent.date = (string)dr["date"];
+                CalActualEvent.FromHour = (double)dr["FromHour"];
+                CalActualEvent.ToHour = (double)dr["ToHour"];
+                CalActualEvent.EventName = (string) dr["EventName"];
+                CalActualEvent.EmpFirstName = (string) dr["EmpFirstName"];
+                CalActualEvent.EmpLastName = (string) dr["EmpLastName"];
+                CalActualEvent.Location = (string) dr["Location"];
+                CalActualEvent.EmployeeEmpCode = (int)dr["EmployeeEmpCode"];
+                CalActualEvent.Event_TypeEventCode = (int)dr["Event_TypeEventCode"];
+
+                CalendarActualEventList.Add(CalActualEvent);
+            }
+
+            return CalendarActualEventList;
+        }
+        catch (Exception ex)
+        {
+            // write to log
+            throw (ex);
+        }
+        finally
+        {
+            if (con != null)
+            {
+                con.Close();
+            }
+
+        }
+    }
+
+    // פונקצייה שקוראת לנו את כל הפרטים של אירוע בפועל כאשר בוחרים בלוח שנה טווח תאריכים, קורא את פרטי טבלת סוג אירוע ופרטים של האחראי אירוע מכוח האדם
+
+    public List<CalendarActualEvent> GetCalendarActualEventRangeDate(string FromDate, string ToDate)
+    {
+        List<CalendarActualEvent> CalendarActualEventList = new List<CalendarActualEvent>();
+        SqlConnection con = null;
+
+        try
+        {
+            con = connect("ConnectionStringName"); // create a connection to the database using the connection String defined in the web config file
+
+            String selectSTR = @"select * from Actual_Event ae inner join Event_Type et on ae.Event_TypeEventCode= et.EventCode inner join Person p on p.EmpCode= ae.EmployeeEmpCode where ae.date>='" + FromDate + "' and ae.date<= '"+ ToDate+ "'";
+            SqlCommand cmd = new SqlCommand(selectSTR, con);
+
+            // get a reader
+            SqlDataReader dr = cmd.ExecuteReader(CommandBehavior.CloseConnection); // CommandBehavior.CloseConnection: the connection will be closed after reading has reached the end
+
+            while (dr.Read())
+            {   // Read till the end of the data into a row
+                CalendarActualEvent CalActualEvent = new CalendarActualEvent();
+
+                CalActualEvent.Barcode = (int)dr["Barcode"];
+                CalActualEvent.date = (string)dr["date"];
+                CalActualEvent.FromHour = (double)dr["FromHour"];
+                CalActualEvent.ToHour = (double)dr["ToHour"];
+                CalActualEvent.EventName = (string)dr["EventName"];
+                CalActualEvent.EmpFirstName = (string)dr["EmpFirstName"];
+                CalActualEvent.EmpLastName = (string)dr["EmpLastName"];
+                CalActualEvent.Location = (string)dr["Location"];
+                CalActualEvent.EmployeeEmpCode = (int)dr["EmployeeEmpCode"];
+                CalActualEvent.Event_TypeEventCode = (int)dr["Event_TypeEventCode"];
+
+                CalendarActualEventList.Add(CalActualEvent);
+            }
+
+            return CalendarActualEventList;
+        }
+        catch (Exception ex)
+        {
+            // write to log
+            throw (ex);
+        }
+        finally
+        {
+            if (con != null)
+            {
+                con.Close();
+            }
+
+        }
+    }
+
+    // פונקצייה שקוראת לנו את כל הפרטים של משימה בפועל שלא משוייכת לאירוע כאשר לוחצים בלוח שנה על תאריך ספציפי עם פרטי טבלת סוג משימה ופרטים של מבצעי משימה מכוח האדם
+    public List<CalendarActualTask> GetCalendarActualTaskOneDate(string FromDate)
+    {
+        List<CalendarActualTask> CalendarActualTaskList = new List<CalendarActualTask>();
+        SqlConnection con = null;
+
+        try
+        {
+            con = connect("ConnectionStringName"); // create a connection to the database using the connection String defined in the web config file
+
+            String selectSTR = @"  select * from Task_Person tp inner join Task t on tp.TaskTaskNo= t.TaskNo inner join person p on tp.PersonEmpCode= p.EmpCode where tp.exceutionDate= '" + FromDate + "' and t.TaskName!= 'NULL'";
+            SqlCommand cmd = new SqlCommand(selectSTR, con);
+
+            // get a reader
+            SqlDataReader dr = cmd.ExecuteReader(CommandBehavior.CloseConnection); // CommandBehavior.CloseConnection: the connection will be closed after reading has reached the end
+
+            while (dr.Read())
+            {   // Read till the end of the data into a row
+                CalendarActualTask CalActualTask = new CalendarActualTask();
+
+                CalActualTask.TaskTaskNo = (int)dr["TaskTaskNo"];
+                CalActualTask.exceutionDate = (string)dr["exceutionDate"];
+                CalActualTask.FromHour = (double)dr["FromHour"];
+                CalActualTask.ToHour = (double)dr["ToHour"];
+                CalActualTask.TaskName = (string)dr["TaskName"];
+                CalActualTask.EmpFirstName = (string)dr["EmpFirstName"];
+                CalActualTask.EmpLastName = (string)dr["EmpLastName"];
+                CalActualTask.PersonEmpCode = (int)dr["PersonEmpCode"];
+
+                CalendarActualTaskList.Add(CalActualTask);
+            }
+
+            return CalendarActualTaskList;
+        }
+        catch (Exception ex)
+        {
+            // write to log
+            throw (ex);
+        }
+        finally
+        {
+            if (con != null)
+            {
+                con.Close();
+            }
+
+        }
+    }
+
+    // פונקצייה שקוראת לנו את כל הפרטים של משימה בפועל שלא משוייכת לאירוע כאשר בוחרים בלוח שנה טווח תאריכים, קורא גם את פרטי טבלת סוג משימה ופרטים של מבצעי המשימה מכוח האדם
+    public List<CalendarActualTask> GetCalendarActualTaskRangeDate(string FromDate, string ToDate)
+    {
+        List<CalendarActualTask> CalendarActualTaskList = new List<CalendarActualTask>();
+        SqlConnection con = null;
+
+        try
+        {
+            con = connect("ConnectionStringName"); // create a connection to the database using the connection String defined in the web config file
+
+            String selectSTR = @"select * from Task_Person tp inner join Task t on tp.TaskTaskNo= t.TaskNo inner join person p on tp.PersonEmpCode= p.EmpCode where tp.exceutionDate >= '" + FromDate + "' and tp.exceutionDate<= '" + ToDate + "' and t.TaskName!= 'NULL'";
+            SqlCommand cmd = new SqlCommand(selectSTR, con);
+
+            // get a reader
+            SqlDataReader dr = cmd.ExecuteReader(CommandBehavior.CloseConnection); // CommandBehavior.CloseConnection: the connection will be closed after reading has reached the end
+
+            while (dr.Read())
+            {   // Read till the end of the data into a row
+                CalendarActualTask CalActualTask = new CalendarActualTask();
+
+                CalActualTask.TaskTaskNo = (int)dr["TaskTaskNo"];
+                CalActualTask.exceutionDate = (string)dr["exceutionDate"];
+                CalActualTask.FromHour = (double)dr["FromHour"];
+                CalActualTask.ToHour = (double)dr["ToHour"];
+                CalActualTask.TaskName = (string)dr["TaskName"];
+                CalActualTask.EmpFirstName = (string)dr["EmpFirstName"];
+                CalActualTask.EmpLastName = (string)dr["EmpLastName"];
+                CalActualTask.PersonEmpCode = (int)dr["PersonEmpCode"];
+
+                CalendarActualTaskList.Add(CalActualTask);
+            }
+
+            return CalendarActualTaskList;
+        }
+        catch (Exception ex)
+        {
+            // write to log
+            throw (ex);
+        }
+        finally
+        {
+            if (con != null)
+            {
+                con.Close();
+            }
+
+        }
+    }
 }

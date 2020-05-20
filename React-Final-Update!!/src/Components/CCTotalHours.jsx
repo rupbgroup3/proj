@@ -64,13 +64,12 @@ class CCTotalHours extends Component {
         const data = this.props.TotalTaskInEventPerVar[index];
         if ( data.executionDate>=this.state.FromDate&& data.executionDate<=this.state.ToDate&& this.props.location.state.data.EmpCode== data.PersonEmpCode) {
           RowsToInsert.push({
-            TaskName: data.TaskName,
-            executionDate: new Date(data.executionDate).toLocaleDateString().split(','),
+             TaskName: data.TaskName,
+             executionDate: new Date(data.executionDate).toLocaleDateString().split(','),
              FromHour:(Math.trunc(data.FromHour/60)) <10 && Math.trunc((data.FromHour-(Math.trunc(data.FromHour)))*60)!=0 && Math.trunc((data.FromHour-(Math.trunc(data.FromHour)))*60)>9? "0"+ (Math.trunc(data.FromHour/60))+ ":"+Math.round( Math.trunc((data.FromHour-(Math.trunc(data.FromHour)))*60)): (Math.trunc(data.FromHour/60)) <10 && Math.trunc((data.FromHour-(Math.trunc(data.FromHour)))*60)!=0 && Math.trunc((data.FromHour-(Math.trunc(data.FromHour)))*60)<10?  "0"+ (Math.trunc(data.FromHour/60))+ ":0"+Math.round( Math.trunc((data.FromHour-(Math.trunc(data.FromHour)))*60)): (Math.trunc(data.FromHour/60)) <10 && Math.trunc((data.FromHour-(Math.trunc(data.FromHour)))*60)==0 &&Math.round(Math.trunc((data.FromHour/60-(Math.trunc(data.FromHour/60)))*60))>9? "0"+ (Math.trunc(data.FromHour/60))+ ":"+ Math.round(Math.trunc((data.FromHour/60-(Math.trunc(data.FromHour/60)))*60)): (Math.trunc(data.FromHour/60)) <10 && Math.trunc((data.FromHour-(Math.trunc(data.FromHour)))*60)==0 &&Math.round(Math.trunc((data.FromHour/60-(Math.trunc(data.FromHour/60)))*60))<10? "0"+ (Math.trunc(data.FromHour/60))+ ":0"+ Math.round(Math.trunc((data.FromHour/60-(Math.trunc(data.FromHour/60)))*60)): (Math.trunc(data.FromHour/60)) >9 && Math.trunc((data.FromHour-(Math.trunc(data.FromHour)))*60)==0&& Math.round( Math.trunc((data.FromHour/60-(Math.trunc(data.FromHour/60)))*60))>9? (Math.trunc(data.FromHour/60))+ ":"+Math.round( Math.trunc((data.FromHour/60-(Math.trunc(data.FromHour/60)))*60)) : (Math.trunc(data.FromHour/60)) >9 && Math.trunc((data.FromHour-(Math.trunc(data.FromHour)))*60)==0&& Math.round( Math.trunc((data.FromHour/60-(Math.trunc(data.FromHour/60)))*60))<10? (Math.trunc(data.FromHour/60))+ ":0"+Math.round( Math.trunc((data.FromHour/60-(Math.trunc(data.FromHour/60)))*60)): (Math.trunc(data.FromHour/60)) >9 && Math.trunc((data.FromHour-(Math.trunc(data.FromHour)))*60)!=0&& Math.trunc((data.FromHour-(Math.trunc(data.FromHour)))*60)>9? (Math.trunc(data.FromHour/60))+ ":"+Math.round( Math.trunc((data.FromHour-(Math.trunc(data.FromHour)))*60)) : (Math.trunc(data.FromHour/60)) >9 && Math.trunc((data.FromHour-(Math.trunc(data.FromHour)))*60)!=0&& Math.trunc((data.FromHour-(Math.trunc(data.FromHour)))*60)<10?  (Math.trunc(data.FromHour/60))+ ":0"+Math.round( Math.trunc((data.FromHour-(Math.trunc(data.FromHour)))*60)):"",
              ToHour:(Math.trunc(data.ToHour/60)) <10 && Math.trunc((data.ToHour-(Math.trunc(data.ToHour)))*60)!=0 && Math.trunc((data.ToHour-(Math.trunc(data.ToHour)))*60)>9? "0"+ (Math.trunc(data.ToHour/60))+ ":"+Math.round( Math.trunc((data.ToHour-(Math.trunc(data.ToHour)))*60)): (Math.trunc(data.ToHour/60)) <10 && Math.trunc((data.ToHour-(Math.trunc(data.ToHour)))*60)!=0 && Math.trunc((data.ToHour-(Math.trunc(data.ToHour)))*60)<10?  "0"+ (Math.trunc(data.ToHour/60))+ ":0"+Math.round( Math.trunc((data.ToHour-(Math.trunc(data.ToHour)))*60)): (Math.trunc(data.ToHour/60)) <10 && Math.trunc((data.ToHour-(Math.trunc(data.ToHour)))*60)==0 &&Math.round(Math.trunc((data.ToHour/60-(Math.trunc(data.ToHour/60)))*60))>9? "0"+ (Math.trunc(data.ToHour/60))+ ":"+ Math.round(Math.trunc((data.ToHour/60-(Math.trunc(data.ToHour/60)))*60)): (Math.trunc(data.ToHour/60)) <10 && Math.trunc((data.ToHour-(Math.trunc(data.ToHour)))*60)==0 &&Math.round(Math.trunc((data.ToHour/60-(Math.trunc(data.ToHour/60)))*60))<10? "0"+ (Math.trunc(data.ToHour/60))+ ":0"+ Math.round(Math.trunc((data.ToHour/60-(Math.trunc(data.ToHour/60)))*60)): (Math.trunc(data.ToHour/60)) >9 && Math.trunc((data.ToHour-(Math.trunc(data.ToHour)))*60)==0&& Math.round( Math.trunc((data.ToHour/60-(Math.trunc(data.ToHour/60)))*60))>9? (Math.trunc(data.ToHour/60))+ ":"+Math.round( Math.trunc((data.ToHour/60-(Math.trunc(data.ToHour/60)))*60)) : (Math.trunc(data.ToHour/60)) >9 && Math.trunc((data.ToHour-(Math.trunc(data.ToHour)))*60)==0&& Math.round( Math.trunc((data.ToHour/60-(Math.trunc(data.ToHour/60)))*60))<10? (Math.trunc(data.ToHour/60))+ ":0"+Math.round( Math.trunc((data.ToHour/60-(Math.trunc(data.ToHour/60)))*60)): (Math.trunc(data.ToHour/60)) >9 && Math.trunc((data.ToHour-(Math.trunc(data.ToHour)))*60)!=0&& Math.trunc((data.ToHour-(Math.trunc(data.ToHour)))*60)>9? (Math.trunc(data.ToHour/60))+ ":"+Math.round( Math.trunc((data.ToHour-(Math.trunc(data.ToHour)))*60)) : (Math.trunc(data.ToHour/60)) >9 && Math.trunc((data.ToHour-(Math.trunc(data.ToHour)))*60)!=0&& Math.trunc((data.ToHour-(Math.trunc(data.ToHour)))*60)<10?  (Math.trunc(data.ToHour/60))+ ":0"+Math.round( Math.trunc((data.ToHour-(Math.trunc(data.ToHour)))*60)):"",
              TotalHours: (Math.trunc((data.ToHour-data.FromHour)/60)) <10 && Math.trunc(((data.ToHour-data.FromHour)-(Math.trunc((data.ToHour-data.FromHour))))*60)!=0 && Math.trunc(((data.ToHour-data.FromHour)-(Math.trunc(data.ToHour-data.FromHour)))*60)>9? "0"+ (Math.trunc((data.ToHour-data.FromHour)/60))+ ":"+Math.round( Math.trunc(((data.ToHour-data.FromHour)-(Math.trunc(data.ToHour-data.FromHour)))*60)): (Math.trunc((data.ToHour-data.FromHour)/60)) <10 && Math.trunc(((data.ToHour-data.FromHour)-(Math.trunc(data.ToHour-data.FromHour)))*60)!=0 && Math.trunc(((data.ToHour-data.FromHour)-(Math.trunc(data.ToHour-data.FromHour)))*60)<10?  "0"+ (Math.trunc((data.ToHour-data.FromHour)/60))+ ":0"+Math.round( Math.trunc(((data.ToHour-data.FromHour)-(Math.trunc(data.ToHour-data.FromHour)))*60)): (Math.trunc((data.ToHour-data.FromHour)/60)) <10 && Math.trunc(((data.ToHour-data.FromHour)-(Math.trunc(data.ToHour-data.FromHour)))*60)==0 &&Math.round(Math.trunc(((data.ToHour-data.FromHour)/60-(Math.trunc((data.ToHour-data.FromHour)/60)))*60))>9? "0"+ (Math.trunc((data.ToHour-data.FromHour)/60))+ ":"+ Math.round(Math.trunc(((data.ToHour-data.FromHour)/60-(Math.trunc((data.ToHour-data.FromHour)/60)))*60)): (Math.trunc((data.ToHour-data.FromHour)/60)) <10 && Math.trunc(((data.ToHour-data.FromHour)-(Math.trunc(data.ToHour-data.FromHour)))*60)==0 &&Math.round(Math.trunc(((data.ToHour-data.FromHour)/60-(Math.trunc((data.ToHour-data.FromHour)/60)))*60))<10? "0"+ (Math.trunc((data.ToHour-data.FromHour)/60))+ ":0"+ Math.round(Math.trunc(((data.ToHour-data.FromHour)/60-(Math.trunc((data.ToHour-data.FromHour)/60)))*60)): (Math.trunc((data.ToHour-data.FromHour)/60)) >9 && Math.trunc(((data.ToHour-data.FromHour)-(Math.trunc(data.ToHour-data.FromHour)))*60)==0&& Math.round( Math.trunc(((data.ToHour-data.FromHour)/60-(Math.trunc((data.ToHour-data.FromHour)/60)))*60))>9? (Math.trunc((data.ToHour-data.FromHour)/60))+ ":"+Math.round( Math.trunc(((data.ToHour-data.FromHour)/60-(Math.trunc((data.ToHour-data.FromHour)/60)))*60)) : (Math.trunc((data.ToHour-data.FromHour)/60)) >9 && Math.trunc(((data.ToHour-data.FromHour)-(Math.trunc(data.ToHour-data.FromHour)))*60)==0&& Math.round( Math.trunc(((data.ToHour-data.FromHour)/60-(Math.trunc((data.ToHour-data.FromHour)/60)))*60))<10? (Math.trunc((data.ToHour-data.FromHour)/60))+ ":0"+Math.round( Math.trunc(((data.ToHour-data.FromHour)/60-(Math.trunc((data.ToHour-data.FromHour)/60)))*60)): (Math.trunc((data.ToHour-data.FromHour)/60)) >9 && Math.trunc(((data.ToHour-data.FromHour)-(Math.trunc(data.ToHour-data.FromHour)))*60)!=0&& Math.trunc(((data.ToHour-data.FromHour)-(Math.trunc(data.ToHour-data.FromHour)))*60)>9? (Math.trunc((data.ToHour-data.FromHour)/60))+ ":"+Math.round( Math.trunc(((data.ToHour-data.FromHour)-(Math.trunc(data.ToHour-data.FromHour)))*60)) : (Math.trunc((data.ToHour-data.FromHour)/60)) >9 && Math.trunc(((data.ToHour-data.FromHour)-(Math.trunc(data.ToHour-data.FromHour)))*60)!=0&& Math.trunc(((data.ToHour-data.FromHour)-(Math.trunc(data.ToHour-data.FromHour)))*60)<10?  (Math.trunc((data.ToHour-data.FromHour)/60))+ ":0"+Math.round( Math.trunc(((data.ToHour-data.FromHour)-(Math.trunc(data.ToHour-data.FromHour)))*60)):"" 
-
-    })
+            })
         }
       }
 
@@ -233,7 +232,7 @@ class CCTotalHours extends Component {
         </nav>
         {this.state.Modal?
                 <div id="editDiv">          
-                <form id="TotalHoursToEnter" class="modal-content animate" action="/action_page.php" onSubmit={this.submitted}>
+                <form  class="modal-content animate" action="/action_page.php" onSubmit={this.submitted}>
                           <card id="idCard1">
                           <div className="form-group row">
                             
@@ -245,7 +244,7 @@ class CCTotalHours extends Component {
                               <input
                               placeholder="אנא הכנס תאריך התחלה להפקדת הדוח"
                                type="date"
-                      
+                                
                                 id="StartDate"
                                 required
                                 value={this.state.FromDate}
@@ -269,8 +268,6 @@ class CCTotalHours extends Component {
                   
                                                                              
                           </div>
-
-
                           <div className="Fotterdiv2BTN">
                             
                             <button
@@ -282,9 +279,9 @@ class CCTotalHours extends Component {
                               הפק דו"ח
                             </button>
                           </div>
-
                           </card >
         
+                     
                         </form>
                 </div>:  
                 <div>

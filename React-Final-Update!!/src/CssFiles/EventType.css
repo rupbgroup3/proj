@@ -24,7 +24,7 @@ table{
   
 }
 #tdLeft{
-  border-right: solid 4px gray;
+  border-right: solid 4px rgba(255,196,12,0.7);
   width: 50%;
 }
 #tdRight{
@@ -42,13 +42,13 @@ table{
  
   cursor: hand;
   cursor: pointer;
-  background-color: rgb(217, 235, 233);
+  /* background-color: rgb(217, 235, 233); */
  float: right;
  color:black;
  background-clip: border-box;
  border: 1px solid transparent;
  border-radius: 100px;
- border:3px solid gold;
+ border:3px solid rgba(255,196,12,0.7);
  font-size: calc(4px + 2vmin);
  margin-top: 20px;
 
@@ -57,17 +57,20 @@ column-count: 5;
 
 margin-right: 20px;
 margin-left: 4px;
+transform-origin: 65% 75%;
+transition: transform 0.5s, filter 0.5s ease-out;
   
 }
-
-.btnTaskss:hover {
-  background-color:gold;
-  color: white;
+.btnTaskss:hover{
+  transform: scale(1.15);
 }
+
+
 
 
 .btnEqs {
- 
+  transform-origin: 65% 75%;
+  transition: transform 0.5s, filter 0.5s ease-out;
   align-items: center;
   justify-content: center;
  
@@ -76,13 +79,13 @@ margin-left: 4px;
  
   cursor: hand;
   cursor: pointer;
-  background-color: rgb(217, 235, 233);
+  /* background-color: rgb(217, 235, 233); */
  float: right;
  color:black;
  background-clip: border-box;
  border: 1px solid transparent;
  border-radius: 100px;
- border:3px solid gold;
+ border:3px solid rgba(255,196,12,0.7);
  font-size: calc(4px + 2vmin);
  margin-top: 20px;
 
@@ -94,26 +97,30 @@ margin-left: 4px;
  
 
 }
-.btnEqs:hover {
-  background-color:gold;
-  color: white;
+
+.btnEqs:hover{
+  transform: scale(1.15);
 }
+
 #idMDBBtn{
 font-size: 15px;
 padding-left: 40px;
 padding-right: 40px;
+background-color: rgba(255,196,12,0.7);
 }
+
 #idMDBBtnSave{
-  overflow:hidden;
-float: left;
+ float: left;
+ background-color: rgba(255,196,12,0.7);
   font-size: 15px;
+
 }
 
 #idMDBBtnEditEvents{
-float: right;
-overflow:hidden;
+ float: right;
   font-size: 15px;
-
+  background-color: rgba(255,196,12,0.7);
+  margin-bottom: 30px;
 }
 #divEquipment {
 
@@ -162,8 +169,7 @@ table.table.table-bordered.table-hover.table-striped.dataTable {
 }
 #IDMDBBTNn{
   font-size: 15px;
-
-  
+  background-color: rgba(255,196,12,0.7); 
   
 }
 #input_checkbox{
@@ -190,3 +196,9 @@ table.table.table-bordered.table-hover.table-striped.dataTable {
 .IDcheckbox {
   margin-right: 20px;
 }
+#IDMDBBTN{
+  background-color: rgba(255,196,12,0.7);
+}
+
+
+

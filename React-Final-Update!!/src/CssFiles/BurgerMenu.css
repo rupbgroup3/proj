@@ -1,6 +1,9 @@
 html,
 body {
   margin: 0;
+ 
+  
+
 }
 
 #App {
@@ -29,57 +32,23 @@ body {
   cursor: hand;
   cursor: pointer;
 }
-#root
-  > div
-  > div
-  > div.header
-  > div:nth-child(1)
-  > div.bm-menu-wrap
-  > div.bm-menu
-  > nav
-  > a:nth-child(1)
-  :hover {
+#root > div > div > div.header > div:nth-child(1) > div.bm-menu-wrap > div.bm-menu > nav > a:nth-child(1)  :hover{
   cursor: hand;
   cursor: pointer;
   color: #4490bb;
 }
-#root
-  > div
-  > div
-  > div.header
-  > div:nth-child(1)
-  > div.bm-menu-wrap
-  > div.bm-menu
-  > nav
-  :hover {
+#root > div > div > div.header > div:nth-child(1) > div.bm-menu-wrap > div.bm-menu > nav  :hover {
   cursor: hand;
   cursor: pointer;
   color: #4490bb;
 }
 
-#root
-  > div
-  > div
-  > div.header
-  > div:nth-child(1)
-  > div.bm-menu-wrap
-  > div.bm-menu
-  > nav
-  > a:nth-child(2):hover {
+#root > div > div > div.header > div:nth-child(1) > div.bm-menu-wrap > div.bm-menu > nav > a:nth-child(2):hover{
   cursor: hand;
   cursor: pointer;
   color: #4490bb;
-}
-#root
-  > div
-  > div
-  > div.header
-  > div:nth-child(1)
-  > div.bm-menu-wrap
-  > div:nth-child(2)
-  > div
-  > button
-  :hover {
+} 
+#root > div > div > div.header > div:nth-child(1) > div.bm-menu-wrap > div:nth-child(2) > div > button :hover{
   cursor: hand;
   cursor: pointer;
   color: #4490bb;
@@ -94,13 +63,13 @@ body {
 
 /* Position and sizing of burger button */
 .bm-burger-button {
-  position: relative;
-  width: 40px;
-  height: 34px;
-  right: 15px;
-  top: 16px;
-  /* right: 0; */
-  float: right;
+    position: relative;
+    width: 40px;
+    height: 34px;
+    right: 15px;
+    top: 16px;
+    /* right: 0; */
+    float: right;
 }
 
 /* Color/shape of burger icon bars */
@@ -116,10 +85,10 @@ body {
 
 /* Color/shape of close button cross */
 .bm-cross {
-  font-size: 35px;
+    font-size: 35px;
   background: #bebdc7;
 }
-.bm-cross :hover {
+.bm-cross :hover{
   cursor: hand;
   cursor: pointer;
   color: #4972a1;
@@ -150,20 +119,24 @@ body {
   margin-right: 25px;
   margin-bottom: 15px;
 }
-#manageactivitiesi {
+#manageactivitiesi{
   margin-right: 50px;
   margin-bottom: 15px;
 }
 
-#resourcesi {
+#resourcesi{
   margin-right: 46px;
   margin-bottom: 15px;
 }
-#calendari {
+#calendari{
   margin-right: 46px;
   margin-bottom: 15px;
 }
-#logouti {
+#logouti{
   margin-right: 53px;
   margin-bottom: 15px;
+
 }
+
+
+

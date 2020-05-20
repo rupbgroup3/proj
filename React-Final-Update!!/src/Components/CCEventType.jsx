@@ -861,11 +861,10 @@ class CCEventType extends Component {
             <MDBBtn
               id="IDMDBBTNn"
               onClick={this.addNewEventType}
-              color="success"
+             
             >
               הוסף סוג אירוע חדש
             </MDBBtn>
-            <br/>
             <MDBDataTable
               theadColor="#B5DBF8"
               paging={true}
@@ -900,44 +899,43 @@ class CCEventType extends Component {
               {/* <span id="IdSpan">שם סוג האירוע</span> */}
             </div>
             <div id="ID2BTN" className="row">
-        
+              <div className="col-xs-6 col-xxs-6">
+              <MDBBtn
+                onClick={this.EditTableShow}
+                id="idMDBBtnEditEvents"
+                color={"rgba(255,196,12,0.7)"}
+                rounded
+                
+              >
+                הצג אירועים קיימים
+              </MDBBtn>
+              </div>
               {this.state.EditBtn ? (
-                <div className="col-xs-6 col-xxs-6 " >
+                <div className="col-xs-6 col-xxs-6">
+
                   <MDBBtn
-              
                     id="idMDBBtnSave"
-                    color="primary"
+                    color={"rgba(255,196,12,0.7)"}
                     onClick={this.PutExistEvent}
                   >
                     שמור עריכת אירוע קיים
                   </MDBBtn>
+                  
                 </div>
+                
               ) : (
-                <div className="col-xs-6 col-xxs-6" >
-                  <MDBBtn
-                
-                    id="idMDBBtnSave"
-                    color="dark-green"
-                    onClick={this.SaveNewEvent}
-                  >
-                    שמור אירוע חדש
-                  </MDBBtn>
-                </div>
-                
-              )}
-                    <div  className="col-xs-6 col-xxs-6 ">
+                <div className="col-xs-6 col-xxs-6 ">
                 <MDBBtn
-             
-                  onClick={this.EditTableShow}
-                  id="idMDBBtnEditEvents"
-                  rounded
-                  color="warning"
+                  id="idMDBBtnSave"
+                  color={"rgba(255,196,12,0.7)"}
+                  onClick={this.SaveNewEvent}
                 >
-                  הצג אירועים קיימים
+                  שמור אירוע חדש
                 </MDBBtn>
-              </div>
+                </div>
+              )}
             </div>
-           
+
             <div className="TaskEventsDiv">
               <table>
                 <tr>
@@ -950,7 +948,7 @@ class CCEventType extends Component {
                             rounded
                             outline
                             id="idMDBBtn"
-                            color="success"
+                            color={"rgba(255,196,12,0.7)"}
                             onClick={this.MoveToEquipTable}
                           >
                             הוספה/עריכה
@@ -1021,7 +1019,7 @@ class CCEventType extends Component {
                             rounded
                             outline
                             id="idMDBBtn"
-                            color="success"
+                            color={"rgba(255,196,12,0.7)"}
                             onClick={this.MoveToTasksTable}
                           >
                             הוספה/עריכה
@@ -1071,7 +1069,7 @@ class CCEventType extends Component {
                               shaded
                               onClick={this.TaskClicked}
                               label="Button Success"
-                              variant="success"
+                              // variant="success"
                             >
                               {" "}
                               {data.TaskName}

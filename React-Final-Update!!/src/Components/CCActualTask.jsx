@@ -25,7 +25,8 @@ class CCActualTask extends Component {
       EquipClickedArr:[],
       EventName: "",
       Barcode: "",
-      TaskIndex: 0
+      TaskIndex: 0,
+      Person_plan_TasksInEvent:[]
     }
   }
   
@@ -51,9 +52,146 @@ class CCActualTask extends Component {
     let Finishminsmanip= minsF/60;
     // את המשתנה הבא נכניס בפוסט בתור שעת סיום בתוך הג'ייסון
      FinishTimeToSQL= Finishhoursmanip+Finishminsmanip;
+     if(this.props.PrevLocation=='/EquipAndTaskInActualEvent'){
+      for (let index1 = 0; index1 < this.props.ActualTaskVar.length; index1++) {
+        const element = this.props.ActualTaskVar[index1];
+        for (let index2 = 0; index2 < this.state.EmpCodesArr.length; index2++) {
+          const element2 = this.state.EmpCodesArr[index2];
+          for (let index3 = 0; index3 < this.props.Person_plan_TasksInEvent.length; index3++) {
+            const element3 = this.props.Person_plan_TasksInEvent[index3];
+            for (let index4 = 0; index4 < this.props.Actual_Event.length; index4++) {
+              const element4 = this.props.Actual_Event[index4];
+              if ((((element.exceutionDate.toString())==(this.state.DateEx.toString()))&& (element2==element.PersonEmpCode)&&(element.ToHour> FinishTimeToSQL)&& (element.FromHour>StartTimeToSQL)&& (element.ToHour>StartTimeToSQL)&&(element.FromHour< FinishTimeToSQL))
+              ||(((element.exceutionDate.toString())==(this.state.DateEx.toString()))&& (element2==element.PersonEmpCode) &&(element.ToHour< FinishTimeToSQL)&& (element.FromHour>StartTimeToSQL)&& (element.ToHour>StartTimeToSQL)&&(element.FromHour< FinishTimeToSQL))
+              ||(((element.exceutionDate.toString())==(this.state.DateEx.toString()))&& (element2==element.PersonEmpCode) &&(element.ToHour> FinishTimeToSQL)&& (element.FromHour<StartTimeToSQL) &&(element.ToHour>StartTimeToSQL)&&(element.FromHour< FinishTimeToSQL))
+              ||(((element.exceutionDate.toString())==(this.state.DateEx.toString()))&& (element2==element.PersonEmpCode)&&(element.ToHour< FinishTimeToSQL)&& (element.FromHour<StartTimeToSQL) && (element.ToHour>StartTimeToSQL)&& (element.FromHour< FinishTimeToSQL))
+              
+      
+              ||(((element3.executionDate.toString())==(this.state.DateEx.toString()))&& (element2==element3.PersonEmpCode)&&(element3.ToHour> FinishTimeToSQL)&& (element3.FromHour>StartTimeToSQL)&& (element3.ToHour>StartTimeToSQL)&&(element3.FromHour< FinishTimeToSQL))
+              ||(((element3.executionDate.toString())==(this.state.DateEx.toString()))&& (element2==element3.PersonEmpCode) &&(element3.ToHour< FinishTimeToSQL)&& (element3.FromHour>StartTimeToSQL)&& (element3.ToHour>StartTimeToSQL)&&(element3.FromHour< FinishTimeToSQL))
+              ||(((element3.executionDate.toString())==(this.state.DateEx.toString()))&& (element2==element3.PersonEmpCode) &&(element3.ToHour> FinishTimeToSQL)&& (element3.FromHour<StartTimeToSQL) &&(element3.ToHour>StartTimeToSQL)&&(element3.FromHour< FinishTimeToSQL))  
+              ||(((element3.executionDate.toString())==(this.state.DateEx.toString()))&& (element2==element3.PersonEmpCode)&&(element3.ToHour< FinishTimeToSQL)&& (element3.FromHour<StartTimeToSQL) && (element3.ToHour>StartTimeToSQL)&& (element3.FromHour< FinishTimeToSQL))   
+              
+              
+             ) {
+              counter++;
+               Swal.fire({
+                 icon: 'error',                      
+                 title: 'מתנדב אחד או יותר משובצים למשימה חופפת',
+                 text: 'אנא בחר בטווח שעות/ תאריך שונה או שבץ מתנדב אחר למשימה- ניתן לבדק שיבוצים בלוח משימות ואירועים עתידיים' ,
+               })        
+               return;
+             }
+             else if(
+              ((((element4.date.toString())==(this.state.DateEx.toString()))&& (element2==element4.EmployeeEmpCode)&&(element4.ToHour> FinishTimeToSQL)&& (element4.FromHour>StartTimeToSQL)&& (element4.ToHour>StartTimeToSQL)&&(element4.FromHour< FinishTimeToSQL))
+              ||(((element4.date.toString())==(this.state.DateEx.toString()))&& (element2==element4.EmployeeEmpCode) &&(element4.ToHour< FinishTimeToSQL)&& (element4.FromHour>StartTimeToSQL)&& (element4.ToHour>StartTimeToSQL)&&(element4.FromHour< FinishTimeToSQL))
+              ||(((element4.date.toString())==(this.state.DateEx.toString()))&& (element2==element4.EmployeeEmpCode) &&(element4.ToHour> FinishTimeToSQL)&& (element4.FromHour<StartTimeToSQL) &&(element4.ToHour>StartTimeToSQL)&&(element4.FromHour< FinishTimeToSQL))  
+              ||(((element4.date.toString())==(this.state.DateEx.toString()))&& (element2==element4.EmployeeEmpCode)&&(element4.ToHour< FinishTimeToSQL)&& (element4.FromHour<StartTimeToSQL) && (element4.ToHour>StartTimeToSQL)&& (element4.FromHour< FinishTimeToSQL)) )  
+             ) {
+              counter++;
+              Swal.fire({
+                icon: 'error',                      
+                title: 'אחראי האירוע משובץ בתור אחראי',
+                text: 'לא ניתן לשבץ אחראי אירוע גם בתור מבצע משימה, אנא בטל שיבוץ זה במשימה הנוכחית' ,
+              })        
+              return;
+             }
+            }
+          }
+        }
+      }
+    }
+    else if(this.props.PrevLocation=='/Calendar'){
+      let Person_plan_TasksInEvent={
+        PersonEmpCode: this.props.location.state.data.PersonEmpCode,
+        plan_TasksInEventActual_EventBarcode: this.props.location.state.data.plan_TasksInEventActual_EventBarcode,
+        plan_TasksInEventTaskTaskNo: this.props.location.state.data.plan_TasksInEventTaskTaskNo
+      }
+      await this.DeletePerson_plan_TasksInEvent(Person_plan_TasksInEvent);
 
+      let EmpCodesArr= [];
+      EmpCodesArr.push(this.props.location.state.data.PersonEmpCode);
 
-    
+      for (let index1 = 0; index1 < this.props.ActualTaskVar.length; index1++) {
+        const element = this.props.ActualTaskVar[index1];
+        for (let index2 = 0; index2 < EmpCodesArr.length; index2++) {
+          const element2 = EmpCodesArr[index2];
+          for (let index3 = 0; index3 < this.props.Person_plan_TasksInEvent.length; index3++) {
+            const element3 = this.props.Person_plan_TasksInEvent[index3];
+            for (let index4 = 0; index4 < this.props.Actual_Event.length; index4++) {
+              const element4 = this.props.Actual_Event[index4];
+              if ((((element.exceutionDate.toString())==(this.state.DateEx.toString()))&& (element2==element.PersonEmpCode)&&(element.ToHour> FinishTimeToSQL)&& (element.FromHour>StartTimeToSQL)&& (element.ToHour>StartTimeToSQL)&&(element.FromHour< FinishTimeToSQL))
+              ||(((element.exceutionDate.toString())==(this.state.DateEx.toString()))&& (element2==element.PersonEmpCode) &&(element.ToHour< FinishTimeToSQL)&& (element.FromHour>StartTimeToSQL)&& (element.ToHour>StartTimeToSQL)&&(element.FromHour< FinishTimeToSQL))
+              ||(((element.exceutionDate.toString())==(this.state.DateEx.toString()))&& (element2==element.PersonEmpCode) &&(element.ToHour> FinishTimeToSQL)&& (element.FromHour<StartTimeToSQL) &&(element.ToHour>StartTimeToSQL)&&(element.FromHour< FinishTimeToSQL))
+              ||(((element.exceutionDate.toString())==(this.state.DateEx.toString()))&& (element2==element.PersonEmpCode)&&(element.ToHour< FinishTimeToSQL)&& (element.FromHour<StartTimeToSQL) && (element.ToHour>StartTimeToSQL)&& (element.FromHour< FinishTimeToSQL))
+              
+      
+              ||(((element3.executionDate.toString())==(this.state.DateEx.toString()))&& (element2==element3.PersonEmpCode)&&(element3.ToHour> FinishTimeToSQL)&& (element3.FromHour>StartTimeToSQL)&& (element3.ToHour>StartTimeToSQL)&&(element3.FromHour< FinishTimeToSQL))
+              ||(((element3.executionDate.toString())==(this.state.DateEx.toString()))&& (element2==element3.PersonEmpCode) &&(element3.ToHour< FinishTimeToSQL)&& (element3.FromHour>StartTimeToSQL)&& (element3.ToHour>StartTimeToSQL)&&(element3.FromHour< FinishTimeToSQL))
+              ||(((element3.executionDate.toString())==(this.state.DateEx.toString()))&& (element2==element3.PersonEmpCode) &&(element3.ToHour> FinishTimeToSQL)&& (element3.FromHour<StartTimeToSQL) &&(element3.ToHour>StartTimeToSQL)&&(element3.FromHour< FinishTimeToSQL))  
+              ||(((element3.executionDate.toString())==(this.state.DateEx.toString()))&& (element2==element3.PersonEmpCode)&&(element3.ToHour< FinishTimeToSQL)&& (element3.FromHour<StartTimeToSQL) && (element3.ToHour>StartTimeToSQL)&& (element3.FromHour< FinishTimeToSQL))   
+                    
+             ) {
+              counter++;
+               Swal.fire({
+                 icon: 'error',                      
+                 title: 'מתנדב אחד או יותר משובצים למשימה חופפת',
+                 text: 'אנא בחר בטווח שעות/ תאריך שונה או שבץ מתנדב אחר למשימה- ניתן לבדק שיבוצים בלוח משימות ואירועים עתידיים' ,
+               })        
+               return;
+             }
+             else if(
+              ((((element4.date.toString())==(this.state.DateEx.toString()))&& (element2==element4.EmployeeEmpCode)&&(element4.ToHour> FinishTimeToSQL)&& (element4.FromHour>StartTimeToSQL)&& (element4.ToHour>StartTimeToSQL)&&(element4.FromHour< FinishTimeToSQL))
+              ||(((element4.date.toString())==(this.state.DateEx.toString()))&& (element2==element4.EmployeeEmpCode) &&(element4.ToHour< FinishTimeToSQL)&& (element4.FromHour>StartTimeToSQL)&& (element4.ToHour>StartTimeToSQL)&&(element4.FromHour< FinishTimeToSQL))
+              ||(((element4.date.toString())==(this.state.DateEx.toString()))&& (element2==element4.EmployeeEmpCode) &&(element4.ToHour> FinishTimeToSQL)&& (element4.FromHour<StartTimeToSQL) &&(element4.ToHour>StartTimeToSQL)&&(element4.FromHour< FinishTimeToSQL))  
+              ||(((element4.date.toString())==(this.state.DateEx.toString()))&& (element2==element4.EmployeeEmpCode)&&(element4.ToHour< FinishTimeToSQL)&& (element4.FromHour<StartTimeToSQL) && (element4.ToHour>StartTimeToSQL)&& (element4.FromHour< FinishTimeToSQL)) )  
+             ) {
+              counter++;
+              Swal.fire({
+                icon: 'error',                      
+                title: 'אחראי האירוע משובץ בתור אחראי',
+                text: 'לא ניתן לשבץ אחראי אירוע גם בתור מבצע משימה, אנא בטל שיבוץ זה במשימה הנוכחית' ,
+              })        
+              return;
+             }
+            }
+          }
+        }
+      }   
+    }
+    else if(this.props.PrevLocation=='/Calendar2'){
+      let Task_Person={
+        TaskTaskNo: this.props.location.state.data.TaskTaskNo,
+        PersonEmpCode: this.props.location.state.data.PersonEmpCode,
+        FromHour: this.props.location.state.data.FromHour
+      }
+      await this.props.DeleteActualTask(Task_Person);
+
+      let EmpCodesArr= [];
+      EmpCodesArr.push(this.props.location.state.data.PersonEmpCode);
+
+      for (let index1 = 0; index1 < this.props.ActualTaskVar.length; index1++) {
+        const element = this.props.ActualTaskVar[index1];
+        for (let index2 = 0; index2 < EmpCodesArr.length; index2++) {
+          const element2 = EmpCodesArr[index2];
+          if ((((element.exceutionDate.toString())==(this.state.DateEx.toString()))&& (element2==element.PersonEmpCode)&&(element.ToHour> FinishTimeToSQL)&& (element.FromHour>StartTimeToSQL)&& (element.ToHour>StartTimeToSQL)&&(element.FromHour< FinishTimeToSQL))
+           ||(((element.exceutionDate.toString())==(this.state.DateEx.toString()))&& (element2==element.PersonEmpCode) &&(element.ToHour< FinishTimeToSQL)&& (element.FromHour>StartTimeToSQL)&& (element.ToHour>StartTimeToSQL)&&(element.FromHour< FinishTimeToSQL))
+           ||(((element.exceutionDate.toString())==(this.state.DateEx.toString()))&& (element2==element.PersonEmpCode) &&(element.ToHour> FinishTimeToSQL)&& (element.FromHour<StartTimeToSQL) &&(element.ToHour>StartTimeToSQL)&&(element.FromHour< FinishTimeToSQL))
+           ||(((element.exceutionDate.toString())==(this.state.DateEx.toString()))&& (element2==element.PersonEmpCode)&&(element.ToHour< FinishTimeToSQL)&& (element.FromHour<StartTimeToSQL) && (element.ToHour>StartTimeToSQL)&& (element.FromHour< FinishTimeToSQL))
+                 
+          ) {
+           counter++;
+            Swal.fire({
+              icon: 'error',                      
+              title: 'מתנדב אחד או יותר משובצים למשימה חופפת',
+              text: 'אנא בחר בטווח שעות/ תאריך שונה או שבץ מתנדב אחר למשימה- ניתן לבדק שיבוצים בלוח משימות ואירועים עתידיים' ,
+            })        
+            return;
+          } 
+        }
+      }
+    }
+    else{
       for (let index1 = 0; index1 < this.props.ActualTaskVar.length; index1++) {
         const element = this.props.ActualTaskVar[index1];
         for (let index2 = 0; index2 < this.state.EmpCodesArr.length; index2++) {
@@ -74,8 +212,9 @@ class CCActualTask extends Component {
           } 
         }
       }
-    
-        if(this.state.EmpCodesArr.length==0){
+    }
+ 
+        if(this.state.EmpCodesArr.length==0&& this.props.PrevLocation!='/Calendar' && this.props.PrevLocation!='/Calendar2'){
           Swal.fire({
             icon: 'error',
             title: 'לא נבחרו מבצעי משימה',
@@ -99,8 +238,101 @@ class CCActualTask extends Component {
           })
           evt.preventDefault();
          }
+         else if(counter<1 &&this.props.PrevLocation=='/Calendar'){
+          let Person_plan_TasksInEvent={
+            PersonEmpCode : this.props.location.state.data.PersonEmpCode,
+            plan_TasksInEventActual_EventBarcode: this.props.location.state.data.plan_TasksInEventActual_EventBarcode,
+            plan_TasksInEventTaskTaskNo: this.props.location.state.data.plan_TasksInEventTaskTaskNo,
+            FromHour: StartTimeToSQL,
+            ToHour: FinishTimeToSQL,
+            executionDate: this.state.DateEx.toString()
+           }
+           await this.PostToActualOneTaskInEvent(Person_plan_TasksInEvent);
 
-        else if(counter<1){  
+
+       Swal.fire({
+        position: 'center',
+      icon: 'success',
+      title: 'המשימה עודכנה בהצלחה',
+      showConfirmButton: false,
+      timer: 1200
+     });
+     this.props.MyPreviousLocation('/ActualTask');
+     this.props.history.push({
+      pathname:'/Calendar'
+    }) 
+  }
+  else if(counter<1 &&this.props.PrevLocation=='/Calendar2'){
+  
+    let Task_Person={
+      TaskTaskNo:  this.props.location.state.data.TaskTaskNo,
+      PersonEmpCode: this.props.location.state.data.PersonEmpCode,
+      FromHour: StartTimeToSQL,
+      ToHour: FinishTimeToSQL,
+      ReportedByPerson: "false",
+      ApprovedByManager: "false",
+      exceutionDate: this.state.DateEx.toString()
+    }
+    
+     this.props.PostActualTask(Task_Person);
+    
+    Swal.fire({
+      position: 'center',
+    icon: 'success',
+    title: 'המשימה עודכנה בהצלחה',
+    showConfirmButton: false,
+    timer: 1200
+   });
+   this.props.MyPreviousLocation('/ActualTask');
+   this.props.history.push({
+    pathname:'/Calendar'
+  }) 
+  }
+         else if(counter<1&& this.props.PrevLocation=='/EquipAndTaskInActualEvent'  && this.state.TaskIndex!= this.props.location.state.TaskClickedArr.length-1){
+           let Person_plan_TasksInEventState= this.state.Person_plan_TasksInEvent;
+
+         for (let index = 0; index < this.state.EmpCodesArr.length; index++) {
+          const element = this.state.EmpCodesArr[index];
+          console.log(element)
+          let Person_plan_TasksInEvent={
+            PersonEmpCode : element,
+            plan_TasksInEventActual_EventBarcode: this.props.location.state.Barcode,
+            plan_TasksInEventTaskTaskNo: this.props.location.state.TaskClickedArr[this.state.TaskIndex].TaskNo,
+            FromHour: StartTimeToSQL,
+            ToHour: FinishTimeToSQL,
+            executionDate: this.state.DateEx.toString()
+           }
+
+         Person_plan_TasksInEventState.push(Person_plan_TasksInEvent);
+        }        
+        this.setState({Person_plan_TasksInEvent:Person_plan_TasksInEventState })
+        this.TaskIndex();
+        this.CleanValues();
+         }
+
+         else if(counter<1&& this.props.PrevLocation=='/EquipAndTaskInActualEvent'  && this.state.TaskIndex== this.props.location.state.TaskClickedArr.length-1){
+          let Person_plan_TasksInEventState= this.state.Person_plan_TasksInEvent;
+
+          for (let index = 0; index < this.state.EmpCodesArr.length; index++) {
+           const element = this.state.EmpCodesArr[index];
+           console.log(element)
+           let Person_plan_TasksInEvent={
+             PersonEmpCode : element,
+             plan_TasksInEventActual_EventBarcode: this.props.location.state.Barcode,
+             plan_TasksInEventTaskTaskNo: this.props.location.state.TaskClickedArr[this.state.TaskIndex].TaskNo,
+             FromHour: StartTimeToSQL,
+             ToHour: FinishTimeToSQL,
+             executionDate: this.state.DateEx.toString()
+            }
+ 
+          Person_plan_TasksInEventState.push(Person_plan_TasksInEvent);
+         }
+         this.setState({Person_plan_TasksInEvent:Person_plan_TasksInEventState })
+
+         this.PostAllTasksIntoActualEvent(evt);
+
+         }
+        else if(counter<1 &&this.props.PrevLocation!='/EquipAndTaskInActualEvent'){  
         for (let index = 0; index < this.state.EmpCodesArr.length; index++) {
        
           const element = this.state.EmpCodesArr[index];
@@ -116,7 +348,7 @@ class CCActualTask extends Component {
         }
          this.props.PostActualTask(Task_Person);
         }
-  
+        
         Swal.fire({
           position: 'center',
         icon: 'success',
@@ -128,9 +360,95 @@ class CCActualTask extends Component {
        this.props.history.push({
         pathname:'/ManageActivities'
       }) 
+
     }   
   }
 
+  PostToActualOneTaskInEvent=async(Person_plan_TasksInEvent)=>{
+    await this.props.PostPerson_plan_TasksInEvent(Person_plan_TasksInEvent);
+  }
+
+DeletePerson_plan_TasksInEvent=async(Person_plan_TasksInEvent)=>{
+  await this.props.DeletePerson_plan_TasksInEvent(Person_plan_TasksInEvent);
+}
+
+  PostAllTasksIntoActualEvent=async(evt)=>{
+    evt.preventDefault();
+
+    setTimeout(
+     await function() {
+        for (let index = 0; index < this.state.Person_plan_TasksInEvent.length; index++) {
+          const element = this.state.Person_plan_TasksInEvent[index];
+          console.log(element);
+          let Person_plan_TasksInEvent={
+            PersonEmpCode: element.PersonEmpCode,
+            plan_TasksInEventActual_EventBarcode: element.plan_TasksInEventActual_EventBarcode,
+            plan_TasksInEventTaskTaskNo: element.plan_TasksInEventTaskTaskNo,
+            FromHour: element.FromHour,
+            ToHour: element.ToHour,
+            executionDate: element.executionDate
+          }
+           this.props.PostPerson_plan_TasksInEvent(Person_plan_TasksInEvent);
+        } 
+        
+      }.bind(this),
+      1500
+    );
+      
+    setTimeout(
+      await function() {
+        for (let index = 0; index < this.props.location.state.EquipClickedArr.length; index++) {
+          const element = this.props.location.state.EquipClickedArr[index];
+          let EquipmentType_Actual_Event={
+            EquipmentTypeCode: element.Code,
+            Actual_EventBarcode: this.props.location.state.Barcode 
+          }
+           this.props.PostEquipmentType_Actual_Event(EquipmentType_Actual_Event);
+        }
+
+        this.props.MyPreviousLocation('/ActualTask');
+        this.props.history.push({
+         pathname:'/'
+       }) 
+
+let timerInterval
+Swal.fire({
+  title: 'אנא המתן להזנת פרטי האירוע',
+  timer: 2000,
+  timerProgressBar: true,
+  onBeforeOpen: () => {
+    Swal.showLoading()
+    timerInterval = setInterval(() => {
+      const content = Swal.getContent()
+      if (content) {
+        const b = content.querySelector('b')
+        if (b) {
+          b.textContent = Swal.getTimerLeft()
+        }
+      }
+    }, 100)
+  },
+  onClose: () => {
+    clearInterval(timerInterval)
+    Swal.fire({
+      position: 'center',
+    icon: 'success',
+    title: 'כל שלבי הגדרת אירוע בפועל ושיוך משימות וציוד לאירוע הסתיימו',
+    showConfirmButton: false,
+    timer: 2000
+   });
+  }
+}).then((result) => {
+  /* Read more about handling dismissals below */
+  if (result.dismiss === Swal.DismissReason.timer) {
+    console.log('I was closed by the timer')
+  }
+})     
+      }.bind(this),
+      1500
+    );
+   
+  }
 
   ChooseTaskRules=()=>{
     this.setState({AddingEmpsModal: true});
@@ -207,7 +525,7 @@ class CCActualTask extends Component {
               ISEMPLOYEE: data.IsEmployee==0? "מתנדב": "עובד",
               actions: <div style={{textAlign:'center'}}>
                                         
-                                  <MDBBtn id="AddToTask" onClick={()=>this.AddPersonToActualTask(data)} color="warning">שבץ למשימה</MDBBtn>
+                                  <MDBBtn onClick={()=>this.AddPersonToActualTask(data)} color="warning">שבץ למשימה</MDBBtn>
                       </div>
             }
             newRows.push(SpecificPerson)
@@ -364,7 +682,7 @@ class CCActualTask extends Component {
             ISEMPLOYEE: data.IsEmployee==0? "מתנדב": "עובד",
             actions: <div style={{textAlign:'center'}}>
                         
-                        <MDBBtn id="AddToTask" onClick={()=>this.AddPersonToActualTask(data)} color="warning">שבץ למשימה</MDBBtn>
+                        <MDBBtn onClick={()=>this.AddPersonToActualTask(data)} color="warning">שבץ למשימה</MDBBtn>
                     </div>
           }
           :""
@@ -378,6 +696,8 @@ class CCActualTask extends Component {
   }
   componentDidMount(){
     this.props.GetActualTask();
+    this.props.GetPerson_plan_TasksInEvent();
+    this.props.GetActualEvent();
     let today = new Date(),
     date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
     let TodayDate= (date.toString()).split('-');
@@ -416,11 +736,37 @@ class CCActualTask extends Component {
     console.log(FullCurrenttime)   
     setTimeout(
       function() {
+        if(this.state.PrevLocation=='/EquipAndTaskInActualEvent'&& this.props.location.state!=undefined)
+        {
+          this.setState({
+            TaskClickedArr: this.props.location.state.TaskClickedArr,
+            EquipClickedArr: this.props.location.state.EquipClickedArr,
+            EventName:this.props.location.state.EventName,
+            Barcode: this.props.location.state.Barcode            
+          })
+        }
+        else if(this.props.PrevLocation=='/Calendar'){
+          let data= this.props.location.state.data;
+          this.setState({
+            StartHour: (Math.trunc(data.FromHour/60)) <10 && Math.trunc((data.FromHour-(Math.trunc(data.FromHour)))*60)!=0 && Math.trunc((data.FromHour-(Math.trunc(data.FromHour)))*60)>9? "0"+ (Math.trunc(data.FromHour/60))+ ":"+Math.round( Math.trunc((data.FromHour-(Math.trunc(data.FromHour)))*60)): (Math.trunc(data.FromHour/60)) <10 && Math.trunc((data.FromHour-(Math.trunc(data.FromHour)))*60)!=0 && Math.trunc((data.FromHour-(Math.trunc(data.FromHour)))*60)<10?  "0"+ (Math.trunc(data.FromHour/60))+ ":0"+Math.round( Math.trunc((data.FromHour-(Math.trunc(data.FromHour)))*60)): (Math.trunc(data.FromHour/60)) <10 && Math.trunc((data.FromHour-(Math.trunc(data.FromHour)))*60)==0 &&Math.round(Math.trunc((data.FromHour/60-(Math.trunc(data.FromHour/60)))*60))>9? "0"+ (Math.trunc(data.FromHour/60))+ ":"+ Math.round(Math.trunc((data.FromHour/60-(Math.trunc(data.FromHour/60)))*60)): (Math.trunc(data.FromHour/60)) <10 && Math.trunc((data.FromHour-(Math.trunc(data.FromHour)))*60)==0 &&Math.round(Math.trunc((data.FromHour/60-(Math.trunc(data.FromHour/60)))*60))<10? "0"+ (Math.trunc(data.FromHour/60))+ ":0"+ Math.round(Math.trunc((data.FromHour/60-(Math.trunc(data.FromHour/60)))*60)): (Math.trunc(data.FromHour/60)) >9 && Math.trunc((data.FromHour-(Math.trunc(data.FromHour)))*60)==0&& Math.round( Math.trunc((data.FromHour/60-(Math.trunc(data.FromHour/60)))*60))>9? (Math.trunc(data.FromHour/60))+ ":"+Math.round( Math.trunc((data.FromHour/60-(Math.trunc(data.FromHour/60)))*60)) : (Math.trunc(data.FromHour/60)) >9 && Math.trunc((data.FromHour-(Math.trunc(data.FromHour)))*60)==0&& Math.round( Math.trunc((data.FromHour/60-(Math.trunc(data.FromHour/60)))*60))<10? (Math.trunc(data.FromHour/60))+ ":0"+Math.round( Math.trunc((data.FromHour/60-(Math.trunc(data.FromHour/60)))*60)): (Math.trunc(data.FromHour/60)) >9 && Math.trunc((data.FromHour-(Math.trunc(data.FromHour)))*60)!=0&& Math.trunc((data.FromHour-(Math.trunc(data.FromHour)))*60)>9? (Math.trunc(data.FromHour/60))+ ":"+Math.round( Math.trunc((data.FromHour-(Math.trunc(data.FromHour)))*60)) : (Math.trunc(data.FromHour/60)) >9 && Math.trunc((data.FromHour-(Math.trunc(data.FromHour)))*60)!=0&& Math.trunc((data.FromHour-(Math.trunc(data.FromHour)))*60)<10?  (Math.trunc(data.FromHour/60))+ ":0"+Math.round( Math.trunc((data.FromHour-(Math.trunc(data.FromHour)))*60)):"",
+            FinishHour: (Math.trunc(data.ToHour/60)) <10 && Math.trunc((data.ToHour-(Math.trunc(data.ToHour)))*60)!=0 && Math.trunc((data.ToHour-(Math.trunc(data.ToHour)))*60)>9? "0"+ (Math.trunc(data.ToHour/60))+ ":"+Math.round( Math.trunc((data.ToHour-(Math.trunc(data.ToHour)))*60)): (Math.trunc(data.ToHour/60)) <10 && Math.trunc((data.ToHour-(Math.trunc(data.ToHour)))*60)!=0 && Math.trunc((data.ToHour-(Math.trunc(data.ToHour)))*60)<10?  "0"+ (Math.trunc(data.ToHour/60))+ ":0"+Math.round( Math.trunc((data.ToHour-(Math.trunc(data.ToHour)))*60)): (Math.trunc(data.ToHour/60)) <10 && Math.trunc((data.ToHour-(Math.trunc(data.ToHour)))*60)==0 &&Math.round(Math.trunc((data.ToHour/60-(Math.trunc(data.ToHour/60)))*60))>9? "0"+ (Math.trunc(data.ToHour/60))+ ":"+ Math.round(Math.trunc((data.ToHour/60-(Math.trunc(data.ToHour/60)))*60)): (Math.trunc(data.ToHour/60)) <10 && Math.trunc((data.ToHour-(Math.trunc(data.ToHour)))*60)==0 &&Math.round(Math.trunc((data.ToHour/60-(Math.trunc(data.ToHour/60)))*60))<10? "0"+ (Math.trunc(data.ToHour/60))+ ":0"+ Math.round(Math.trunc((data.ToHour/60-(Math.trunc(data.ToHour/60)))*60)): (Math.trunc(data.ToHour/60)) >9 && Math.trunc((data.ToHour-(Math.trunc(data.ToHour)))*60)==0&& Math.round( Math.trunc((data.ToHour/60-(Math.trunc(data.ToHour/60)))*60))>9? (Math.trunc(data.ToHour/60))+ ":"+Math.round( Math.trunc((data.ToHour/60-(Math.trunc(data.ToHour/60)))*60)) : (Math.trunc(data.ToHour/60)) >9 && Math.trunc((data.ToHour-(Math.trunc(data.ToHour)))*60)==0&& Math.round( Math.trunc((data.ToHour/60-(Math.trunc(data.ToHour/60)))*60))<10? (Math.trunc(data.ToHour/60))+ ":0"+Math.round( Math.trunc((data.ToHour/60-(Math.trunc(data.ToHour/60)))*60)): (Math.trunc(data.ToHour/60)) >9 && Math.trunc((data.ToHour-(Math.trunc(data.ToHour)))*60)!=0&& Math.trunc((data.ToHour-(Math.trunc(data.ToHour)))*60)>9? (Math.trunc(data.ToHour/60))+ ":"+Math.round( Math.trunc((data.ToHour-(Math.trunc(data.ToHour)))*60)) : (Math.trunc(data.ToHour/60)) >9 && Math.trunc((data.ToHour-(Math.trunc(data.ToHour)))*60)!=0&& Math.trunc((data.ToHour-(Math.trunc(data.ToHour)))*60)<10?  (Math.trunc(data.ToHour/60))+ ":0"+Math.round( Math.trunc((data.ToHour-(Math.trunc(data.ToHour)))*60)):"",
+            DateEx: data.executionDate 
+          })
+        }
+        else if(this.props.PrevLocation=='/Calendar2'){
+          let data= this.props.location.state.data;
+          this.setState({
+            StartHour: (Math.trunc(data.FromHour/60)) <10 && Math.trunc((data.FromHour-(Math.trunc(data.FromHour)))*60)!=0 && Math.trunc((data.FromHour-(Math.trunc(data.FromHour)))*60)>9? "0"+ (Math.trunc(data.FromHour/60))+ ":"+Math.round( Math.trunc((data.FromHour-(Math.trunc(data.FromHour)))*60)): (Math.trunc(data.FromHour/60)) <10 && Math.trunc((data.FromHour-(Math.trunc(data.FromHour)))*60)!=0 && Math.trunc((data.FromHour-(Math.trunc(data.FromHour)))*60)<10?  "0"+ (Math.trunc(data.FromHour/60))+ ":0"+Math.round( Math.trunc((data.FromHour-(Math.trunc(data.FromHour)))*60)): (Math.trunc(data.FromHour/60)) <10 && Math.trunc((data.FromHour-(Math.trunc(data.FromHour)))*60)==0 &&Math.round(Math.trunc((data.FromHour/60-(Math.trunc(data.FromHour/60)))*60))>9? "0"+ (Math.trunc(data.FromHour/60))+ ":"+ Math.round(Math.trunc((data.FromHour/60-(Math.trunc(data.FromHour/60)))*60)): (Math.trunc(data.FromHour/60)) <10 && Math.trunc((data.FromHour-(Math.trunc(data.FromHour)))*60)==0 &&Math.round(Math.trunc((data.FromHour/60-(Math.trunc(data.FromHour/60)))*60))<10? "0"+ (Math.trunc(data.FromHour/60))+ ":0"+ Math.round(Math.trunc((data.FromHour/60-(Math.trunc(data.FromHour/60)))*60)): (Math.trunc(data.FromHour/60)) >9 && Math.trunc((data.FromHour-(Math.trunc(data.FromHour)))*60)==0&& Math.round( Math.trunc((data.FromHour/60-(Math.trunc(data.FromHour/60)))*60))>9? (Math.trunc(data.FromHour/60))+ ":"+Math.round( Math.trunc((data.FromHour/60-(Math.trunc(data.FromHour/60)))*60)) : (Math.trunc(data.FromHour/60)) >9 && Math.trunc((data.FromHour-(Math.trunc(data.FromHour)))*60)==0&& Math.round( Math.trunc((data.FromHour/60-(Math.trunc(data.FromHour/60)))*60))<10? (Math.trunc(data.FromHour/60))+ ":0"+Math.round( Math.trunc((data.FromHour/60-(Math.trunc(data.FromHour/60)))*60)): (Math.trunc(data.FromHour/60)) >9 && Math.trunc((data.FromHour-(Math.trunc(data.FromHour)))*60)!=0&& Math.trunc((data.FromHour-(Math.trunc(data.FromHour)))*60)>9? (Math.trunc(data.FromHour/60))+ ":"+Math.round( Math.trunc((data.FromHour-(Math.trunc(data.FromHour)))*60)) : (Math.trunc(data.FromHour/60)) >9 && Math.trunc((data.FromHour-(Math.trunc(data.FromHour)))*60)!=0&& Math.trunc((data.FromHour-(Math.trunc(data.FromHour)))*60)<10?  (Math.trunc(data.FromHour/60))+ ":0"+Math.round( Math.trunc((data.FromHour-(Math.trunc(data.FromHour)))*60)):"",
+            FinishHour: (Math.trunc(data.ToHour/60)) <10 && Math.trunc((data.ToHour-(Math.trunc(data.ToHour)))*60)!=0 && Math.trunc((data.ToHour-(Math.trunc(data.ToHour)))*60)>9? "0"+ (Math.trunc(data.ToHour/60))+ ":"+Math.round( Math.trunc((data.ToHour-(Math.trunc(data.ToHour)))*60)): (Math.trunc(data.ToHour/60)) <10 && Math.trunc((data.ToHour-(Math.trunc(data.ToHour)))*60)!=0 && Math.trunc((data.ToHour-(Math.trunc(data.ToHour)))*60)<10?  "0"+ (Math.trunc(data.ToHour/60))+ ":0"+Math.round( Math.trunc((data.ToHour-(Math.trunc(data.ToHour)))*60)): (Math.trunc(data.ToHour/60)) <10 && Math.trunc((data.ToHour-(Math.trunc(data.ToHour)))*60)==0 &&Math.round(Math.trunc((data.ToHour/60-(Math.trunc(data.ToHour/60)))*60))>9? "0"+ (Math.trunc(data.ToHour/60))+ ":"+ Math.round(Math.trunc((data.ToHour/60-(Math.trunc(data.ToHour/60)))*60)): (Math.trunc(data.ToHour/60)) <10 && Math.trunc((data.ToHour-(Math.trunc(data.ToHour)))*60)==0 &&Math.round(Math.trunc((data.ToHour/60-(Math.trunc(data.ToHour/60)))*60))<10? "0"+ (Math.trunc(data.ToHour/60))+ ":0"+ Math.round(Math.trunc((data.ToHour/60-(Math.trunc(data.ToHour/60)))*60)): (Math.trunc(data.ToHour/60)) >9 && Math.trunc((data.ToHour-(Math.trunc(data.ToHour)))*60)==0&& Math.round( Math.trunc((data.ToHour/60-(Math.trunc(data.ToHour/60)))*60))>9? (Math.trunc(data.ToHour/60))+ ":"+Math.round( Math.trunc((data.ToHour/60-(Math.trunc(data.ToHour/60)))*60)) : (Math.trunc(data.ToHour/60)) >9 && Math.trunc((data.ToHour-(Math.trunc(data.ToHour)))*60)==0&& Math.round( Math.trunc((data.ToHour/60-(Math.trunc(data.ToHour/60)))*60))<10? (Math.trunc(data.ToHour/60))+ ":0"+Math.round( Math.trunc((data.ToHour/60-(Math.trunc(data.ToHour/60)))*60)): (Math.trunc(data.ToHour/60)) >9 && Math.trunc((data.ToHour-(Math.trunc(data.ToHour)))*60)!=0&& Math.trunc((data.ToHour-(Math.trunc(data.ToHour)))*60)>9? (Math.trunc(data.ToHour/60))+ ":"+Math.round( Math.trunc((data.ToHour-(Math.trunc(data.ToHour)))*60)) : (Math.trunc(data.ToHour/60)) >9 && Math.trunc((data.ToHour-(Math.trunc(data.ToHour)))*60)!=0&& Math.trunc((data.ToHour-(Math.trunc(data.ToHour)))*60)<10?  (Math.trunc(data.ToHour/60))+ ":0"+Math.round( Math.trunc((data.ToHour-(Math.trunc(data.ToHour)))*60)):"",
+            DateEx: data.exceutionDate 
+          })
+        }
+        else{
           this.setState({today: FullCurrentDate})
           this.setState({DateEx:FullCurrentDate })
           this.setState({StartHour: FullCurrenttime,
           FinishHour: FullCurrenttime})
-        
+        }
       }
       .bind(this),
       1000
@@ -439,7 +785,7 @@ class CCActualTask extends Component {
               ISEMPLOYEE: data.IsEmployee==0? "מתנדב": "עובד",
               actions: <div style={{textAlign:'center'}}>
                           
-                          <MDBBtn id="AddToTask" onClick={()=>this.AddPersonToActualTask(data)} color="warning">שבץ למשימה</MDBBtn>
+                          <MDBBtn onClick={()=>this.AddPersonToActualTask(data)} color="warning">שבץ למשימה</MDBBtn>
                       </div>
             }
             ))}) 
@@ -449,10 +795,37 @@ class CCActualTask extends Component {
   );
   
   }
+  DeleteActualEvent=(Barcode)=>{
+
+    this.props.DeleteActualEvent(Barcode);
+  }
 
   BackClicked=()=>{
-
-    if(this.props.PrevLocation=="/ManageActivities"){
+    if(this.props.PrevLocation=="/EquipAndTaskInActualEvent"){
+      Swal.fire({
+        title: "?האם לבטל את התהליך שהתחלת",
+        text: "בלחיצה על כפתור חזור תהליך תזמון האירוע שהתחלת יבוטל ולא יישמר משום שלא תוזמנו לו משימות בפועל, כדי להמשיך את התהליך לחץ על לא",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'כן',
+        cancelButtonText: "לא"
+      }).then((result) => {
+        if (result.value) {
+          this.DeleteActualEvent(this.props.Actual_Event[this.props.Actual_Event.length-1].Barcode);
+           Swal.fire(
+            '!בוטל',
+            'תהליך תזמון האירוע ושיוך משימות וציוד בוטל',
+            'success'
+          ) 
+           this.props.history.push({
+            pathname:'/ManageActivities'
+          })       
+        }
+      }) 
+    }
+    else if(this.props.PrevLocation=="/ManageActivities"){
       Swal.fire({
         title: "?האם לבטל את התהליך שהתחלת",
         text: "בלחיצה על כפתור חזור תהליך תזמון משימה בפועל יבוטל ולא יישמר",
@@ -475,7 +848,29 @@ class CCActualTask extends Component {
         }
       }) 
     }
-    
+    else if(this.props.PrevLocation=="/Calendar"|| this.props.PrevLocation=='/Calendar2'){
+      Swal.fire({
+        title: "?האם לבטל את התהליך שהתחלת",
+        text: "בלחיצה על כפתור חזור תהליך עדכון משימה בפועל יבוטל ולא יישמר",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'כן',
+        cancelButtonText: "לא"
+      }).then((result) => {
+        if (result.value) {   
+           Swal.fire(
+            '!בוטל',
+            'תהליך עדכון משימה בפועל בוטל',
+            'success'
+          ) 
+           this.props.history.push({
+            pathname:'/Calendar'
+          })       
+        }
+      }) 
+    }
     else{
       this.props.history.push({
         pathname:'/ManageActivities'
@@ -483,8 +878,31 @@ class CCActualTask extends Component {
     }
   }
   HomeClicked=()=>{
-  
-    if(this.props.PrevLocation=="/ManageActivities"){
+    if(this.props.PrevLocation=="/EquipAndTaskInActualEvent"){
+      Swal.fire({
+        title: "?האם לבטל את התהליך שהתחלת",
+        text: " תהליך תזמון האירוע שהתחלת יבוטל ולא יישמר משום שלא תוזמנו לו משימות בפועל, כדי להמשיך את התהליך לחץ על לא",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'כן',
+        cancelButtonText: "לא"
+      }).then((result) => {
+        if (result.value) {
+           this.DeleteActualEvent(this.props.Actual_Event[this.props.Actual_Event.length-1].Barcode);
+           Swal.fire(
+             '!בוטל',
+             'תהליך תזמון האירוע ושיוך משימות וציוד בוטל',
+             'success'
+           ) 
+           this.props.history.push({
+            pathname:'/home'
+          })      
+        }
+      }) 
+    }
+    else if(this.props.PrevLocation=="/ManageActivities"){
       Swal.fire({
         title: "?האם לבטל את התהליך שהתחלת",
         text: " תהליך תזמון משימה בפועל יבוטל ולא יישמר",
@@ -507,6 +925,29 @@ class CCActualTask extends Component {
         }
       }) 
     }
+    else if(this.props.PrevLocation=="/Calendar"|| this.props.PrevLocation=='/Calendar2'){
+      Swal.fire({
+        title: "?האם לבטל את התהליך שהתחלת",
+        text: " תהליך עדכון משימה בפועל יבוטל ולא יישמר",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'כן',
+        cancelButtonText: "לא"
+      }).then((result) => {
+        if (result.value) { 
+           Swal.fire(
+            '!בוטל',
+            'תהליך עדכון משימה בפועל בוטל',
+            'success'
+          ) 
+           this.props.history.push({
+            pathname:'/home'
+          })       
+        }
+      }) 
+    }
     else{
       this.props.MyPreviousLocation(window.location.pathname);
       this.props.history.push({
@@ -515,8 +956,38 @@ class CCActualTask extends Component {
     }
   }
   LogOutClicked=()=>{
-  
-    if(this.props.PrevLocation=="/ManageActivities"){
+    if(this.props.PrevLocation=="/EquipAndTaskInActualEvent"){
+      Swal.fire({
+        title: "?האם לבטל את התהליך שהתחלת",
+        text: "בלחיצה על כפתור התנתק תהליך תזמון האירוע שהתחלת יבוטל ולא יישמר משום שלא תוזמנו לו משימות בפועל, כדי להמשיך את התהליך לחץ על לא",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'כן',
+        cancelButtonText: "לא"
+      }).then((result) => {
+        if (result.value) {
+           this.DeleteActualEvent(this.props.Actual_Event[this.props.Actual_Event.length-1].Barcode);
+           Swal.fire(
+            '!בוטל',
+            'תהליך תזמון משימה בפועל בוטל',
+            'success'
+          ) 
+           this.props.history.push({
+            pathname:'/'
+          }) 
+          Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: 'התנתקת מהמערכת בהצלחה',
+            showConfirmButton: false,
+            timer: 1200
+          })           
+        }
+      }) 
+    }
+    else if(this.props.PrevLocation=="/ManageActivities"){
       Swal.fire({
         title: "?האם לבטל את התהליך שהתחלת",
         text: "בלחיצה על כפתור התנתק תהליך תזמון משימה בפועל יבוטל ולא יישמר",
@@ -546,7 +1017,36 @@ class CCActualTask extends Component {
         }
       }) 
     }
-   
+    else if(this.props.PrevLocation=="/Calendar"|| this.props.PrevLocation=='/Calendar2'){
+      Swal.fire({
+        title: "?האם לבטל את התהליך שהתחלת",
+        text: "בלחיצה על כפתור התנתק תהליך עדכון משימה בפועל יבוטל ולא יישמר",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'כן',
+        cancelButtonText: "לא"
+      }).then((result) => {
+        if (result.value) {  
+           Swal.fire(
+            '!בוטל',
+            'תהליך עדכון משימה בפועל בוטל',
+            'success'
+          ) 
+           this.props.history.push({
+            pathname:'/'
+          }) 
+          Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: 'התנתקת מהמערכת בהצלחה',
+            showConfirmButton: false,
+            timer: 1200
+          })      
+        }
+      }) 
+    }
     else{
       this.props.history.push({
         pathname:'/login'
@@ -563,8 +1063,31 @@ class CCActualTask extends Component {
   }
 
   ManageActivitiesClicked=()=>{
-  
-    if(this.props.PrevLocation=="/ManageActivities"){
+    if(this.props.PrevLocation=="/EquipAndTaskInActualEvent"){
+      Swal.fire({
+        title: "?האם לבטל את התהליך שהתחלת",
+        text: " תהליך תזמון האירוע שהתחלת יבוטל ולא יישמר משום שלא תוזמנו לו משימות בפועל, כדי להמשיך את התהליך לחץ על לא",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'כן',
+        cancelButtonText: "לא"
+      }).then((result) => {
+        if (result.value) {
+           this.DeleteActualEvent(this.props.Actual_Event[this.props.Actual_Event.length-1].Barcode);
+           Swal.fire(
+             '!בוטל',
+             'תהליך תזמון האירוע ושיוך משימות וציוד בוטל',
+             'success'
+           ) 
+           this.props.history.push({
+            pathname:'/ManageActivities'
+          })      
+        }
+      }) 
+    }
+    else if(this.props.PrevLocation=="/ManageActivities"){
       Swal.fire({
         title: "?האם לבטל את התהליך שהתחלת",
         text: " תהליך תזמון משימה בפועל יבוטל ולא יישמר",
@@ -587,7 +1110,29 @@ class CCActualTask extends Component {
         }
       }) 
     }
-  
+    else if(this.props.PrevLocation=="/Calendar"|| this.props.PrevLocation=='/Calendar2'){
+      Swal.fire({
+        title: "?האם לבטל את התהליך שהתחלת",
+        text: " תהליך עדכון משימה בפועל יבוטל ולא יישמר",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'כן',
+        cancelButtonText: "לא"
+      }).then((result) => {
+        if (result.value) { 
+           Swal.fire(
+            '!בוטל',
+            'תהליך עדכון משימה בפועל בוטל',
+            'success'
+          ) 
+           this.props.history.push({
+            pathname:'/ManageActivities'
+          })       
+        }
+      }) 
+    }
     else{
       this.props.MyPreviousLocation(window.location.pathname);
       this.props.history.push({
@@ -597,8 +1142,31 @@ class CCActualTask extends Component {
   }
 
   ResourcesClicked=()=>{
- 
-    if(this.props.PrevLocation=="/ManageActivities"){
+    if(this.props.PrevLocation=="/EquipAndTaskInActualEvent"){
+      Swal.fire({
+        title: "?האם לבטל את התהליך שהתחלת",
+        text: " תהליך תזמון האירוע שהתחלת יבוטל ולא יישמר משום שלא תוזמנו לו משימות בפועל, כדי להמשיך את התהליך לחץ על לא",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'כן',
+        cancelButtonText: "לא"
+      }).then((result) => {
+        if (result.value) {
+           this.DeleteActualEvent(this.props.Actual_Event[this.props.Actual_Event.length-1].Barcode);
+           Swal.fire(
+             '!בוטל',
+             'תהליך תזמון האירוע ושיוך משימות וציוד בוטל',
+             'success'
+           ) 
+           this.props.history.push({
+            pathname:'/Resources'
+          })      
+        }
+      }) 
+    }
+    else if(this.props.PrevLocation=="/ManageActivities"){
       Swal.fire({
         title: "?האם לבטל את התהליך שהתחלת",
         text: " תהליך תזמון משימה בפועל יבוטל ולא יישמר",
@@ -621,6 +1189,29 @@ class CCActualTask extends Component {
         }
       }) 
     }
+    else if(this.props.PrevLocation=="/Calendar"|| this.props.PrevLocation=='/Calendar2'){
+      Swal.fire({
+        title: "?האם לבטל את התהליך שהתחלת",
+        text: " תהליך עדכון משימה בפועל יבוטל ולא יישמר",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'כן',
+        cancelButtonText: "לא"
+      }).then((result) => {
+        if (result.value) { 
+           Swal.fire(
+            '!בוטל',
+            'תהליך עדכון משימה בפועל בוטל',
+            'success'
+          ) 
+           this.props.history.push({
+            pathname:'/Resources'
+          })       
+        }
+      }) 
+    }
     else{
       this.props.MyPreviousLocation(window.location.pathname);
       this.props.history.push({
@@ -630,8 +1221,31 @@ class CCActualTask extends Component {
   }
 
   CalendarClicked=()=>{
-  
-    if(this.props.PrevLocation=="/ManageActivities"){
+    if(this.props.PrevLocation=="/EquipAndTaskInActualEvent"){
+      Swal.fire({
+        title: "?האם לבטל את התהליך שהתחלת",
+        text: " תהליך תזמון האירוע שהתחלת יבוטל ולא יישמר משום שלא תוזמנו לו משימות בפועל, כדי להמשיך את התהליך לחץ על לא",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'כן',
+        cancelButtonText: "לא"
+      }).then((result) => {
+        if (result.value) {
+           this.DeleteActualEvent(this.props.Actual_Event[this.props.Actual_Event.length-1].Barcode);
+           Swal.fire(
+             '!בוטל',
+             'תהליך תזמון האירוע ושיוך משימות וציוד בוטל',
+             'success'
+           ) 
+           this.props.history.push({
+            pathname:'/Calendar'
+          })      
+        }
+      }) 
+    }
+    else if(this.props.PrevLocation=="/ManageActivities"){
       Swal.fire({
         title: "?האם לבטל את התהליך שהתחלת",
         text: " תהליך תזמון משימה בפועל יבוטל ולא יישמר",
@@ -646,6 +1260,29 @@ class CCActualTask extends Component {
            Swal.fire(
             '!בוטל',
             'תהליך תזמון משימה בפועל בוטל',
+            'success'
+          ) 
+           this.props.history.push({
+            pathname:'/Calendar'
+          })       
+        }
+      }) 
+    }
+    else if(this.props.PrevLocation=="/Calendar"|| this.props.PrevLocation=='/Calendar2'){
+      Swal.fire({
+        title: "?האם לבטל את התהליך שהתחלת",
+        text: " תהליך עדכון משימה בפועל יבוטל ולא יישמר",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'כן',
+        cancelButtonText: "לא"
+      }).then((result) => {
+        if (result.value) { 
+           Swal.fire(
+            '!בוטל',
+            'תהליך עדכון משימה בפועל בוטל',
             'success'
           ) 
            this.props.history.push({
@@ -704,7 +1341,7 @@ class CCActualTask extends Component {
         return (
         
             <div>
-              {
+                       {
                 this.state.AddingEmpsModal?"":
 
             
@@ -754,9 +1391,7 @@ class CCActualTask extends Component {
               <br/>
             </div>
               }
-
 {this.state.AddingEmpsModal?
-
 
 <div id="editDiv">
 <div className="header">  
@@ -811,6 +1446,8 @@ class CCActualTask extends Component {
           <div className="container-fluid">
             <div className="navbar-header">
               {
+                this.props.PrevLocation=='/EquipAndTaskInActualEvent'?
+                <h1>שיבוץ למשימה: {this.props.location.state.TaskClickedArr[this.state.TaskIndex].TaskName}</h1>:
 
                 <h1>שיבוץ למשימה: {this.props.location.state== undefined?"": this.props.location.state.data.TaskName}</h1>
               }
@@ -819,7 +1456,7 @@ class CCActualTask extends Component {
           </div>
         </nav>
     <div style={{padding:'0%'}}>
-                <MDBBtn id="IDMDBBTNn" onClick={()=>this.MoveBackToActualTask()} color="success">המשך  </MDBBtn>
+                <MDBBtn  color={"rgba(255,196,12,0.7)"} id="IDMDBBTNn" onClick={()=>this.MoveBackToActualTask()} >המשך  </MDBBtn>
                 <MDBDataTable
                 
                 theadColor="#B5DBF8"
@@ -847,8 +1484,12 @@ class CCActualTask extends Component {
 <br/>
 <form  onSubmit={this.SaveActualTask}>
   <div id="container">
+ {this.props.PrevLocation=='/EquipAndTaskInActualEvent'?
+  <h1 id="H1Header">הגדרת משימה: {this.props.location.state.TaskClickedArr[this.state.TaskIndex].TaskName}</h1>
 
- {<h1 id="H1Header">הגדרת משימה: {this.props.location.state.data== undefined?"":
+ :this.props.PrevLocation=='/Calendar'|| this.props.PrevLocation=='/Calendar2'? <h1 id="H1Header">עדכון משימה: {this.props.location.state.data== undefined?"":
+ this.props.location.state.data.TaskName}</h1> 
+  :<h1 id="H1Header">הגדרת משימה: {this.props.location.state.data== undefined?"":
  this.props.location.state.data.TaskName}</h1> 
 }
 
@@ -874,22 +1515,22 @@ class CCActualTask extends Component {
 <label>
 {/* <img   className="ImgActualType" src="https://img.icons8.com/office/30/000000/employee-card.png"/> */}
 {
-  <button id="BTNActualTask" onClick={this.ChooseTaskRules}><b>בחר מבצעי משימה</b> </button>
+  this.props.PrevLocation!='/Calendar'&& this.props.PrevLocation!= '/Calendar2'?
+  <button id="BTNActualTask" onClick={this.ChooseTaskRules}><b>בחר מבצעי משימה</b> </button> :""
 }
 
 
 </label>
 
 {
-
-    <MDBBtn id="MDBBtnActualTask_save" type="submit" value="Submit" color="success"><b>שמור משימה חדשה</b>  </MDBBtn>
-
+    this.props.PrevLocation!='/Calendar' && this.props.PrevLocation!='/Calendar2'?
+    <MDBBtn id="MDBBtnActualTask_save" type="submit" value="Submit"   ><b>שמור משימה חדשה</b>  </MDBBtn>:
+    <MDBBtn id="MDBBtnActualTask_save" type="submit" value="Submit"  color={"rgba(255,196,12,0.7)"} ><b>עדכן משימה</b>  </MDBBtn>
 }
 
 </div>
 </form>
 </div>
-
 }
 
                 

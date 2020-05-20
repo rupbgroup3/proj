@@ -1,6 +1,11 @@
 .App {
   text-align: center;
 }
+body{
+  background-color: #777689;
+
+}
+
 
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
@@ -19,6 +24,8 @@
   color: white;
 }
 
+
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
@@ -28,126 +35,132 @@
   }
 }
 
-.buttonHome {
-  background-color: rgb(217, 235, 233);
+.buttonHome{
+ 
   background-clip: border-box;
   border: 1px solid transparent;
   border-radius: 220px;
   height: 220px;
   width: 220px;
   font-size: calc(20px + 2vmin);
-  align-items: center;
-  justify-content: center;
-  margin-top: 100px;
-  cursor: hand;
-  cursor: pointer;
-  border: 3px solid gold;
-  color: black;
+ align-items:center;
+ justify-content: center;
+ margin-top: 100px;
+ cursor: hand;
+ cursor: pointer;
+ border:3px solid rgba(255,196,12,0.7);
+ color: black;
+ transform-origin: 65% 75%;
+ transition: transform 0.5s, filter 0.5s ease-out;
+ 
 }
+
+.buttonHome:hover{
+  transform: scale(1.25);
+
+}
+
+
 
 body {
   padding: 30px;
+ 
 }
 
 .form-signin {
-  max-width: 330px;
-  padding: 15px;
+	max-width: 330px;
+	padding: 15px;
   margin: 0 auto;
+  
 }
 .form-signin .form-signin-heading,
 .form-signin .checkbox {
-  margin-bottom: 10px;
+	margin-bottom: 10px;
 }
 .form-signin .checkbox {
   font-weight: normal;
+  
 }
 .form-signin .form-control {
-  position: relative;
-  height: auto;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-  padding: 10px;
-  font-size: 16px;
+	position: relative;
+	height: auto;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+	padding: 10px;
+	font-size: 16px;
 }
 
 .form-signin input[type="email"] .form-signin input[type="password"] {
-  margin-bottom: -1px;
-  border-bottom-right-radius: 0;
+	margin-bottom: -1px;
+	border-bottom-right-radius: 0;
   border-bottom-right-radius: 0;
   text-align: right;
 }
-#btnSignIN {
-  background-color: rgb(61, 63, 182);
-  color: white;
-  width: inherit;
-  padding-right: 71px;
-  padding-left: 71px;
+#btnSignIN{
+
+/* background-color:rgb(61, 63, 182) ; */
+background-color: rgba(255,196,12,0.7);
+color: white;
+width: inherit;
+padding-right: 71px;
+padding-left: 71px;
 }
-#customCheck1 {
-  margin-left: 10px;
+#customCheck1{
+ margin-left: 10px;
 }
 
-.custom-control.custom-checkbox {
-  padding-left: 0;
-}
+ .custom-control.custom-checkbox{padding-left: 0;}
 
-label.custom-control-label {
-  position: relative;
-  padding-right: 1.5rem;
-}
+ label.custom-control-label {
+   position: relative;
+   padding-right: 1.5rem;
+ }
 
-.custom-control.custom-checkbox :hover {
+ .custom-control.custom-checkbox :hover{
   cursor: hand;
   cursor: pointer;
-}
-
-label.custom-control-label::before,
-label.custom-control-label::after {
-  right: 0;
-  left: auto;
-}
-#customCheck1 {
-  margin-left: 10px;
-}
-label {
-  text-align: right;
+ }
+ 
+ label.custom-control-label::before, label.custom-control-label::after{
+   right: 0;
+   left: auto;
+ }
+label{
+  text-align:right;
   margin-top: 20px;
   font-size: 12px;
 }
-#inputUser {
-  text-align: right;
+#inputUser{
+  text-align:right;
 }
-.buttonHome:hover {
-  background-color: gold;
-  color: white;
-}
-#LoginForm {
+
+#LoginForm{
   width: 250px;
   text-align: center;
   display: block;
-  margin: 0 auto;
+  margin: 0 auto ;
 }
-#leftBTN {
-  align-items: center;
+#leftBTN{
+align-items: center;
 }
-.btnResDiv {
+.btnResDiv{
   text-align: center;
-  margin: 0 auto;
-  position: relative;
+  margin: 0 auto ;
+  position:relative;
   align-items: center;
 }
 
-.homeDiv {
+.homeDiv{
   text-align: center;
-  margin: 0 auto;
-  position: relative;
+  margin: 0 auto ;
+  position:relative;
   align-items: center;
 }
-.form-control {
+.form-control{
   text-align: right;
 }
-.H4class {
+.H4class{
   float: right;
   margin-top: 10px;
 }
@@ -155,3 +168,8 @@ label {
   text-align: right;
   margin-top: 15px;
 }
+
+
+
+
+

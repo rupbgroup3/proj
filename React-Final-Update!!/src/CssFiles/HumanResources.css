@@ -19,6 +19,7 @@
 }
 #IDMDBBTN{
    font-size: 15px;
+   background-color: rgba(255,196,12,0.7);
    
 }
 #MDBBTH_DELET_EDIT{
@@ -29,7 +30,7 @@
 #IDMDBBTNRRight{
     float: right;
     font-size: 15px; 
-    
+    background-color: rgba(255,196,12,0.7);
 }
 #foterBTN {
     margin: auto;

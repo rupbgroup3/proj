@@ -3,6 +3,8 @@ import { Switch, Route, Link, withRouter, Redirect } from "react-router-dom";
 import Agodit from "../image/Agodit.png";
 import { ControlLabel } from "react-bootstrap";
 import Swal from "sweetalert2";
+import $ from 'jquery';
+
 
 class CCLogin extends Component {
   constructor(props) {
@@ -27,7 +29,7 @@ class CCLogin extends Component {
     localStorage.setItem("rememberMe", rememberMe);
     localStorage.setItem("usernameEntered", rememberMe ? usernameEntered : "");
     localStorage.setItem("PasswordEntered", rememberMe ? PasswordEntered : "");
-    let counter=0;
+    let counter = 0;
     for (let index = 0; index < this.props.PersonVar.length; index++) {
       const element = this.props.PersonVar[index];
       if (
@@ -49,7 +51,7 @@ class CCLogin extends Component {
       }
     }
     evt.preventDefault();
-    if (counter==0) {
+    if (counter == 0) {
       Swal.fire({
         icon: "error",
         title: "שגיאה",
@@ -93,12 +95,14 @@ class CCLogin extends Component {
   }
 
   render() {
+  console.log($('h4').length); 
     if (this.state.redirected) {
       return <Redirect to="/home" />;
     }
     return (
       <div>
         <div className="LogoDiv">
+          
           <img className="Agodit" src={Agodit}></img>
           <h1 className="AgoditText">אגודית</h1>
         </div>
@@ -139,7 +143,7 @@ class CCLogin extends Component {
           <br />
           <br />
           <div className="form-group">
-            <div className="custom-control custom-checkbox">
+            <div className="custom-control custom-checkbox right">
               <input
                 type="checkbox"
                 className="custom-control-input"
@@ -154,7 +158,7 @@ class CCLogin extends Component {
           </div>
           <br />
           <br />
-          <button type="submit" className="btn btn-primary btn-block">
+          <button   type="submit" className="btn btn-primary btn-block">
             <h4> התחבר</h4>
           </button>
         </form>

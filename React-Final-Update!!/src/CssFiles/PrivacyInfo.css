@@ -30,7 +30,6 @@
 }
 #cancelSaveBTN {
   float: left;
-  
 }
 
 .modal {
@@ -62,9 +61,9 @@
   align-items: center;
 }
 
-/* .row {
+.row {
   flex-direction: row-reverse;
-} */
+}
 .dropdown-content {
   text-align: right;
   align-items: right;
@@ -106,15 +105,14 @@ input#Quantity {
 }
 
 .Root {
-  background-color: #5da260;
+  /* background-color: #5da260; */
   height: -webkit-fill-available;
   display: flex;
 }
 
 card {
-  border: solid 2px darkgrey;
+  border: solid 2px rgba(255,196,12,0.7);
   display: grid;
- 
 }
 /* #idCard1{
 
@@ -140,11 +138,13 @@ input#StartDate {
   margin-right: 22px;
   width: 80%;
   height: 25px;
-  display:block; margin : 0 auto;
+  display: block;
+  margin: 0 auto;
 }
 input#EndDate {
   margin-right: 22px;
   width: 80%;
   height: 25px;
-  display:block; margin : 0 auto;
+  display: block;
+  margin: 0 auto;
 }

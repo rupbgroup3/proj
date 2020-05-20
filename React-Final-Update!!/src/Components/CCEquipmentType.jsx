@@ -5,6 +5,7 @@ import Swal from "sweetalert2";
 import { useLocation } from "react-router-dom";
 import Agodit from "../image/Agodit.png";
 import { stack as Menu } from "react-burger-menu";
+import "../CssFiles/EventType.css";
 
 const Toast = Swal.mixin({
   toast: true,
@@ -117,12 +118,12 @@ class CCEquipmentType extends React.Component {
               Quantity: data.Quantity,
               actions: (
                 <div style={{ textAlign: "center" }}>
-                  <MDBBtn onClick={() => this.editUser(data)} color="warning">
+                  <MDBBtn onClick={() => this.editUser(data)} color={"rgba(255,196,12,0.7)"}>
                     <img src="https://img.icons8.com/android/25/000000/edit.png" />
                   </MDBBtn>
                   <MDBBtn
                     onClick={() => this.deleteUser(data.Name)}
-                    color="danger"
+                    color={"rgba(255,196,12,0.7)"}
                   >
                     <img src="https://img.icons8.com/material/25/000000/delete--v1.png" />
                   </MDBBtn>
@@ -153,12 +154,12 @@ class CCEquipmentType extends React.Component {
               Quantity: data.Quantity,
               actions: (
                 <div style={{ textAlign: "center" }}>
-                  <MDBBtn onClick={() => this.editUser(data)} color="warning">
+                  <MDBBtn onClick={() => this.editUser(data)} color={"rgba(255,196,12,0.7)"}>
                     <img src="https://img.icons8.com/android/25/000000/edit.png" />
                   </MDBBtn>
                   <MDBBtn
                     onClick={() => this.deleteUser(data.Name)}
-                    color="danger"
+                    color={"rgba(255,196,12,0.7)"}
                   >
                     <img src="https://img.icons8.com/material/25/000000/delete--v1.png" />
                   </MDBBtn>
@@ -181,6 +182,7 @@ class CCEquipmentType extends React.Component {
   componentDidMount() {
     setTimeout(
       function () {
+        this.props.GetActualEvent();
         this.setState({
           rows: this.props.EquipmentVar.map((data) => ({
             Name: data.Name,
@@ -213,69 +215,229 @@ class CCEquipmentType extends React.Component {
         state: {
           TaskClickedArr: this.props.location.state.TaskClickedArr,
           EquipClickedArr: this.props.location.state.EquipClickedArr,
-          EventNameEntered: this.props.location.state.EventNameEntered
+          EventNameEntered: this.props.location.state.EventNameEntered,
+        },
+      });
+    } else if (this.props.PrevLocation == "/EquipAndTaskInActualEvent") {
+      this.props.MyPreviousLocation("/EquipmentType");
+      this.props.history.push({
+        pathname: "/EquipAndTaskInActualEvent",
+        state: {
+          TaskClickedArr: this.props.location.state.TaskClickedArr,
+          EquipClickedArr: this.props.location.state.EquipClickedArr,
+          EventName: this.props.location.state.EventName,
         },
       });
     } else {
-      this.props.MyPreviousLocation(window.location.pathname);
+      this.props.MyPreviousLocation("/EquipmentType");
       this.props.history.push({
         pathname: "/Resources",
       });
     }
   };
 
-  LogOutClicked = () => {
+  MoveBack = () => {
+    this.props.MyPreviousLocation("/EquipmentType");
     this.props.history.push({
-      pathname: "/",
+      pathname: "/EquipAndTaskInActualEvent",
+      state: {
+        TaskClickedArr: this.props.location.state.TaskClickedArr,
+        EquipClickedArr: this.props.location.state.EquipClickedArr,
+        EventName: this.props.location.state.EventName,
+      },
     });
-    Swal.fire({
-      position: "center",
-      icon: "success",
-      title: "התנתקת מהמערכת בהצלחה",
-      showConfirmButton: false,
-      timer: 1200,
-    });
+  };
+  LogOutClicked = () => {
+    if (this.props.PrevLocation == "/EquipAndTaskInActualEvent") {
+      Swal.fire({
+        title: "?האם לבטל את התהליך שהתחלת",
+        text:
+          "בלחיצה על כפתור התנתק תהליך תזמון האירוע שהתחלת יבוטל ולא יישמר משום שלא שוייך למשימות וציוד, כדי להמשיך את התהליך לחץ על לחצן חזור     ",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "כן",
+        cancelButtonText: "לא",
+      }).then((result) => {
+        if (result.value) {
+          this.DeleteActualEvent(
+            this.props.Actual_Event[this.props.Actual_Event.length - 1].Barcode
+          );
+          Swal.fire("התנתקות", "התנתקת מהמערכת בהצלחה", "success");
+          this.props.history.push({
+            pathname: "/",
+          });
+        }
+      });
+    } else {
+      this.props.history.push({
+        pathname: "/",
+      });
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: "התנתקת מהמערכת בהצלחה",
+        showConfirmButton: false,
+        timer: 1200,
+      });
+    }
+  };
+
+  DeleteActualEvent = (Barcode) => {
+    this.props.DeleteActualEvent(Barcode);
   };
 
   MoveBackToEventType = () => {
     if (this.props.PrevLocation == "/EventTypes") {
       this.props.MyPreviousLocation("/EquipmentType");
-
       this.props.history.push({
         pathname: "/EventTypes",
         state: {
           TaskClickedArr: this.props.location.state.TaskClickedArr,
           EquipClickedArr: this.props.location.state.EquipClickedArr,
-          EventNameEntered: this.props.location.state.EventNameEntered
+          EventNameEntered: this.props.location.state.EventNameEntered,
         },
       });
     }
   };
 
   HomeClicked = () => {
-    this.props.MyPreviousLocation(window.location.pathname);
-    this.props.history.push({
-      pathname: "/home",
-    });
+    if (this.props.PrevLocation == "/EquipAndTaskInActualEvent") {
+      Swal.fire({
+        title: "?האם לבטל את התהליך שהתחלת",
+        text:
+          "בלחיצה על כפתור הבית תהליך תזמון האירוע שהתחלת יבוטל ולא יישמר משום שלא שוייך למשימות וציוד, כדי להמשיך את התהליך לחץ על לחצן חזור     ",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "כן",
+        cancelButtonText: "לא",
+      }).then((result) => {
+        if (result.value) {
+          this.DeleteActualEvent(
+            this.props.Actual_Event[this.props.Actual_Event.length - 1].Barcode
+          );
+          Swal.fire(
+            "!בוטל",
+            "תהליך תזמון האירוע ושיוך משימות וציוד בוטל",
+            "success"
+          );
+          this.props.history.push({
+            pathname: "/home",
+          });
+        }
+      });
+    } else {
+      this.props.MyPreviousLocation("/EquipmentType");
+      this.props.history.push({
+        pathname: "/home",
+      });
+    }
   };
 
   ManageActivitiesClicked = () => {
-    this.props.MyPreviousLocation(window.location.pathname);
-    this.props.history.push({
-      pathname: "/ManageActivities",
-    });
+    if (this.props.PrevLocation == "/EquipAndTaskInActualEvent") {
+      Swal.fire({
+        title: "?האם לבטל את התהליך שהתחלת",
+        text:
+          " תהליך תזמון האירוע שהתחלת יבוטל ולא יישמר משום שלא שוייך למשימות וציוד, כדי להמשיך את התהליך לחץ על לחצן חזור",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "כן",
+        cancelButtonText: "לא",
+      }).then((result) => {
+        if (result.value) {
+          this.DeleteActualEvent(
+            this.props.Actual_Event[this.props.Actual_Event.length - 1].Barcode
+          );
+          Swal.fire(
+            "!בוטל",
+            "תהליך תזמון האירוע ושיוך משימות וציוד בוטל",
+            "success"
+          );
+          this.props.history.push({
+            pathname: "/ManageActivities",
+          });
+        }
+      });
+    } else {
+      this.props.MyPreviousLocation("/EquipmentType");
+      this.props.history.push({
+        pathname: "/ManageActivities",
+      });
+    }
   };
   ResourcesClicked = () => {
-    this.props.MyPreviousLocation(window.location.pathname);
-    this.props.history.push({
-      pathname: "/Resources",
-    });
+    if (this.props.PrevLocation == "/EquipAndTaskInActualEvent") {
+      Swal.fire({
+        title: "?האם לבטל את התהליך שהתחלת",
+        text:
+          " תהליך תזמון האירוע שהתחלת יבוטל ולא יישמר משום שלא שוייך למשימות וציוד, כדי להמשיך את התהליך לחץ על לחצן חזור",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "כן",
+        cancelButtonText: "לא",
+      }).then((result) => {
+        if (result.value) {
+          this.DeleteActualEvent(
+            this.props.Actual_Event[this.props.Actual_Event.length - 1].Barcode
+          );
+          Swal.fire(
+            "!בוטל",
+            "תהליך תזמון האירוע ושיוך משימות וציוד בוטל",
+            "success"
+          );
+          this.props.history.push({
+            pathname: "/Resources",
+          });
+        }
+      });
+    } else {
+      this.props.MyPreviousLocation("/EquipmentType");
+      this.props.history.push({
+        pathname: "/Resources",
+      });
+    }
   };
   CalendarClicked = () => {
-    this.props.MyPreviousLocation(window.location.pathname);
-    this.props.history.push({
-      pathname: "/Calendar",
-    });
+    if (this.props.PrevLocation == "/EquipAndTaskInActualEvent") {
+      Swal.fire({
+        title: "?האם לבטל את התהליך שהתחלת",
+        text:
+          " תהליך תזמון האירוע שהתחלת יבוטל ולא יישמר משום שלא שוייך למשימות וציוד, כדי להמשיך את התהליך לחץ על לחצן חזור",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "כן",
+        cancelButtonText: "לא",
+      }).then((result) => {
+        if (result.value) {
+          this.DeleteActualEvent(
+            this.props.Actual_Event[this.props.Actual_Event.length - 1].Barcode
+          );
+          Swal.fire(
+            "!בוטל",
+            "תהליך תזמון האירוע ושיוך משימות וציוד בוטל",
+            "success"
+          );
+          this.props.history.push({
+            pathname: "/Calendar",
+          });
+        }
+      });
+    } else {
+      this.props.MyPreviousLocation("/EquipmentType");
+      this.props.history.push({
+        pathname: "/Calendar",
+      });
+    }
   };
 
   render() {
@@ -399,7 +561,7 @@ class CCEquipmentType extends React.Component {
                   </div>
                   <div id="foterBTN">
                     <button
-                      
+                     
                       type="submit"
                       className="btn btn-primary btn-lg"
                       id="saveBTN"
@@ -408,7 +570,7 @@ class CCEquipmentType extends React.Component {
                     </button>
                     <input
                       type="button"
-                      className="btn btn-warning btn-lg "
+                      className="btn btn-warning btn-lg"
                       id="cancelSaveBTN"
                       value="ביטול"
                       onClick={this.modalClosed}
@@ -420,6 +582,14 @@ class CCEquipmentType extends React.Component {
           </div>
         ) : (
           <div style={{ padding: "0%" }}>
+            {this.props.PrevLocation == "/EquipAndTaskInActualEvent" &&
+            this.props.location.state != undefined ? (
+              <MDBBtn id="IDMDBBTN" onClick={this.MoveBack} color="info">
+                חזור לאירוע
+              </MDBBtn>
+            ) : (
+              ""
+            )}
             {this.props.PrevLocation == "/EventTypes" ? (
               <MDBBtn
                 id="IDMDBBTN"
@@ -431,10 +601,11 @@ class CCEquipmentType extends React.Component {
             ) : (
               ""
             )}
-            <MDBBtn
+            <MDBBtn style={{backgroundColor: "rgba(255,196,12,0.7)"}}
               id="IDMDBBTN"
+              color={"rgba(255,196,12,0.7)"}
               onClick={() => this.addNewUser("Ashton Cox")}
-              color="success"
+             
             >
               הוסף סוג ציוד חדש
             </MDBBtn>

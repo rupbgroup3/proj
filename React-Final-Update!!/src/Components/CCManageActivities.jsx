@@ -52,7 +52,13 @@ this.setState({searchedEnter:e.target.value})
       pathname:'/'
     })
   }
-
+  MoveToActualEvent=(data2)=>{
+    this.props.MyPreviousLocation('/ManageActivities');
+    this.props.history.push({
+      pathname:'/ActualEvent',
+      state: {data: data2}
+    })
+  }
   MoveToActualTask=(data1)=>{
     this.props.MyPreviousLocation('/ManageActivities');
     this.props.history.push({
@@ -180,7 +186,7 @@ this.setState({searchedEnter:e.target.value})
           {this.state.TasksClicked
             ? this.state.TasksTypeVar.map(data => (
               data.TaskName.includes(this.state.searchedEnter)?
-                <div id="IDBTN_STRONG" className="col-xs-6 col-sm-6 col-md-4 col-lg-3 col-xl-2 ">
+                <div className="col-xs-6 col-sm-6 col-md-4 col-lg-3 col-xl-2 ">
               
                   <button
                     className="btnTasks"
@@ -204,13 +210,13 @@ this.setState({searchedEnter:e.target.value})
               ))
             : this.state.EventsTypeVar.map(data => (
               data.EventName.includes(this.state.searchedEnter)?
-                <div id="IDBTN_STRONG" className="col-xs-6 col-sm-6 col-md-4 col-lg-3 col-xl-2  ">
+                <div className="col-xs-6 col-sm-6 col-md-4 col-lg-3 col-xl-2 ">
                  
                   <button
                     className="btnEvents"
                     style={buttonHome}
                     shaded
-                  
+                    onClick={() =>this.MoveToActualEvent(data)}
                     label="Button Success"
                     variant="success"
                   >

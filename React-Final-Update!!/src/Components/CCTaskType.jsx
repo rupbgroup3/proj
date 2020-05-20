@@ -180,6 +180,17 @@ class CCTaskType extends React.Component {
     this.setState({ Description: e.target.value });
   };
 
+  MoveBack = () => {
+    this.props.MyPreviousLocation(window.location.pathname);
+    this.props.history.push({
+      pathname: "/EquipAndTaskInActualEvent",
+      state: {
+        TaskClickedArr: this.props.location.state.TaskClickedArr,
+        EquipClickedArr: this.props.location.state.EquipClickedArr,
+        EventName: this.props.location.state.EventName,
+      },
+    });
+  };
   BackClicked = () => {
     if (this.props.PrevLocation == "/EventTypes") {
       this.props.MyPreviousLocation("/TasksType");
@@ -188,16 +199,26 @@ class CCTaskType extends React.Component {
         state: {
           TaskClickedArr: this.props.location.state.TaskClickedArr,
           EquipClickedArr: this.props.location.state.EquipClickedArr,
-          EventNameEntered: this.props.location.state.EventNameEntered
+          EventNameEntered: this.props.location.state.EventNameEntered,
+        },
+      });
+    } else if (this.props.PrevLocation == "/EquipAndTaskInActualEvent") {
+      this.props.MyPreviousLocation("/TasksType");
+      this.props.history.push({
+        pathname: "/EquipAndTaskInActualEvent",
+        state: {
+          TaskClickedArr: this.props.location.state.TaskClickedArr,
+          EquipClickedArr: this.props.location.state.EquipClickedArr,
+          EventName: this.props.location.state.EventName,
         },
       });
     } else if (this.props.PrevLocation == "/ManageActivities") {
-      this.props.MyPreviousLocation(window.location.pathname);
+      this.props.MyPreviousLocation("/TasksType");
       this.props.history.push({
         pathname: "/ManageActivities",
       });
     } else {
-      this.props.MyPreviousLocation(window.location.pathname);
+      this.props.MyPreviousLocation("/TasksType");
       this.props.history.push({
         pathname: "/Resources",
       });
@@ -206,6 +227,7 @@ class CCTaskType extends React.Component {
   componentDidMount() {
     setTimeout(
       function () {
+        this.props.GetActualEvent();
         this.setState({
           rows: this.props.TasksTypeVar.map((data) => ({
             TaskName: data.TaskName,
@@ -235,42 +257,181 @@ class CCTaskType extends React.Component {
     );
   }
   LogOutClicked = () => {
-    this.props.history.push({
-      pathname: "/",
-    });
-    Swal.fire({
-      position: "center",
-      icon: "success",
-      title: "התנתקת מהמערכת בהצלחה",
-      showConfirmButton: false,
-      timer: 1200,
-    });
+    if (this.props.PrevLocation == "/EquipAndTaskInActualEvent") {
+      Swal.fire({
+        title: "?האם לבטל את התהליך שהתחלת",
+        text:
+          "בלחיצה על התנתק תהליך תזמון האירוע שהתחלת יבוטל ולא יישמר משום שלא שוייך למשימות וציוד, כדי להמשיך את התהליך לחץ על לחצן חזור",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "כן",
+        cancelButtonText: "לא",
+      }).then((result) => {
+        if (result.value) {
+          this.DeleteActualEvent(
+            this.props.Actual_Event[this.props.Actual_Event.length - 1].Barcode
+          );
+          Swal.fire("התנתקות", "התנתקת מהמערכת בהצלחה", "success");
+          this.props.history.push({
+            pathname: "/",
+          });
+        }
+      });
+    } else {
+      this.props.history.push({
+        pathname: "/",
+      });
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: "התנתקת מהמערכת בהצלחה",
+        showConfirmButton: false,
+        timer: 1200,
+      });
+    }
+  };
+  DeleteActualEvent = (Barcode) => {
+    this.props.DeleteActualEvent(Barcode);
   };
 
   HomeClicked = () => {
-    this.props.MyPreviousLocation(window.location.pathname);
-    this.props.history.push({
-      pathname: "/home",
-    });
+    if (this.props.PrevLocation == "/EquipAndTaskInActualEvent") {
+      Swal.fire({
+        title: "?האם לבטל את התהליך שהתחלת",
+        text:
+          " תהליך תזמון האירוע שהתחלת יבוטל ולא יישמר משום שלא שוייך למשימות וציוד, כדי להמשיך את התהליך לחץ על לחצן חזור",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "כן",
+        cancelButtonText: "לא",
+      }).then((result) => {
+        if (result.value) {
+          this.DeleteActualEvent(
+            this.props.Actual_Event[this.props.Actual_Event.length - 1].Barcode
+          );
+          Swal.fire(
+            "!בוטל",
+            "תהליך תזמון האירוע ושיוך משימות וציוד בוטל",
+            "success"
+          );
+          this.props.history.push({
+            pathname: "/home",
+          });
+        }
+      });
+    } else {
+      this.props.MyPreviousLocation("/TasksType");
+      this.props.history.push({
+        pathname: "/home",
+      });
+    }
   };
 
   ManageActivitiesClicked = () => {
-    this.props.MyPreviousLocation(window.location.pathname);
-    this.props.history.push({
-      pathname: "/ManageActivities",
-    });
+    if (this.props.PrevLocation == "/EquipAndTaskInActualEvent") {
+      Swal.fire({
+        title: "?האם לבטל את התהליך שהתחלת",
+        text:
+          " תהליך תזמון האירוע שהתחלת יבוטל ולא יישמר משום שלא שוייך למשימות וציוד, כדי להמשיך את התהליך לחץ על לחצן חזור",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "כן",
+        cancelButtonText: "לא",
+      }).then((result) => {
+        if (result.value) {
+          this.DeleteActualEvent(
+            this.props.Actual_Event[this.props.Actual_Event.length - 1].Barcode
+          );
+          Swal.fire(
+            "!בוטל",
+            "תהליך תזמון האירוע ושיוך משימות וציוד בוטל",
+            "success"
+          );
+          this.props.history.push({
+            pathname: "/ManageActivities",
+          });
+        }
+      });
+    } else {
+      this.props.MyPreviousLocation("/TasksType");
+      this.props.history.push({
+        pathname: "/ManageActivities",
+      });
+    }
   };
   ResourcesClicked = () => {
-    this.props.MyPreviousLocation(window.location.pathname);
-    this.props.history.push({
-      pathname: "/Resources",
-    });
+    if (this.props.PrevLocation == "/EquipAndTaskInActualEvent") {
+      Swal.fire({
+        title: "?האם לבטל את התהליך שהתחלת",
+        text:
+          " תהליך תזמון האירוע שהתחלת יבוטל ולא יישמר משום שלא שוייך למשימות וציוד, כדי להמשיך את התהליך לחץ על לחצן חזור",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "כן",
+        cancelButtonText: "לא",
+      }).then((result) => {
+        if (result.value) {
+          this.DeleteActualEvent(
+            this.props.Actual_Event[this.props.Actual_Event.length - 1].Barcode
+          );
+          Swal.fire(
+            "!בוטל",
+            "תהליך תזמון האירוע ושיוך משימות וציוד בוטל",
+            "success"
+          );
+          this.props.history.push({
+            pathname: "/Resources",
+          });
+        }
+      });
+    } else {
+      this.props.MyPreviousLocation("/TasksType");
+      this.props.history.push({
+        pathname: "/Resources",
+      });
+    }
   };
   CalendarClicked = () => {
-    this.props.MyPreviousLocation(window.location.pathname);
-    this.props.history.push({
-      pathname: "/Calendar",
-    });
+    if (this.props.PrevLocation == "/EquipAndTaskInActualEvent") {
+      Swal.fire({
+        title: "?האם לבטל את התהליך שהתחלת",
+        text:
+          " תהליך תזמון האירוע שהתחלת יבוטל ולא יישמר משום שלא שוייך למשימות וציוד, כדי להמשיך את התהליך לחץ על לחצן חזור",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "כן",
+        cancelButtonText: "לא",
+      }).then((result) => {
+        if (result.value) {
+          this.DeleteActualEvent(
+            this.props.Actual_Event[this.props.Actual_Event.length - 1].Barcode
+          );
+          Swal.fire(
+            "!בוטל",
+            "תהליך תזמון האירוע ושיוך משימות וציוד בוטל",
+            "success"
+          );
+          this.props.history.push({
+            pathname: "/Calendar",
+          });
+        }
+      });
+    } else {
+      this.props.MyPreviousLocation("/TasksType");
+      this.props.history.push({
+        pathname: "/Calendar",
+      });
+    }
   };
 
   MoveBackToEventType = () => {
@@ -281,7 +442,7 @@ class CCTaskType extends React.Component {
         state: {
           TaskClickedArr: this.props.location.state.TaskClickedArr,
           EquipClickedArr: this.props.location.state.EquipClickedArr,
-          EventNameEntered: this.props.location.state.EventNameEntered
+          EventNameEntered: this.props.location.state.EventNameEntered,
         },
       });
     }
@@ -399,7 +560,7 @@ class CCTaskType extends React.Component {
                   </div>
                   <div id="foterBTN">
                     <button
-                     
+                      
                       type="submit"
                       className="btn btn-primary btn-lg"
                       id="saveBTN"
@@ -428,7 +589,14 @@ class CCTaskType extends React.Component {
                 </div>
               </div>
             </nav>
-
+            {this.props.PrevLocation == "/EquipAndTaskInActualEvent" &&
+            this.props.location.state != undefined ? (
+              <MDBBtn id="IDMDBBTN" onClick={this.MoveBack} color="info">
+                חזור לאירוע
+              </MDBBtn>
+            ) : (
+              ""
+            )}
             {this.props.PrevLocation == "/EventTypes" ? (
               <MDBBtn
                 id="IDMDBBTN"
@@ -443,8 +611,9 @@ class CCTaskType extends React.Component {
 
             <MDBBtn
               id="IDMDBBTN"
+              color={"rgba(255,196,12,0.7)"}
               onClick={() => this.addNewUser("Ashton Cox")}
-              color="success"
+             
             >
               הוסף סוג משימה חדש
             </MDBBtn>

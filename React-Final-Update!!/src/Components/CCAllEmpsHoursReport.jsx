@@ -473,7 +473,6 @@ class CCAllEmpsHoursReport extends Component {
                     <input
                       placeholder="אנא הכנס תאריך התחלה להפקדת הדוח"
                       type="date"
-                   
                       id="StartDate"
                       required
                       value={this.state.FromDate}
@@ -487,7 +486,6 @@ class CCAllEmpsHoursReport extends Component {
                     <input
                       placeholder="אנא הכנס תאריך סיום להפקדת הדוח"
                       type="date"
-                     
                       id="EndDate"
                       required
                       value={this.state.ToDate}
@@ -495,19 +493,18 @@ class CCAllEmpsHoursReport extends Component {
                     />
                   </div>
                 </div>
-                
-              <div className="Fotterdiv2BTN">
-                <button
-                  style={{ margin: 20 }}
-                  type="submit"
-                  className="btn btn-primary btn-lg"
-                  id="saveBTN"
-                >
-                  הפק דו"ח
-                </button>
-              </div>
+                <div className="Fotterdiv2BTN">
+                  <button
+                    style={{ margin: 20 }}
+                    type="submit"
+                    className="btn btn-primary btn-lg"
+                    id="saveBTN"
+                    color={"rgba(255,196,12,0.7)"}
+                  >
+                    הפק דו"ח
+                  </button>
+                </div>
               </card>
-
             </form>
           </div>
         ) : (
@@ -515,8 +512,9 @@ class CCAllEmpsHoursReport extends Component {
             <div style={{ padding: "0%" }}>
               <MDBBtn
                 id="IDMDBBTN"
+                color={"rgba(255,196,12,0.7)"}
                 onClick={() => this.ChangeDatesSort()}
-                color="success"
+               
               >
                 בחר טווח תאריכים אחר
               </MDBBtn>

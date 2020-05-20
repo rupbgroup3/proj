@@ -16,9 +16,13 @@ import CCEventType from "./Components/CCEventType.jsx";
 import CCEquipmentType from "./Components/CCEquipmentType.jsx";
 import CCTaskType from "./Components/CCTaskType";
 import CCActualTask from "./Components/CCActualTask";
+import CCActualEvent from "./Components/CCActualEvent";
+import CCEquipAndTaskInActualEvent from "./Components/CCEquipAndTaskInActualEvent";
 import CCTotalHours from "./Components/CCTotalHours";
 import CCAllEmpsHoursReport from "./Components/CCAllEmpsHoursReport";
+import CCCalendar from "./Components/CCCalendar";
 import "react-calendar/dist/Calendar.css";
+import "./CssFiles/Calendar.css";
 import "./CssFiles/BurgerMenu.css";
 
 class App extends Component {
@@ -37,12 +41,63 @@ class App extends Component {
       RoleVar: [],
       Role_EmployeeVar: [],
       EmpInfoRoles: [],
+      Actual_Event: [],
+      Person_plan_TasksInEvent: [],
       TotalTaskPerVar: [],
       TotalTaskInEventPerVar: [],
       TasksInEventHoursReport: [],
       TasksHoursReport: [],
+      CalendarActualEventOneDate: [],
+      CalendarActualEventRangeDate: [],
+      CalendarActualTaskOneDate: [],
+      CalendarActualTaskRangeDate: [],
+      EquipmentType_Actual_Event: [],
+      CalendarActualTaskInEventOneDate: [],
+      CalendarActualTaskInEventRangeDate: [],
     };
-    let local = false;
+    let local = true;
+
+    this.apiCalendarActualTaskInEventRangeDateUrl =
+      "http://localhost:57661/api/CalendarActualTaskInEventRangeDate";
+    if (!local) {
+      this.apiCalendarActualTaskInEventRangeDateUrl =
+        "http://proj.ruppin.ac.il/bgroup3/prod/api/CalendarActualTaskInEventRangeDate";
+    }
+
+    this.apiCalendarActualTaskInEventOneDateUrl =
+      "http://localhost:57661/api/CalendarActualTaskInEventOneDate";
+    if (!local) {
+      this.apiCalendarActualTaskInEventOneDateUrl =
+        "http://proj.ruppin.ac.il/bgroup3/prod/api/CalendarActualTaskInEventOneDate";
+    }
+
+    this.apiCalendarActualTaskRangeDateUrl =
+      "http://localhost:57661/api/CalendarActualTaskRangeDate";
+    if (!local) {
+      this.apiCalendarActualTaskRangeDateUrl =
+        "http://proj.ruppin.ac.il/bgroup3/prod/api/CalendarActualTaskRangeDate";
+    }
+
+    this.apiCalendarActualTaskOneDateUrl =
+      "http://localhost:57661/api/CalendarActualTaskOneDate";
+    if (!local) {
+      this.apiCalendarActualTaskOneDateUrl =
+        "http://proj.ruppin.ac.il/bgroup3/prod/api/CalendarActualTaskOneDate";
+    }
+
+    this.apiCalendarActualEventRangeDateUrl =
+      "http://localhost:57661/api/CalendarActualEventRangeDate";
+    if (!local) {
+      this.apiCalendarActualEventRangeDateUrl =
+        "http://proj.ruppin.ac.il/bgroup3/prod/api/CalendarActualEventRangeDate";
+    }
+
+    this.apiCalendarActualEventOneDateUrl =
+      "http://localhost:57661/api/CalendarActualEventOneDate";
+    if (!local) {
+      this.apiCalendarActualEventOneDateUrl =
+        "http://proj.ruppin.ac.il/bgroup3/prod/api/CalendarActualEventOneDate";
+    }
 
     this.apiTasksHoursReportUrl = "http://localhost:57661/api/TasksHoursRep";
     if (!local) {
@@ -68,6 +123,26 @@ class App extends Component {
     if (!local) {
       this.apiTotalTasksInEventPerUrl =
         "http://proj.ruppin.ac.il/bgroup3/prod/api/TotalTasksInEventPer";
+    }
+
+    this.apiActual_EventUrl = "http://localhost:57661/api/Actual_Event";
+    if (!local) {
+      this.apiActual_EventUrl =
+        "http://proj.ruppin.ac.il/bgroup3/prod/api/Actual_Event";
+    }
+
+    this.apiPerson_plan_TasksInEventUrl =
+      "http://localhost:57661/api/Person_plan_TasksInEvent";
+    if (!local) {
+      this.apiPerson_plan_TasksInEventUrl =
+        "http://proj.ruppin.ac.il/bgroup3/prod/api/Person_plan_TasksInEvent";
+    }
+
+    this.apiEquipmentType_Actual_EventUrl =
+      "http://localhost:57661/api/EquipmentType_Actual_Event";
+    if (!local) {
+      this.apiEquipmentType_Actual_EventUrl =
+        "http://proj.ruppin.ac.il/bgroup3/prod/api/EquipmentType_Actual_Event";
     }
 
     this.apiEmpInfoRolesUrl = "http://localhost:57661/api/EmpInfoRoles";
@@ -166,6 +241,224 @@ class App extends Component {
   };
   NameOfUser = (Name) => {
     this.setState({ NameOfUser: Name });
+  };
+  GetPerson_plan_TasksInEvent = async () => {
+    await fetch(this.apiPerson_plan_TasksInEventUrl)
+      .then((res) => {
+        return res.json();
+      })
+      .then(
+        (result) => {
+          // console.log(result);
+          this.setState({ Person_plan_TasksInEvent: result });
+          console.log(this.state.Person_plan_TasksInEvent);
+        },
+        (error) => {
+          console.log("err post=", error);
+        }
+      );
+  };
+
+  PostPerson_plan_TasksInEvent = async (Person_plan_TasksInEvent) => {
+    console.log(Person_plan_TasksInEvent);
+    await fetch(this.apiPerson_plan_TasksInEventUrl, {
+      method: "POST",
+      body: JSON.stringify(Person_plan_TasksInEvent),
+      headers: new Headers({
+        "Content-type": "application/json; charset=UTF-8", //very important to add the 'charset=UTF-8'!!!!
+      }),
+    })
+      .then((res) => {
+        console.log("res=", res);
+        return res.json();
+      })
+      .then(
+        (result) => {
+          console.log("fetch POST= ", result);
+          console.log(result.Avg);
+        },
+        (error) => {
+          console.log("err post=", error);
+        }
+      );
+  };
+
+  DeletePerson_plan_TasksInEvent = async (Person_plan_TasksInEvent) => {
+    console.log(Person_plan_TasksInEvent);
+    await fetch(this.apiPerson_plan_TasksInEventUrl, {
+      method: "DELETE",
+      body: JSON.stringify(Person_plan_TasksInEvent),
+      headers: new Headers({
+        "Content-type": "application/json; charset=UTF-8", //very important to add the 'charset=UTF-8'!!!!
+      }),
+    })
+      .then((res) => {
+        console.log("res=", res);
+        return res.json();
+      })
+      .then(
+        (result) => {
+          this.setState({ Person_plan_TasksInEvent: result });
+          console.log("fetch DELETE= ", result);
+          console.log(result);
+        },
+        (error) => {
+          console.log("err delete=", error);
+        }
+      );
+  };
+
+  GetEquipmentType_Actual_Event = async () => {
+    await fetch(this.apiEquipmentType_Actual_EventUrl)
+      .then((res) => {
+        return res.json();
+      })
+      .then(
+        (result) => {
+          // console.log(result);
+          this.setState({ EquipmentType_Actual_Event: result });
+          console.log(this.state.EquipmentType_Actual_Event);
+        },
+        (error) => {
+          console.log("err post=", error);
+        }
+      );
+  };
+
+  PostEquipmentType_Actual_Event = async (EquipmentType_Actual_Event) => {
+    await fetch(this.apiEquipmentType_Actual_EventUrl, {
+      method: "POST",
+      body: JSON.stringify(EquipmentType_Actual_Event),
+      headers: new Headers({
+        "Content-type": "application/json; charset=UTF-8", //very important to add the 'charset=UTF-8'!!!!
+      }),
+    })
+      .then((res) => {
+        console.log("res=", res);
+        return res.json();
+      })
+      .then(
+        (result) => {
+          console.log("fetch POST= ", result);
+          console.log(result.Avg);
+        },
+        (error) => {
+          console.log("err post=", error);
+        }
+      );
+  };
+
+  DeleteEquipmentType_Actual_Event = async (EquipmentType_Actual_Event) => {
+    console.log(EquipmentType_Actual_Event);
+    await fetch(this.apiEquipmentType_Actual_EventUrl, {
+      method: "DELETE",
+      body: JSON.stringify(EquipmentType_Actual_Event),
+      headers: new Headers({
+        "Content-type": "application/json; charset=UTF-8", //very important to add the 'charset=UTF-8'!!!!
+      }),
+    })
+      .then((res) => {
+        console.log("res=", res);
+        return res.json();
+      })
+      .then(
+        (result) => {
+          this.setState({ EquipmentType_Actual_Event: result });
+          console.log("fetch DELETE= ", result);
+          console.log(result);
+        },
+        (error) => {
+          console.log("err delete=", error);
+        }
+      );
+  };
+
+  GetActualEvent = async () => {
+    await fetch(this.apiActual_EventUrl)
+      .then((res) => {
+        return res.json();
+      })
+      .then(
+        (result) => {
+          // console.log(result);
+          this.setState({ Actual_Event: result });
+          console.log(this.state.Actual_Event);
+        },
+        (error) => {
+          console.log("err post=", error);
+        }
+      );
+  };
+
+  PutActual_Event = async (Actual_Event) => {
+    await fetch(this.apiActual_EventUrl, {
+      method: "PUT",
+      body: JSON.stringify(Actual_Event),
+      headers: new Headers({
+        "Content-type": "application/json; charset=UTF-8", //very important to add the 'charset=UTF-8'!!!!
+      }),
+    })
+      .then((res) => {
+        console.log("res=", res);
+        return res.json();
+      })
+      .then(
+        (result) => {
+          this.setState({ Actual_Event: result });
+          console.log("fetch PUT= ", result);
+          console.log(result.Avg);
+        },
+        (error) => {
+          console.log("err PUT=", error);
+        }
+      );
+  };
+
+  PostActualEvent = async (Actual_Event) => {
+    await fetch(this.apiActual_EventUrl, {
+      method: "POST",
+      body: JSON.stringify(Actual_Event),
+      headers: new Headers({
+        "Content-type": "application/json; charset=UTF-8", //very important to add the 'charset=UTF-8'!!!!
+      }),
+    })
+      .then((res) => {
+        console.log("res=", res);
+        return res.json();
+      })
+      .then(
+        (result) => {
+          console.log("fetch POST= ", result);
+          console.log(result.Avg);
+        },
+        (error) => {
+          console.log("err post=", error);
+        }
+      );
+  };
+
+  DeleteActualEvent = async (Barcode) => {
+    console.log(Barcode);
+    await fetch(this.apiActual_EventUrl, {
+      method: "DELETE",
+      body: Barcode,
+      headers: new Headers({
+        "Content-type": "application/json; charset=UTF-8", //very important to add the 'charset=UTF-8'!!!!
+      }),
+    })
+      .then((res) => {
+        console.log("res=", res);
+        return res.json();
+      })
+      .then(
+        (result) => {
+          console.log("fetch DELETE= ", result);
+          console.log(result);
+        },
+        (error) => {
+          console.log("err delete=", error);
+        }
+      );
   };
 
   GetActualTask = async () => {
@@ -922,6 +1215,150 @@ class App extends Component {
       );
   };
 
+  GetCalendarActualEventOneDate = async (t) => {
+    await fetch(this.apiCalendarActualEventOneDateUrl, {
+      method: "POST",
+      body: JSON.stringify(t),
+      headers: new Headers({
+        "Content-type": "application/json; charset=UTF-8", //very important to add the 'charset=UTF-8'!!!!
+      }),
+    })
+      .then((res) => {
+        console.log("res=", res);
+        return res.json();
+      })
+      .then(
+        (result) => {
+          console.log("fetch POST= ", result);
+          this.setState({ CalendarActualEventOneDate: result });
+          console.log(this.state.CalendarActualEventOneDate);
+        },
+        (error) => {
+          console.log("err post=", error);
+        }
+      );
+  };
+
+  GetCalendarActualEventRangeDate = async (t) => {
+    await fetch(this.apiCalendarActualEventRangeDateUrl, {
+      method: "PUT",
+      body: JSON.stringify(t),
+      headers: new Headers({
+        "Content-type": "application/json; charset=UTF-8", //very important to add the 'charset=UTF-8'!!!!
+      }),
+    })
+      .then((res) => {
+        console.log("res=", res);
+        return res.json();
+      })
+      .then(
+        (result) => {
+          console.log("fetch put= ", result);
+          this.setState({ CalendarActualEventRangeDate: result });
+          console.log(this.state.CalendarActualEventRangeDate);
+        },
+        (error) => {
+          console.log("err put=", error);
+        }
+      );
+  };
+
+  GetCalendarActualTaskOneDate = async (t) => {
+    await fetch(this.apiCalendarActualTaskOneDateUrl, {
+      method: "POST",
+      body: JSON.stringify(t),
+      headers: new Headers({
+        "Content-type": "application/json; charset=UTF-8", //very important to add the 'charset=UTF-8'!!!!
+      }),
+    })
+      .then((res) => {
+        console.log("res=", res);
+        return res.json();
+      })
+      .then(
+        (result) => {
+          console.log("fetch POST= ", result);
+          this.setState({ CalendarActualTaskOneDate: result });
+          console.log(this.state.CalendarActualTaskOneDate);
+        },
+        (error) => {
+          console.log("err post=", error);
+        }
+      );
+  };
+
+  GetCalendarActualTaskRangeDate = async (t) => {
+    await fetch(this.apiCalendarActualTaskRangeDateUrl, {
+      method: "PUT",
+      body: JSON.stringify(t),
+      headers: new Headers({
+        "Content-type": "application/json; charset=UTF-8", //very important to add the 'charset=UTF-8'!!!!
+      }),
+    })
+      .then((res) => {
+        console.log("res=", res);
+        return res.json();
+      })
+      .then(
+        (result) => {
+          console.log("fetch put= ", result);
+          this.setState({ CalendarActualTaskRangeDate: result });
+          console.log(this.state.CalendarActualTaskRangeDate);
+        },
+        (error) => {
+          console.log("err put=", error);
+        }
+      );
+  };
+
+  GetCalendarActualTaskInEventOneDate = async (t) => {
+    await fetch(this.apiCalendarActualTaskInEventOneDateUrl, {
+      method: "POST",
+      body: JSON.stringify(t),
+      headers: new Headers({
+        "Content-type": "application/json; charset=UTF-8", //very important to add the 'charset=UTF-8'!!!!
+      }),
+    })
+      .then((res) => {
+        console.log("res=", res);
+        return res.json();
+      })
+      .then(
+        (result) => {
+          console.log("fetch POST= ", result);
+          this.setState({ CalendarActualTaskInEventOneDate: result });
+          console.log(this.state.CalendarActualTaskInEventOneDate);
+        },
+        (error) => {
+          console.log("err post=", error);
+        }
+      );
+  };
+
+  GetCalendarActualTaskInEventRangeDate = async (t) => {
+    await fetch(this.apiCalendarActualTaskInEventRangeDateUrl, {
+      method: "PUT",
+      body: JSON.stringify(t),
+      headers: new Headers({
+        "Content-type": "application/json; charset=UTF-8", //very important to add the 'charset=UTF-8'!!!!
+      }),
+    })
+      .then((res) => {
+        console.log("res=", res);
+        return res.json();
+      })
+      .then(
+        (result) => {
+          console.log("fetch put= ", result);
+          this.setState({ CalendarActualTaskInEventRangeDate: result });
+          console.log(this.state.CalendarActualTaskInEventRangeDate);
+        },
+        (error) => {
+          console.log("err put=", error);
+        }
+      );
+  };
+
   render() {
     return (
       <div>
@@ -1012,6 +1449,9 @@ class App extends Component {
               UpdateEquipment={this.UpdateEquipment}
               PrevLocation={this.state.PrevLocation}
               MyPreviousLocation={this.MyPreviousLocation}
+              DeleteActualEvent={this.DeleteActualEvent}
+              GetActualEvent={this.GetActualEvent}
+              Actual_Event={this.state.Actual_Event}
             />
           </Route>
           <Route path="/TasksType">
@@ -1023,6 +1463,9 @@ class App extends Component {
               UpdateTask={this.UpdateTask}
               PrevLocation={this.state.PrevLocation}
               MyPreviousLocation={this.MyPreviousLocation}
+              DeleteActualEvent={this.DeleteActualEvent}
+              GetActualEvent={this.GetActualEvent}
+              Actual_Event={this.state.Actual_Event}
             />
           </Route>
           <Route path="/ActualTask">
@@ -1033,10 +1476,73 @@ class App extends Component {
               PersonVar={this.state.PersonVar}
               GetActualTask={this.GetActualTask}
               MyPreviousLocation={this.MyPreviousLocation}
+              PostPerson_plan_TasksInEvent={this.PostPerson_plan_TasksInEvent}
+              PostEquipmentType_Actual_Event={
+                this.PostEquipmentType_Actual_Event
+              }
+              GetPerson_plan_TasksInEvent={this.GetPerson_plan_TasksInEvent}
+              Person_plan_TasksInEvent={this.state.Person_plan_TasksInEvent}
+              GetActualEvent={this.GetActualEvent}
+              Actual_Event={this.state.Actual_Event}
+              DeleteActualEvent={this.DeleteActualEvent}
+              DeletePerson_plan_TasksInEvent={
+                this.DeletePerson_plan_TasksInEvent
+              }
               DeleteActualTask={this.DeleteActualTask}
             />
           </Route>
-
+          <Route path="/ActualEvent">
+            <CCActualEvent
+              PrevLocation={this.state.PrevLocation}
+              EmpInfoRoles={this.state.EmpInfoRoles}
+              MyPreviousLocation={this.MyPreviousLocation}
+              EventTypeVar={this.state.EventTypeVar}
+              GetEmpInfoRoles={this.GetEmpInfoRoles}
+              PostActualEvent={this.PostActualEvent}
+              GetActualEvent={this.GetActualEvent}
+              Actual_Event={this.state.Actual_Event}
+              GetEquipmentTable={this.GetEquipmentTable}
+              GetEvents={this.GetEvents}
+              GetEvent_Type_EquipmentType={this.GetEvent_Type_EquipmentType}
+              GetEvent_Type_Task={this.GetEvent_Type_Task}
+              GetTasks={this.GetTasks}
+              GetActualTask={this.GetActualTask}
+              ActualTaskVar={this.state.ActualTaskVar}
+              GetPerson_plan_TasksInEvent={this.GetPerson_plan_TasksInEvent}
+              Person_plan_TasksInEvent={this.state.Person_plan_TasksInEvent}
+              PutActual_Event={this.PutActual_Event}
+            />
+          </Route>
+          <Route path="/EquipAndTaskInActualEvent">
+            <CCEquipAndTaskInActualEvent
+              GetEvents={this.GetEvents}
+              EventTypeVar={this.state.EventTypeVar}
+              EquipmentVar={this.state.EquipmentVar}
+              TasksTypeVar={this.state.TasksTypeVar}
+              GetEquipmentTable={this.GetEquipmentTable}
+              GetTasks={this.GetTasks}
+              PostEvent_Type_EquipmentType={this.PostEvent_Type_EquipmentType}
+              PostEvent_Type_Task={this.PostEvent_Type_Task}
+              GetEvent_Type_EquipmentType={this.GetEvent_Type_EquipmentType}
+              GetEvent_Type_Task={this.GetEvent_Type_Task}
+              Event_Type_EquipmentTypeVar={
+                this.state.Event_Type_EquipmentTypeVar
+              }
+              Event_Type_TaskVar={this.state.Event_Type_TaskVar}
+              DeleteEvent_Type_EquipmentType={
+                this.DeleteEvent_Type_EquipmentType
+              }
+              DeleteEvent_Type_Task={this.DeleteEvent_Type_Task}
+              PostEventType={this.PostEventType}
+              UpdateEventType={this.UpdateEventType}
+              MyPreviousLocation={this.MyPreviousLocation}
+              PrevLocation={this.state.PrevLocation}
+              DeleteEventType={this.DeleteEventType}
+              GetActualEvent={this.GetActualEvent}
+              Actual_Event={this.state.Actual_Event}
+              DeleteActualEvent={this.DeleteActualEvent}
+            />
+          </Route>
           <Route path="/TotalHours">
             <CCTotalHours
               MyPreviousLocation={this.MyPreviousLocation}
@@ -1060,6 +1566,54 @@ class App extends Component {
               TasksInEventHoursReport={this.state.TasksInEventHoursReport}
               GetTasksHoursReport={this.GetTasksHoursReport}
               TasksHoursReport={this.state.TasksHoursReport}
+            />
+          </Route>
+          <Route path="/Calendar">
+            <CCCalendar
+              GetCalendarActualEventOneDate={this.GetCalendarActualEventOneDate}
+              CalendarActualEventOneDate={this.state.CalendarActualEventOneDate}
+              GetTotalTasksInEventPer={this.GetTotalTasksInEventPer}
+              TotalTaskInEventPerVar={this.state.TotalTaskInEventPerVar}
+              CalendarActualEventRangeDate={
+                this.state.CalendarActualEventRangeDate
+              }
+              GetCalendarActualEventRangeDate={
+                this.GetCalendarActualEventRangeDate
+              }
+              CalendarActualTaskOneDate={this.state.CalendarActualTaskOneDate}
+              GetCalendarActualTaskOneDate={this.GetCalendarActualTaskOneDate}
+              GetCalendarActualTaskRangeDate={
+                this.GetCalendarActualTaskRangeDate
+              }
+              CalendarActualTaskRangeDate={
+                this.state.CalendarActualTaskRangeDate
+              }
+              MyPreviousLocation={this.MyPreviousLocation}
+              PrevLocation={this.state.PrevLocation}
+              DeletePerson_plan_TasksInEvent={
+                this.DeletePerson_plan_TasksInEvent
+              }
+              DeleteEquipmentType_Actual_Event={
+                this.DeleteEquipmentType_Actual_Event
+              }
+              GetPerson_plan_TasksInEvent={this.GetPerson_plan_TasksInEvent}
+              Person_plan_TasksInEvent={this.state.Person_plan_TasksInEvent}
+              GetEquipmentType_Actual_Event={this.GetEquipmentType_Actual_Event}
+              EquipmentType_Actual_Event={this.state.EquipmentType_Actual_Event}
+              DeleteActualEvent={this.DeleteActualEvent}
+              DeleteActualTask={this.DeleteActualTask}
+              GetCalendarActualTaskInEventOneDate={
+                this.GetCalendarActualTaskInEventOneDate
+              }
+              CalendarActualTaskInEventOneDate={
+                this.state.CalendarActualTaskInEventOneDate
+              }
+              GetCalendarActualTaskInEventRangeDate={
+                this.GetCalendarActualTaskInEventRangeDate
+              }
+              CalendarActualTaskInEventRangeDate={
+                this.state.CalendarActualTaskInEventRangeDate
+              }
             />
           </Route>
         </Switch>

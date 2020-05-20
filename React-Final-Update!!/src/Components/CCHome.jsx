@@ -7,8 +7,6 @@ import Swal from "sweetalert2";
 import { stack as Menu } from "react-burger-menu";
 
 
-
-
 const buttonHome = { margin: 30 };
 
 class CCHome extends Component {
