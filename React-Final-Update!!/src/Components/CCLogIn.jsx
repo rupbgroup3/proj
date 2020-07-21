@@ -3,7 +3,8 @@ import { Switch, Route, Link, withRouter, Redirect } from "react-router-dom";
 import Agodit from "../image/Agodit.png";
 import { ControlLabel } from "react-bootstrap";
 import Swal from "sweetalert2";
-import $ from 'jquery';
+import { MDBBtn } from "mdbreact";
+
 
 
 class CCLogin extends Component {
@@ -95,7 +96,7 @@ class CCLogin extends Component {
   }
 
   render() {
-  console.log($('h4').length); 
+
     if (this.state.redirected) {
       return <Redirect to="/home" />;
     }
@@ -158,9 +159,9 @@ class CCLogin extends Component {
           </div>
           <br />
           <br />
-          <button   type="submit" className="btn btn-primary btn-block">
+          <MDBBtn  color={"rgba(255,196,12,0.7)"}  type="submit" id="BTNLogin">
             <h4> התחבר</h4>
-          </button>
+          </MDBBtn>
         </form>
       </div>
     );

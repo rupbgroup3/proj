@@ -55,7 +55,7 @@ class App extends Component {
       CalendarActualTaskInEventOneDate: [],
       CalendarActualTaskInEventRangeDate: [],
     };
-    let local = true;
+    let local = false;
 
     this.apiCalendarActualTaskInEventRangeDateUrl =
       "http://localhost:57661/api/CalendarActualTaskInEventRangeDate";

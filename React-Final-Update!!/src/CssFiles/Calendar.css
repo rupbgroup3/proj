@@ -44,9 +44,11 @@
       align-content: center;
   }
   #h1CalendarResults{
+    font-weight: bold;
     text-align: center;
   }
   #ToggleDateToRange{
+    border-radius: 80px;
     font-size: 15px;
     margin: auto;
     display: block;
@@ -55,11 +57,19 @@
     background-color: rgba(255, 196, 12,0.7);
   }
   #BackToRegularTabelsView{
+    border-radius: 80px;
     font-size: 15px;
     margin: auto;
     display: block;
     text-align: center;
     margin-bottom: 25px;
+  }
+  th.sorting_desc{
+    background-color: rgba(255, 196, 12,0.7); ;
+  }
+  #root > div > div > div.modal-content.animate > div > div:nth-child(2) > div > div > table > thead:nth-child(1){
+    background-color: rgba(255, 196, 12,0.7); 
+
   }
 
 

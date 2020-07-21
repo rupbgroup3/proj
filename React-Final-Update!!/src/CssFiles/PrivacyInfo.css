@@ -4,6 +4,7 @@
 .privacyList {
   text-align: center;
   font-size: 25px;
+  font-weight: bold;
 }
 .form-group_col-sm-3 {
   text-align: right;
@@ -26,10 +27,12 @@
   float: left;
 }
 #saveBTN {
+
   float: left;
 }
 #cancelSaveBTN {
   float: left;
+  outline: none;
 }
 
 .modal {
@@ -125,11 +128,14 @@ card {
 }
 input#cancelSaveBTN,
 button#saveBTN {
+  background-color: rgba(255,196,12,0.7);
+  border-radius: 80px;
   font-size: 20px;
 }
 #h1Titele {
   margin-bottom: 20px;
   font-size: 22px;
+  font-weight: bold;
 }
 #foterBTN {
   margin: auto;

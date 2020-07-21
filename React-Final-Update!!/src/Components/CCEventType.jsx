@@ -86,11 +86,11 @@ class CCEventType extends Component {
             EventName: data.EventName,
             actions: (
               <div style={{ textAlign: "center" }}>
-                <MDBBtn onClick={() => this.editUser(data)} color="warning">
+                <MDBBtn id="tblBtn" onClick={() => this.editUser(data)} color="warning">
                   {" "}
                   <img src="https://img.icons8.com/android/25/000000/edit.png" />
                 </MDBBtn>
-                <MDBBtn onClick={() => this.deleteUser(data)} color="danger">
+                <MDBBtn id="tblBtn" onClick={() => this.deleteUser(data)} color="danger">
                   <img src="https://img.icons8.com/material/25/000000/delete--v1.png" />
                 </MDBBtn>
               </div>
@@ -123,11 +123,11 @@ class CCEventType extends Component {
             EventName: data.EventName,
             actions: (
               <div style={{ textAlign: "center" }}>
-                <MDBBtn onClick={() => this.editUser(data)} color="warning">
+                <MDBBtn id="tblBtn" onClick={() => this.editUser(data)} color="warning">
                   {" "}
                   <img src="https://img.icons8.com/android/25/000000/edit.png" />
                 </MDBBtn>
-                <MDBBtn onClick={() => this.deleteUser(data)} color="danger">
+                <MDBBtn id="tblBtn" onClick={() => this.deleteUser(data)} color="danger">
                   <img src="https://img.icons8.com/material/25/000000/delete--v1.png" />
                 </MDBBtn>
               </div>
@@ -346,11 +346,11 @@ class CCEventType extends Component {
             EventName: data.EventName,
             actions: (
               <div style={{ textAlign: "center" }}>
-                <MDBBtn onClick={() => this.editUser(data)} color="warning">
+                <MDBBtn id="tblBtn" onClick={() => this.editUser(data)} color="warning">
                   {" "}
                   <img src="https://img.icons8.com/android/25/000000/edit.png" />
                 </MDBBtn>
-                <MDBBtn onClick={() => this.deleteUser(data)} color="danger">
+                <MDBBtn id="tblBtn" onClick={() => this.deleteUser(data)} color="danger">
                   <img src="https://img.icons8.com/material/25/000000/delete--v1.png" />
                 </MDBBtn>
               </div>
@@ -858,13 +858,19 @@ class CCEventType extends Component {
         </div>
         {this.state.EditTableShow ? (
           <div style={{ padding: "0%" }}>
-            <MDBBtn
-              id="IDMDBBTNn"
-              onClick={this.addNewEventType}
-             
-            >
-              הוסף סוג אירוע חדש
-            </MDBBtn>
+                         <br />
+            <nav className="navbar navbar-default">
+              <div className="container-fluid">
+                <div className="navbar-header">
+                  <h1>סוגי אירועים</h1>
+                </div>
+              </div>
+            </nav>
+            <img
+                       id="IDMDBBTNAddNewPerson"
+                       onClick={this.addNewEventType}
+                       src="https://img.icons8.com/material-outlined/30/000000/plus.png"
+                     />
             <MDBDataTable
               theadColor="#B5DBF8"
               paging={true}
@@ -882,6 +888,7 @@ class CCEventType extends Component {
           </div>
         ) : (
           <div id="ManActDiv">
+             <br />
             <nav className="navbar navbar-default">
               <div className="container-fluid">
                 <div className="navbar-header">
@@ -1086,6 +1093,11 @@ class CCEventType extends Component {
             </div>
           </div>
         )}
+        <br/><br/><br/>
+        <footer>
+        <p id="copyright">Copyright, 2020 &#169; <br/> Bar, Almog and Ron.  All rights reserved. </p>
+
+     </footer>
       </div>
     );
   }

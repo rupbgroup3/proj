@@ -96,13 +96,14 @@ class CCTaskType extends React.Component {
               actions: (
                 <div style={{ textAlign: "center" }}>
                   <MDBBtn
-                    id="MDBBTH_DELET_EDIT"
+                      id="tblBtn"
                     onClick={() => this.editUser(data)}
                     color="warning"
                   >
                     <img src="https://img.icons8.com/android/25/000000/edit.png" />
                   </MDBBtn>
                   <MDBBtn
+                    id="tblBtn"
                     onClick={() => this.deleteUser(data.TaskName)}
                     color="danger"
                   >
@@ -137,13 +138,15 @@ class CCTaskType extends React.Component {
               actions: (
                 <div style={{ textAlign: "center" }}>
                   <MDBBtn
-                    id="MDBBTH_DELET_EDIT"
+                    id="tblBtn"
+                    
                     onClick={() => this.editUser(data)}
                     color="warning"
                   >
                     <img src="https://img.icons8.com/android/25/000000/edit.png" />
                   </MDBBtn>
                   <MDBBtn
+                    id="tblBtn"
                     onClick={() => this.deleteUser(data.TaskName)}
                     color="danger"
                   >
@@ -181,7 +184,7 @@ class CCTaskType extends React.Component {
   };
 
   MoveBack = () => {
-    this.props.MyPreviousLocation(window.location.pathname);
+    this.props.MyPreviousLocation("/TasksType");
     this.props.history.push({
       pathname: "/EquipAndTaskInActualEvent",
       state: {
@@ -236,13 +239,15 @@ class CCTaskType extends React.Component {
             actions: (
               <div style={{ textAlign: "center" }}>
                 <MDBBtn
-                  id="MDBBTH_DELET_EDIT"
+                  id="tblBtn"
+                
                   onClick={() => this.editUser(data)}
                   color="warning"
                 >
                   <img src="https://img.icons8.com/android/25/000000/edit.png" />
                 </MDBBtn>
                 <MDBBtn
+                  id="tblBtn"
                   onClick={() => this.deleteUser(data.TaskName)}
                   color="danger"
                 >
@@ -507,22 +512,34 @@ class CCTaskType extends React.Component {
             <h1 className="AgoditText">אגודית</h1>
           </div>
         </div>
-
+        <br />
+        <nav className="navbar navbar-default">
+          <div className="container-fluid">
+            <div className="navbar-header">
+              <h1>סוגי משימות</h1>
+            </div>
+          </div>
+        </nav>
         {this.state.modal ? (
+          
           <div className="Root">
+
             <br />
             <br />
             <br /> <br />
             <div className="container">
+              
               <div id="header-Privacy">
+                <br/>
                 {this.state.editMode ? (
                   <h3 className="privacyList">עריכת סוג משימה קיים </h3>
                 ) : (
-                  <h3 className="privacyList">הוספת סוג משימה חדשה </h3>
+                  <h3 className="privacyList">הוספת סוג משימה חדש </h3>
                 )}
                 <br /> <br />
               </div>
               <div id="editDiv">
+   
                 <form
                   class="modal-content animate"
                   action="/action_page.php"
@@ -537,7 +554,7 @@ class CCTaskType extends React.Component {
                         placeholder="הזן שם משימה"
                         type="text"
                         className="form-control"
-                        id="TaskName"
+                        id="EquipName"
                         required
                         value={this.state.TaskName}
                         onChange={this.TaskNameChanged}
@@ -551,7 +568,7 @@ class CCTaskType extends React.Component {
                         placeholder="הזן תיאור משימה"
                         type="text"
                         className="form-control"
-                        id="Description"
+                        id="Quantity"
                         required
                         value={this.state.Description}
                         onChange={this.DescriptionChanged}
@@ -581,17 +598,10 @@ class CCTaskType extends React.Component {
           </div>
         ) : (
           <div style={{ padding: "0%" }}>
-            <br />
-            <nav className="navbar navbar-default">
-              <div className="container-fluid">
-                <div className="navbar-header">
-                  <h1>סוגי משימות</h1>
-                </div>
-              </div>
-            </nav>
+
             {this.props.PrevLocation == "/EquipAndTaskInActualEvent" &&
             this.props.location.state != undefined ? (
-              <MDBBtn id="IDMDBBTN" onClick={this.MoveBack} color="info">
+              <MDBBtn id="IDMDBBTN" onClick={this.MoveBack} color={"rgba(255,196,12,0.7)"}>
                 חזור לאירוע
               </MDBBtn>
             ) : (
@@ -601,22 +611,18 @@ class CCTaskType extends React.Component {
               <MDBBtn
                 id="IDMDBBTN"
                 onClick={this.MoveBackToEventType}
-                color="info"
+                color={"rgba(255,196,12,0.7)"}
               >
                 חזור לסוג אירוע
               </MDBBtn>
             ) : (
               ""
             )}
-
-            <MDBBtn
-              id="IDMDBBTN"
-              color={"rgba(255,196,12,0.7)"}
-              onClick={() => this.addNewUser("Ashton Cox")}
-             
-            >
-              הוסף סוג משימה חדש
-            </MDBBtn>
+            <img
+                       id="IDMDBBTNAddNewPerson"
+                       onClick={() => this.addNewUser("Ashton Cox")}
+                       src="https://img.icons8.com/material-outlined/30/000000/plus.png"
+                     />
             <MDBDataTable
               theadColor="#B5DBF8"
               paging={true}
@@ -633,6 +639,11 @@ class CCTaskType extends React.Component {
             />
           </div>
         )}
+        <br/><br/><br/>
+        <footer>
+        <p id="copyright">Copyright, 2020 &#169; <br/> Bar, Almog and Ron.  All rights reserved. </p>
+
+     </footer>
       </div>
     );
   }

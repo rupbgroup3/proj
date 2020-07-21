@@ -17,6 +17,15 @@
     width:80px;
     
 }
+#IDMDBBTNAddNewPerson{
+    border-radius: 80px;
+    font-size: 25px;
+    background-color: rgba(255,196,12,0.7);
+    height: 45px;
+    width: 45px;
+    cursor: hand;
+  cursor: pointer;
+ }
 #IDMDBBTN{
    font-size: 15px;
    background-color: rgba(255,196,12,0.7);
@@ -28,6 +37,7 @@
     
 }
 #IDMDBBTNRRight{
+    border-radius: 80px;
     float: right;
     font-size: 15px; 
     background-color: rgba(255,196,12,0.7);

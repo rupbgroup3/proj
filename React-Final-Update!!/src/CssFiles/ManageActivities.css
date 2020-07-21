@@ -1,4 +1,5 @@
 .btnTasks {
+  font-weight: bold;
   border-radius: 10px;
   align-items: center;
   justify-content: center;
@@ -7,7 +8,6 @@
   cursor: hand;
   cursor: pointer;
   /* background-color: #89767F; */
-  float: right;
   color: black;
   background-clip: border-box;
   border: 1px solid transparent;
@@ -27,8 +27,8 @@
 }
 
 
-
 .btnEvents {
+  font-weight: bold;
   align-items: center;
   justify-content: center;
   height: 150px;
@@ -36,7 +36,6 @@
   cursor: hand;
   cursor: pointer;
   /* background-color: #768980; */
-  float: right;
   color: black;
   background-clip: border-box;
   border: 1px solid transparent;
@@ -44,7 +43,7 @@
   border: 3px solid rgba(255,196,12,0.7);
   font-size: calc(4px + 2vmin);
   margin-top: 100px;
-  display: flex;
+  display: list-item;
   column-count: 6;
   margin: 20px;
   transform-origin: 65% 75%;
@@ -211,13 +210,14 @@ transition: transform 0.5s, filter 0.5s ease-out;
   border-radius: 30px;
   margin-right: 150px;
   margin-top: 20px;
+  background-color: rgba(255,196,12,.7);
 }
 #NewEventPlas {
   /* background-color: #768980; */
   height: 50px;
   width: 50px;
   border-radius: 30px;
-
+  background-color: rgba(255,196,12,.7);
   margin-top: 20px;
 }
 
@@ -226,10 +226,10 @@ transition: transform 0.5s, filter 0.5s ease-out;
   margin: auto;
 }
 button.btnTasks {
-  display: grid;
+  display: list-item;
 }
 button.btnEvents {
-  display: grid;
+  display: list-item;
 }
 div#containerr {
   display: block;

@@ -448,6 +448,7 @@ class CCAllEmpsHoursReport extends Component {
             <h1 className="AgoditText">אגודית</h1>
           </div>
         </div>
+        <br/>
         <nav className="navbar navbar-default">
           <div className="container-fluid">
             <div className="navbar-header">
@@ -494,15 +495,15 @@ class CCAllEmpsHoursReport extends Component {
                   </div>
                 </div>
                 <div className="Fotterdiv2BTN">
-                  <button
-                    style={{ margin: 20 }}
+                  <MDBBtn
+                    style={{ margin: 30 }}
                     type="submit"
-                    className="btn btn-primary btn-lg"
+                   
                     id="saveBTN"
                     color={"rgba(255,196,12,0.7)"}
                   >
                     הפק דו"ח
-                  </button>
+                  </MDBBtn>
                 </div>
               </card>
             </form>
@@ -536,6 +537,11 @@ class CCAllEmpsHoursReport extends Component {
             </div>
           </div>
         )}
+        <br/><br/><br/>
+        <footer>
+        <p id="copyright">Copyright, 2020 &#169; <br/> Bar, Almog and Ron.  All rights reserved. </p>
+
+     </footer>
       </div>
     );
   }

@@ -297,9 +297,9 @@ constructor(props) {
                 ISEMPLOYEE: data.IsEmployee==0? "מתנדב": "עובד",
                 actions: <div style={{textAlign:'center'}}>
                             
-                <MDBBtn onClick={()=>this.editUser(data)} color="warning"><img src="https://img.icons8.com/android/25/000000/edit.png"/></MDBBtn>
-                <MDBBtn onClick={()=>this.deleteUser(data.Email)} color="danger"> <img src="https://img.icons8.com/material/25/000000/delete--v1.png"/></MDBBtn>
-                <MDBBtn onClick={()=>this.TotalHours(data)} color="info"> <img src="https://img.icons8.com/material/25/000000/clock--v1.png"/></MDBBtn>                        </div>
+                <MDBBtn id="tblBtn" onClick={()=>this.editUser(data)} color="warning"><img src="https://img.icons8.com/android/25/000000/edit.png"/></MDBBtn>
+                <MDBBtn id="tblBtn" onClick={()=>this.deleteUser(data.Email)} color="danger"> <img src="https://img.icons8.com/material/25/000000/delete--v1.png"/></MDBBtn>
+                <MDBBtn id="tblBtn" onClick={()=>this.TotalHours(data)} color="info"> <img src="https://img.icons8.com/material/25/000000/clock--v1.png"/></MDBBtn>                        </div>
               }
               ))}) 
 
@@ -417,9 +417,9 @@ constructor(props) {
                   ISEMPLOYEE: data.IsEmployee==0? "מתנדב": "עובד",
                   actions: <div style={{textAlign:'center'}}>
                               
-                  <MDBBtn onClick={()=>this.editUser(data)} color="warning"><img src="https://img.icons8.com/android/25/000000/edit.png"/></MDBBtn>
-                  <MDBBtn onClick={()=>this.deleteUser(data.Email)} color="danger"> <img src="https://img.icons8.com/material/25/000000/delete--v1.png"/></MDBBtn>
-                  <MDBBtn onClick={()=>this.TotalHours(data)} color="info"> <img src="https://img.icons8.com/material/25/000000/clock--v1.png"/></MDBBtn>                          </div>
+                  <MDBBtn id="tblBtn" onClick={()=>this.editUser(data)} color="warning"><img src="https://img.icons8.com/android/25/000000/edit.png"/></MDBBtn>
+                  <MDBBtn id="tblBtn" onClick={()=>this.deleteUser(data.Email)} color="danger"> <img src="https://img.icons8.com/material/25/000000/delete--v1.png"/></MDBBtn>
+                  <MDBBtn id="tblBtn" onClick={()=>this.TotalHours(data)} color="info"> <img src="https://img.icons8.com/material/25/000000/clock--v1.png"/></MDBBtn>                          </div>
                 }
                 ))
              
@@ -465,9 +465,9 @@ constructor(props) {
                 ISEMPLOYEE: data.IsEmployee==0? "מתנדב": "עובד",
                 actions: <div id="colAction">
                             
-                            <MDBBtn id="BTN3_table"  onClick={()=>this.editUser(data)} color="warning"><img src="https://img.icons8.com/android/20/000000/edit.png"/></MDBBtn>
-                            <MDBBtn id="BTN3_table"  onClick={()=>this.deleteUser(data.Email)} color="danger"> <img src="https://img.icons8.com/material/20/000000/delete--v1.png"/></MDBBtn>
-                            <MDBBtn id="BTN3_table"  onClick={()=>this.TotalHours(data)} color="info"> <img src="https://img.icons8.com/material/20/000000/clock--v1.png"/></MDBBtn>
+                            <MDBBtn id="tblBtn" onClick={()=>this.editUser(data)} color="warning"><img src="https://img.icons8.com/android/20/000000/edit.png"/></MDBBtn>
+                            <MDBBtn id="tblBtn"  onClick={()=>this.deleteUser(data.Email)} color="danger"> <img src="https://img.icons8.com/material/20/000000/delete--v1.png"/></MDBBtn>
+                            <MDBBtn id="tblBtn"  onClick={()=>this.TotalHours(data)} color="info"> <img src="https://img.icons8.com/material/20/000000/clock--v1.png"/></MDBBtn>
                            
                         </div>
               }
@@ -587,400 +587,423 @@ constructor(props) {
           sort:'asc',
           width:130
         }]   
-         return(
-          <div>
-            
-            {this.state.modal ? (
-          <div>
-                  <div id="BeforeHeader">
-                  <div className="header">
-                    <Menu disableAutoFocus right>
-                      <Link to={"/home"}>
-                        <a className="menu-item">
-                          <i id="homei" class="fas fa-home">
-                            {" "}
-                          </i>
-                          מסך הבית
-                        </a>
-                      </Link>
-          
-                      <a className="menu-item" onClick={this.ManageActivitiesClicked}>
-                        <i id="manageactivitiesi" class="fas fa-bell"></i>
-                        פעילויות
-                      </a>
-          
-                      <a className="menu-item" onClick={this.ResourcesClicked}>
-                        <i id="resourcesi" class="fas fa-globe"></i>
-                        משאבים
-                      </a>
-          
-                      <a className="menu-item" onClick={this.CalendarClicked}>
-                        <i id="calendari" class="far fa-calendar-alt"></i>
-                        לוח שנה
-                      </a>
-          
-                      <a className="menu-item" onClick={this.LogOutClicked}>
-                        <i id="logouti" class="fas fa-sign-out-alt"></i>
-                        התנתק
-                      </a>
-                    </Menu>
-          
-                    <button className="back" onClick={this.BackClicked}></button>
-          
-                    <div className="LogoDiv">
-                      <img className="Agodit" src={Agodit}></img>
-                      <h1 className="AgoditText">אגודית</h1>
-                    </div>
-                  </div>
-                  <br />
-                  <nav className="navbar navbar-default">
-                    <div className="container-fluid">
-                      <div className="navbar-header">
-                        <h1>כוח אדם</h1>
-                      </div>
-                    </div>
-                  </nav>
-                  </div>
-          <div className="Root">
-            <br />
-            <br />
-            <br /> <br />
-            <div className="container">
-              <div id="header-Privacy">
-                {this.state.editMode ? (
-                  <h3 className="privacyList">עריכת כוח אדם קיים</h3>
-                ) : (
-                  <h3 className="privacyList">הוספת כוח אדם חדש</h3>
-                )}
-                <br /> <br />
-              </div>
-              <div id="editDiv">
-                <form
-                  class="modal-content animate"
-                  action="/action_page.php"
-                  onSubmit={this.submitted}
-                >
-                  <card id="idCard1">
-                    <div className="form-group row">
-                      <div className="form-group_col-sm-3">
-                        <h1 id="h1Titele">פרטים אישיים</h1>
-                        <div>
-                          <label for="FirstName">
-                            <span className="red-star">שם פרטי </span>
-                          </label>
-                          <input
-                            type="text"
-                            className="form-control"
-                            id="FirstName"
-                            required
-                            value={this.state.EmpFirstName}
-                            onChange={this.FirstNameChanged}
-                          />
-                        </div>
-                      </div>
-                      <div className="form-group_col-sm-3">
-                        <label for="LastName">
-                          <span className="red-star"> שם משפחה</span>
-                        </label>
-                        <input
-                          type="text"
-                          className="form-control"
-                          id="FullName"
-                          required
-                          value={this.state.EmpLastName}
-                          onChange={this.LastNameChanged}
-                        />
-                      </div>
-                      <div className="form-group_col-sm-3">
-                        <label for="year">
-                          <span className="red-star"> טלפון</span>
-                        </label>
-                        <input
-                          type="tel"
-                          placeholder="מספר בעל 10 ספרות"
-                          pattern="^[0-9]{10}$"
-                          title="חייב להיות בעל 10 ספרות"
-                          className="form-control"
-                          id="PhoneNum"
-                          value={this.state.cellPhone}
-                          onChange={this.cellPhoneChanged}
-                          required
-                        />
-                      </div>
-                      <div className="form-group_col-sm-3">
-                        <label for="color">
-                          <span className="red-star">מייל </span>
-                        </label>
-                        <input
-                          type="email"
-                          className="form-control"
-                          id="Mail"
-                          value={this.state.Email}
-                          onChange={this.EmailChanged}
-                          required
-                        />
-                      </div>
-                    </div>
-                  </card>
+         return (
+           <div>
+             {this.state.modal ? (
+               <div>
+                 <div id="BeforeHeader">
+                   <div className="header">
+                     <Menu disableAutoFocus right>
+                       <Link to={"/home"}>
+                         <a className="menu-item">
+                           <i id="homei" class="fas fa-home">
+                             {" "}
+                           </i>
+                           מסך הבית
+                         </a>
+                       </Link>
 
-                  <card id="idCard">
-                    <div className="form-group row">
-                      <div className="form-group_col-sm-3">
-                        <h1 id="h1Titele">פרטים נוספים</h1>
-                        <label for="color">
-                          <span className="red-star">סטטוס </span>
-                        </label>
-                        <select
-                          placeholder="בחר "
-                          className="form-control"
-                          id="color"
-                          value={this.state.IsActive}
-                          onChange={this.IsActiveChanged}
-                          required
-                        >
-                          <option value="">בחר </option>
-                          <option value="true">פעיל</option>
-                          <option value="false"> לא פעיל </option>
-                        </select>
-                      </div>
+                       <a
+                         className="menu-item"
+                         onClick={this.ManageActivitiesClicked}
+                       >
+                         <i id="manageactivitiesi" class="fas fa-bell"></i>
+                         פעילויות
+                       </a>
 
-                      <div className="form-group_col-sm-3">
-                        <label for="color">
-                          <span className="red-star">מחלקה </span>
-                        </label>
-                        <select
-                          placeholder="בחר "
-                          className="form-control"
-                          id="color"
-                          value={this.state.DepartmnetDepartmentCode}
-                          onChange={this.DepartmnetChanged}
-                          required
-                        >
-                          <option value="">בחר </option>
-                          <option value="1">הנדסה</option>
-                          <option value="2">כלכלה ומנהל עסקים </option>
-                          <option value="3">מדעי החברה והקהילה</option>
-                          <option value="4">מדעי הים</option>
-                          <option value="5">הנדסאים- המכללה הטכנולוגית</option>
-                          <option value="6">מכינות</option>
-                          <option value="8">אחר</option>
-                        </select>
-                      </div>
+                       <a className="menu-item" onClick={this.ResourcesClicked}>
+                         <i id="resourcesi" class="fas fa-globe"></i>
+                         משאבים
+                       </a>
 
-                      <div className="form-group_col-sm-3">
-                        <label>
-                          <span className="red-star">סיום פעילות </span>
-                        </label>
-                        <input
-                          placeholder="מספר בעל 4 ספרות"
-                          pattern="^[0-9]{4}$"
-                          type="tel"
-                          className="form-control"
-                          id="ActiveTillYear"
-                          title=" חייב להיות בעל 4 ספרות "
-                          required
-                          onChange={this.ActiveTillYearChanged}
-                          value={this.state.ActiveTillYear}
-                        />
-                      </div>
+                       <a className="menu-item" onClick={this.CalendarClicked}>
+                         <i id="calendari" class="far fa-calendar-alt"></i>
+                         לוח שנה
+                       </a>
 
-                      <div className="form-group_col-sm-3">
-                        <label>
-                          <span className="red-star"> תחילת הלימודים </span>
-                        </label>
-                        <input
-                          title=" חייב להיות בעל 4 ספרות "
-                          pattern="^[0-9]{4}$"
-                          type="tel"
-                          className="form-control"
-                          id="StudyingStartyear"
-                          placeholder="מספר בעל 4 ספרות"
-                          required
-                          onChange={this.StudyingStartyearChanged}
-                          value={this.state.StudyingStartyear}
-                        />
-                      </div>
-                    </div>
-                    <div className="form-group row">
-                      <div className="form-group_col-sm-3">
-                        <label for="color">
-                          <span className="red-star"> עובד/מתנדב </span>
-                        </label>
-                        <select
-                          placeholder=" בחר "
-                          className="form-control"
-                          id="color"
-                          value={this.state.ISEMPLOYEE}
-                          onChange={this.ISEMPLOYEEChanged}
-                          required
-                        >
-                          <option value="">בחר </option>
-                          <option value="false">מתנדב</option>
-                          <option value="true"> עובד</option>
-                        </select>
-                      </div>
-                      {this.state.EditRoleEmp ? (
-                        <div className="form-group_col-sm-3">
-                          <label for="color">
-                            <span className="red-star">תפקיד </span>
-                          </label>
-                          <select
-                            placeholder=" בחר "
-                            className="form-control"
-                            id="color"
-                            value={this.state.RoleEmployee}
-                            onChange={this.RoleEmployeeChanged}
-                            required
-                          >
-                            <option value=""> בחר </option>
-                            <option value="1">יושב ראש אגודה</option>
-                            <option value="2"> סגן יושב ראש</option>
-                            <option value="3">רמ"ד תרבות</option>
-                            <option value="4"> רמ"ד אקדמיה</option>
-                            <option value="5">רמ"ד לוגיסטיקה</option>
-                            <option value="6"> רמ"ד רווחה</option>
-                            <option value="7">גזבר</option>
-                            <option value="8">רמ"ד שיווק</option>
-                            <option value="9">אחר</option>
-                          </select>
-                        </div>
-                      ) : (
-                        ""
-                      )}
-                      {this.state.EditRoleEmp ? (
-                        <div className="form-group_col-sm-3">
-                          <label for="color" id="RoleId">
-                            <span className="red-star">תיאור תפקיד </span>
-                          </label>
-                          <textarea
-                            placeholder=" תאר בקצרה את התפקיד הנבחר"
-                            rows="4"
-                            className="form-control"
-                            id="description"
-                            required
-                            value={this.state.RoleDescription}
-                            onChange={this.RoleDescriptionChanged}
-                          ></textarea>
-                        </div>
-                      ) : (
-                        ""
-                      )}
-                    </div>
-                    <div className="Fotterdiv2BTN">
-                    <button
-                      
-                      type="submit"
-                      className="btn btn-primary btn-lg"
-                      id="saveBTN"
-                    >
-                      שמור
-                    </button>
-                    <input
-                      type="button"
-                      className="btn btn-warning btn-lg"
-                      id="cancelSaveBTN"
-                      value="ביטול"
-                      onClick={this.modalClosed}
-                    />
-                  </div>
+                       <a className="menu-item" onClick={this.LogOutClicked}>
+                         <i id="logouti" class="fas fa-sign-out-alt"></i>
+                         התנתק
+                       </a>
+                     </Menu>
 
+                     <button
+                       className="back"
+                       onClick={this.BackClicked}
+                     ></button>
 
-                  </card>
-                
-                </form>
-              </div>
-            </div>
-          </div>
-          </div>
-        ) : (
-          <div>
-          <div id="BeforeHeaderMainHr">
-          <div className="header">
-            <Menu disableAutoFocus right>
-              <Link to={"/home"}>
-                <a className="menu-item">
-                  <i id="homei" class="fas fa-home">
-                    {" "}
-                  </i>
-                  מסך הבית
-                </a>
-              </Link>
-  
-              <a className="menu-item" onClick={this.ManageActivitiesClicked}>
-                <i id="manageactivitiesi" class="fas fa-bell"></i>
-                פעילויות
-              </a>
-  
-              <a className="menu-item" onClick={this.ResourcesClicked}>
-                <i id="resourcesi" class="fas fa-globe"></i>
-                משאבים
-              </a>
-  
-              <a className="menu-item" onClick={this.CalendarClicked}>
-                <i id="calendari" class="far fa-calendar-alt"></i>
-                לוח שנה
-              </a>
-  
-              <a className="menu-item" onClick={this.LogOutClicked}>
-                <i id="logouti" class="fas fa-sign-out-alt"></i>
-                התנתק
-              </a>
-            </Menu>
-  
-            <button className="back" onClick={this.BackClicked}></button>
-  
-            <div className="LogoDiv">
-              <img className="Agodit" src={Agodit}></img>
-              <h1 className="AgoditText">אגודית</h1>
-            </div>
-          </div>
-          <br />
-          <nav className="navbar navbar-default">
-            <div className="container-fluid">
-              <div className="navbar-header">
-                <h1>כוח אדם</h1>
-              </div>
-            </div>
-          </nav>
-          
-          <div style={{ padding: "0%" }}>
-            <MDBBtn
-              id="IDMDBBTN"
-              onClick={() => this.addNewUser()}
-              color={"rgba(255,196,12,0.7)"}
-              
-            >
-              הוסף אדם חדש
-            </MDBBtn>
-            <MDBBtn
-              id="IDMDBBTNRRight"
-              onClick={() => this.TotalHoursReport()}
-              color={"rgba(255,196,12,0.7)"}
-            >
-              {" "}
-              דו"ח שעות כולל
-              
-            </MDBBtn>
-            <MDBDataTable
-              theadColor="#B5DBF8"
-              paging={true}
-              className="dataTable"
-              sortable
-              striped
-              bordered
-              hover
-              paginationLabel={["הקודם", "הבא"]}
-              data={{
-                columns: columns,
-                rows: this.state.rows,
-              }}
-            />
-          </div>
-          </div>
-          </div>
-        )}
-      </div>
-    );
+                     <div className="LogoDiv">
+                       <img className="Agodit" src={Agodit}></img>
+                       <h1 className="AgoditText">אגודית</h1>
+                     </div>
+                   </div>
+                   <br />
+                   <nav className="navbar navbar-default">
+                     <div className="container-fluid">
+                       <div className="navbar-header">
+                         <h1>כוח אדם</h1>
+                       </div>
+                     </div>
+                   </nav>
+                 </div>
+                 <div className="Root">
+                   <br />
+                   <br />
+                   <br /> <br />
+                   <div className="container">
+                     <div id="header-Privacy">
+                       {this.state.editMode ? (
+                         <h3 className="privacyList">עריכת כוח אדם קיים</h3>
+                       ) : (
+                         <h3 className="privacyList">הוספת כוח אדם חדש</h3>
+                       )}
+                       <br /> <br />
+                     </div>
+                     <div id="editDiv">
+                       <form
+                         class="modal-content animate"
+                         action="/action_page.php"
+                         onSubmit={this.submitted}
+                       >
+                         <card id="idCard1">
+                           <div className="form-group row">
+                             <div className="form-group_col-sm-3">
+                               <h1 id="h1Titele">פרטים אישיים</h1>
+                               <div>
+                                 <label for="FirstName">
+                                   <span className="red-star">שם פרטי </span>
+                                 </label>
+                                 <input
+                                   type="text"
+                                   className="form-control"
+                                   id="FirstName"
+                                   required
+                                   value={this.state.EmpFirstName}
+                                   onChange={this.FirstNameChanged}
+                                 />
+                               </div>
+                             </div>
+                             <div className="form-group_col-sm-3">
+                               <label for="LastName">
+                                 <span className="red-star"> שם משפחה</span>
+                               </label>
+                               <input
+                                 type="text"
+                                 className="form-control"
+                                 id="FullName"
+                                 required
+                                 value={this.state.EmpLastName}
+                                 onChange={this.LastNameChanged}
+                               />
+                             </div>
+                             <div className="form-group_col-sm-3">
+                               <label for="year">
+                                 <span className="red-star"> טלפון</span>
+                               </label>
+                               <input
+                                 type="tel"
+                                 placeholder="מספר בעל 10 ספרות"
+                                 pattern="^[0-9]{10}$"
+                                 title="חייב להיות בעל 10 ספרות"
+                                 className="form-control"
+                                 id="PhoneNum"
+                                 value={this.state.cellPhone}
+                                 onChange={this.cellPhoneChanged}
+                                 required
+                               />
+                             </div>
+                             <div className="form-group_col-sm-3">
+                               <label for="color">
+                                 <span className="red-star">מייל </span>
+                               </label>
+                               <input
+                                 type="email"
+                                 className="form-control"
+                                 id="Mail"
+                                 value={this.state.Email}
+                                 onChange={this.EmailChanged}
+                                 required
+                               />
+                             </div>
+                           </div>
+                         </card>
+
+                         <card id="idCard">
+                           <div className="form-group row">
+                             <div className="form-group_col-sm-3">
+                               <h1 id="h1Titele">פרטים נוספים</h1>
+                               <label for="color">
+                                 <span className="red-star">סטטוס </span>
+                               </label>
+                               <select
+                                 placeholder="בחר "
+                                 className="form-control"
+                                 id="color"
+                                 value={this.state.IsActive}
+                                 onChange={this.IsActiveChanged}
+                                 required
+                               >
+                                 <option value="">בחר </option>
+                                 <option value="true">פעיל</option>
+                                 <option value="false"> לא פעיל </option>
+                               </select>
+                             </div>
+
+                             <div className="form-group_col-sm-3">
+                               <label for="color">
+                                 <span className="red-star">מחלקה </span>
+                               </label>
+                               <select
+                                 placeholder="בחר "
+                                 className="form-control"
+                                 id="color"
+                                 value={this.state.DepartmnetDepartmentCode}
+                                 onChange={this.DepartmnetChanged}
+                                 required
+                               >
+                                 <option value="">בחר </option>
+                                 <option value="1">הנדסה</option>
+                                 <option value="2">כלכלה ומנהל עסקים </option>
+                                 <option value="3">מדעי החברה והקהילה</option>
+                                 <option value="4">מדעי הים</option>
+                                 <option value="5">
+                                   הנדסאים- המכללה הטכנולוגית
+                                 </option>
+                                 <option value="6">מכינות</option>
+                                 <option value="8">אחר</option>
+                               </select>
+                             </div>
+
+                             <div className="form-group_col-sm-3">
+                               <label>
+                                 <span className="red-star">סיום פעילות </span>
+                               </label>
+                               <input
+                                 placeholder="מספר בעל 4 ספרות"
+                                 pattern="^[0-9]{4}$"
+                                 type="tel"
+                                 className="form-control"
+                                 id="ActiveTillYear"
+                                 title=" חייב להיות בעל 4 ספרות "
+                                 required
+                                 onChange={this.ActiveTillYearChanged}
+                                 value={this.state.ActiveTillYear}
+                               />
+                             </div>
+
+                             <div className="form-group_col-sm-3">
+                               <label>
+                                 <span className="red-star">
+                                   {" "}
+                                   תחילת הלימודים{" "}
+                                 </span>
+                               </label>
+                               <input
+                                 title=" חייב להיות בעל 4 ספרות "
+                                 pattern="^[0-9]{4}$"
+                                 type="tel"
+                                 className="form-control"
+                                 id="StudyingStartyear"
+                                 placeholder="מספר בעל 4 ספרות"
+                                 required
+                                 onChange={this.StudyingStartyearChanged}
+                                 value={this.state.StudyingStartyear}
+                               />
+                             </div>
+                           </div>
+                           <div className="form-group row">
+                             <div className="form-group_col-sm-3">
+                               <label for="color">
+                                 <span className="red-star"> עובד/מתנדב </span>
+                               </label>
+                               <select
+                                 placeholder=" בחר "
+                                 className="form-control"
+                                 id="color"
+                                 value={this.state.ISEMPLOYEE}
+                                 onChange={this.ISEMPLOYEEChanged}
+                                 required
+                               >
+                                 <option value="">בחר </option>
+                                 <option value="false">מתנדב</option>
+                                 <option value="true"> עובד</option>
+                               </select>
+                             </div>
+                             {this.state.EditRoleEmp ? (
+                               <div className="form-group_col-sm-3">
+                                 <label for="color">
+                                   <span className="red-star">תפקיד </span>
+                                 </label>
+                                 <select
+                                   placeholder=" בחר "
+                                   className="form-control"
+                                   id="color"
+                                   value={this.state.RoleEmployee}
+                                   onChange={this.RoleEmployeeChanged}
+                                   required
+                                 >
+                                   <option value=""> בחר </option>
+                                   <option value="1">יושב ראש אגודה</option>
+                                   <option value="2"> סגן יושב ראש</option>
+                                   <option value="3">רמ"ד תרבות</option>
+                                   <option value="4"> רמ"ד אקדמיה</option>
+                                   <option value="5">רמ"ד לוגיסטיקה</option>
+                                   <option value="6"> רמ"ד רווחה</option>
+                                   <option value="7">גזבר</option>
+                                   <option value="8">רמ"ד שיווק</option>
+                                   <option value="9">אחר</option>
+                                 </select>
+                               </div>
+                             ) : (
+                               ""
+                             )}
+                             {this.state.EditRoleEmp ? (
+                               <div className="form-group_col-sm-3">
+                                 <label for="color" id="RoleId">
+                                   <span className="red-star">
+                                     תיאור תפקיד{" "}
+                                   </span>
+                                 </label>
+                                 <textarea
+                                   placeholder=" תאר בקצרה את התפקיד הנבחר"
+                                   rows="4"
+                                   className="form-control"
+                                   id="description"
+                                   required
+                                   value={this.state.RoleDescription}
+                                   onChange={this.RoleDescriptionChanged}
+                                 ></textarea>
+                               </div>
+                             ) : (
+                               ""
+                             )}
+                           </div>
+                           <div className="Fotterdiv2BTN">
+                             <button
+                               type="submit"
+                               className="btn btn-primary btn-lg"
+                               id="saveBTN"
+                               color={"rgba(255,196,12,0.7)"}
+                             >
+                               שמור
+                             </button>
+                             <input
+                               type="button"
+                               className="btn btn-warning btn-lg"
+                               id="cancelSaveBTN"
+                               value="ביטול"
+                               onClick={this.modalClosed}
+                             />
+                           </div>
+                         </card>
+                       </form>
+                     </div>
+                   </div>
+                 </div>
+               </div>
+             ) : (
+               <div>
+                 <div id="BeforeHeaderMainHr">
+                   <div className="header">
+                     <Menu disableAutoFocus right>
+                       <Link to={"/home"}>
+                         <a className="menu-item">
+                           <i id="homei" class="fas fa-home">
+                             {" "}
+                           </i>
+                           מסך הבית
+                         </a>
+                       </Link>
+
+                       <a
+                         className="menu-item"
+                         onClick={this.ManageActivitiesClicked}
+                       >
+                         <i id="manageactivitiesi" class="fas fa-bell"></i>
+                         פעילויות
+                       </a>
+
+                       <a className="menu-item" onClick={this.ResourcesClicked}>
+                         <i id="resourcesi" class="fas fa-globe"></i>
+                         משאבים
+                       </a>
+
+                       <a className="menu-item" onClick={this.CalendarClicked}>
+                         <i id="calendari" class="far fa-calendar-alt"></i>
+                         לוח שנה
+                       </a>
+
+                       <a className="menu-item" onClick={this.LogOutClicked}>
+                         <i id="logouti" class="fas fa-sign-out-alt"></i>
+                         התנתק
+                       </a>
+                     </Menu>
+
+                     <button
+                       className="back"
+                       onClick={this.BackClicked}
+                     ></button>
+
+                     <div className="LogoDiv">
+                       <img className="Agodit" src={Agodit}></img>
+                       <h1 className="AgoditText">אגודית</h1>
+                     </div>
+                   </div>
+                   <br />
+                   <nav className="navbar navbar-default">
+                     <div className="container-fluid">
+                       <div className="navbar-header">
+                         <h1>כוח אדם</h1>
+                       </div>
+                     </div>
+                   </nav>
+
+                   <div style={{ padding: "0%" }}>
+                     <img
+                       id="IDMDBBTNAddNewPerson"
+                       onClick={() => this.addNewUser()}
+                       src="https://img.icons8.com/material-outlined/30/000000/plus.png"
+                     />
+{/* 
+                     <MDBBtn
+                       id="IDMDBBTN"
+                       onClick={() => this.addNewUser()}
+                       color={"rgba(255,196,12,0.7)"}
+                     >
+                       הוסף אדם חדש
+                     </MDBBtn> */}
+                     <MDBBtn
+                       id="IDMDBBTNRRight"
+                       onClick={() => this.TotalHoursReport()}
+                       color={"rgba(255,196,12,0.7)"}
+                     >
+                       {" "}
+                       דו"ח שעות כולל
+                     </MDBBtn>
+                     <MDBDataTable
+                       theadColor="#B5DBF8"
+                       paging={true}
+                       className="dataTable"
+                       sortable
+                       striped
+                       bordered
+                       hover
+                       paginationLabel={["הקודם", "הבא"]}
+                       data={{
+                         columns: columns,
+                         rows: this.state.rows,
+                       }}
+                     />
+                   </div>
+                 </div>
+               </div>
+             )}
+<br/><br/><br/>
+        <footer>
+        <p id="copyright">Copyright, 2020 &#169; <br/> Bar, Almog and Ron.  All rights reserved. </p>
+
+     </footer>           </div>
+         );
   }
 }
 export default withRouter (CCHumanResources)

@@ -4,6 +4,8 @@ import { MDBDataTable, MDBBtn } from "mdbreact";
 import Agodit from "../image/Agodit.png";
 import "../CssFiles/ActualEvent.css";
 import { stack as Menu } from "react-burger-menu";
+import ProgressBar from 'react-bootstrap/ProgressBar'
+
 
 import Swal from "sweetalert2";
 
@@ -21,7 +23,8 @@ class CCActualEvent extends Component {
             AddingEmpsModal: false,
             rows: [],
             EmpCodesArr:[],
-            today: ""
+            today: "",
+            ActualTaskInEventBool: false
           }
     }
     componentDidMount(){
@@ -106,7 +109,7 @@ class CCActualEvent extends Component {
              RoleName: data.RoleName,
               actions: <div style={{textAlign:'center'}}>
           
-                          <MDBBtn onClick={()=>this.AddPersonToActualEvent(data)} color="warning">שבץ לאירוע</MDBBtn>
+                          <MDBBtn id="tblBtn" onClick={()=>this.AddPersonToActualEvent(data)} color="warning">שבץ לאירוע</MDBBtn>
                       </div>
             }
            
@@ -137,7 +140,7 @@ class CCActualEvent extends Component {
              RoleName: data.RoleName,
               actions: <div style={{textAlign:'center'}}>
                           
-                          <MDBBtn onClick={()=>this.AddPersonToActualEvent(data)} color="warning">שבץ לאירוע</MDBBtn>
+                          <MDBBtn id="tblBtn" onClick={()=>this.AddPersonToActualEvent(data)} color="warning">שבץ לאירוע</MDBBtn>
                       </div>
             }
            
@@ -145,7 +148,8 @@ class CCActualEvent extends Component {
             today: FullCurrentDate,
             DateEx:FullCurrentDate,
             StartHour: FullCurrenttime,
-            FinishHour: FullCurrenttime
+            FinishHour: FullCurrenttime,
+            ActualTaskInEventBool: true
     
           }) 
         }
@@ -421,7 +425,7 @@ class CCActualEvent extends Component {
                    RoleName: data.RoleName,
                   actions: <div style={{textAlign:'center'}}>
                                             
-                                      <MDBBtn onClick={()=>this.AddPersonToActualEvent(data)} color="warning">שבץ לאירוע</MDBBtn>
+                                      <MDBBtn id="tblBtn" onClick={()=>this.AddPersonToActualEvent(data)} color="warning">שבץ לאירוע</MDBBtn>
                           </div>
                 }
                 newRows.push(SpecificPerson)
@@ -974,7 +978,7 @@ LogOutClicked=()=>{
         </nav>
     <div style={{padding:'0%'}}>
 
-                <MDBBtn id="IDMDBBTNn" onClick={()=>this.MoveBackToActualEvent()} color="success">  חזרה לתזמון אירוע  </MDBBtn>
+                <button id="IDMDBBTNn" onClick={()=>this.MoveBackToActualEvent()} color="success">  המשך  </button>
                 <MDBDataTable
                 
                 theadColor="#B5DBF8"
@@ -997,8 +1001,16 @@ LogOutClicked=()=>{
 </div>
 
                 :
+                
                 <form style={{padding:100}} style={{textAlign:"center"}} onSubmit={this.SaveActualEvent}>
+                     {this.state.ActualTaskInEventBool?
+                     <div id="progressDiv">
+<ProgressBar style={{height: 24}} animated now={25} label={"25%"} variant="success"/>
+                     </div>
+    :""
+   }
  <div id="container">
+
   <h1 id="H1Header"> אירוע בפועל- {this.props.location.state== undefined?"":
   this.props.location.state.data.EventName}</h1>
 
@@ -1024,21 +1036,21 @@ LogOutClicked=()=>{
 
 
 <label>
-<input id="LocationInput" className="inputActualTask" type="text" name="Location" onChange={this.Location} value={this.state.Location}/>
+<input id="LocationInput" className="inputActualTask" type="text" name="Location" placeholder="אנא הזן מיקום" onChange={this.Location} value={this.state.Location}/>
 <img className="ImgActual" src="https://img.icons8.com/office/30/000000/worldwide-location.png"/>
 <h3 className="H3Actual">מיקום</h3>
 </label>
 {
      this.props.PrevLocation=='/Calendar'?
-     <button id="BTNActualTask" onClick={this.ChooseEventRules}>שנה אחראי אירוע</button>:
-<button color={"rgba(255,196,12,0.7)"} id="BTNActualTask" onClick={this.ChooseEventRules}>בחר אחראי אירוע</button> 
+     <MDBBtn color={"rgba(255,196,12,0.7)"} id="BTNActualTask" onClick={this.ChooseEventRules}>שנה אחראי אירוע</MDBBtn>:
+<MDBBtn color={"rgba(255,196,12,0.7)"} id="BTNActualTask" onClick={this.ChooseEventRules}>בחר אחראי אירוע</MDBBtn> 
 }
 
 <br/>
 {
   this.props.PrevLocation=='/Calendar'?
   <MDBBtn  id="MDBBtnActualTask_save" type="submit" value="Submit"  color={"rgba(255,196,12,0.7)"} >עדכן אירוע</MDBBtn>:
-<MDBBtn  id="MDBBtnActualTask_save" type="submit" value="Submit" >  שמור והמשך</MDBBtn>
+<MDBBtn  color={"rgba(255,196,12,0.7)"}  id="MDBBtnActualTask_save" type="submit" value="Submit" >  שמור והמשך</MDBBtn>
 }
 
 
@@ -1046,7 +1058,11 @@ LogOutClicked=()=>{
 </form>
 
 }
+<br/><br/><br/>
+        <footer>
+        <p id="copyright">Copyright, 2020 &#169; <br/> Bar, Almog and Ron.  All rights reserved. </p>
 
+     </footer>
             </div>
           );
     }

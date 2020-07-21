@@ -18,6 +18,8 @@
     "react-bootstrap-table": "^4.3.1",
     "react-burger-menu": "^2.6.13",
     "react-calendar": "^3.0.1",
+    "react-circular-progressbar": "^2.0.3",
+    "react-copyright": "0.0.1",
     "react-datepicker": "^2.14.1",
     "react-day-picker": "^7.4.0",
     "react-dom": "^16.13.0",

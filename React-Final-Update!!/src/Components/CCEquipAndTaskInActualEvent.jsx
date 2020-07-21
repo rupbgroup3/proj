@@ -9,6 +9,7 @@ import { Checkbox } from "react-bootstrap";
 import { useLocation } from "react-router";
 import Agodit from "../image/Agodit.png";
 import { stack as Menu } from "react-burger-menu";
+import ProgressBar from 'react-bootstrap/ProgressBar'
 
 class CCEquipAndTaskInActualEvent extends Component {
   constructor(props) {
@@ -1117,13 +1118,19 @@ class CCEquipAndTaskInActualEvent extends Component {
 
         <div id="ManActDiv">
           <br />
+
           <nav className="navbar navbar-default">
             <div className="container-fluid">
+           
               <div className="navbar-header">
                 <h1>משימות וציוד לאירוע בפועל</h1>
               </div>
             </div>
           </nav>
+          <div id="progressDiv">
+          <ProgressBar style={{height: 24}} animated now={50} label={"50%"} variant="success"/>
+          </div>
+
           <div id="idDivInput">
             <span id="IdSpan"> אירוע : {this.state.EventName} </span>
             <br />
@@ -1132,7 +1139,7 @@ class CCEquipAndTaskInActualEvent extends Component {
 
             <MDBBtn
               id="idMDBBtnSave"
-              color="dark-green"
+              color={"rgba(255,196,12,0.7)"}
               onClick={this.DefiningTasksStepClicked}
             >
               המשך לניהול משימות
@@ -1143,7 +1150,7 @@ class CCEquipAndTaskInActualEvent extends Component {
               <tr>
                 <td id="tdLeft">
                   <div id="divEquipment">
-                    <h2>סוגי ציוד</h2>
+                    <h2 class="ClassH2">סוגי ציוד</h2>
                     <MDBBtn
                       rounded
                       outline
@@ -1210,7 +1217,7 @@ class CCEquipAndTaskInActualEvent extends Component {
                 </td>
                 <td id="tdRight">
                   <div id="upperRight">
-                    <h2>סוגי משימות</h2>
+                    <h2 class="ClassH2">סוגי משימות</h2>
                     <MDBBtn
                       rounded
                       outline
@@ -1279,6 +1286,11 @@ class CCEquipAndTaskInActualEvent extends Component {
             </table>
           </div>
         </div>
+        <br/><br/><br/>
+        <footer>
+        <p id="copyright">Copyright, 2020 &#169; <br/> Bar, Almog and Ron.  All rights reserved. </p>
+
+     </footer>
       </div>
     );
   }

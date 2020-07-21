@@ -23,7 +23,7 @@ body {
 /* Individual item */
 .bm-item {
   display: inline-block;
-
+  outline: none;
   /* Our sidebar item styling */
   text-decoration: none;
   margin-bottom: 10px;
@@ -32,27 +32,46 @@ body {
   cursor: hand;
   cursor: pointer;
 }
+
+#root > div > div > div.header > div:nth-child(1) > div.bm-menu-wrap > div.bm-menu > nav > a:nth-child(1){
+  outline: none;
+}
 #root > div > div > div.header > div:nth-child(1) > div.bm-menu-wrap > div.bm-menu > nav > a:nth-child(1)  :hover{
   cursor: hand;
   cursor: pointer;
-  color: #4490bb;
+  color: rgba(255, 196, 12,0.7);
+}
+#root > div > div > div.header > div:nth-child(1) > div.bm-menu-wrap > div.bm-menu > nav > a:nth-child(2){
+  outline: none;
 }
 #root > div > div > div.header > div:nth-child(1) > div.bm-menu-wrap > div.bm-menu > nav  :hover {
   cursor: hand;
   cursor: pointer;
-  color: #4490bb;
+  color: rgba(255, 196, 12,0.7);
 }
+#root > div > div > div.header > div:nth-child(1) > div.bm-menu-wrap > div.bm-menu > nav > a:nth-child(3){
+  outline: none;
+}
+
 
 #root > div > div > div.header > div:nth-child(1) > div.bm-menu-wrap > div.bm-menu > nav > a:nth-child(2):hover{
   cursor: hand;
   cursor: pointer;
-  color: #4490bb;
+  color: rgba(255, 196, 12,0.7);
 } 
+#root > div > div > div.header > div:nth-child(1) > div.bm-menu-wrap > div.bm-menu > nav > a:nth-child(4){
+  outline: none;
+}
+
 #root > div > div > div.header > div:nth-child(1) > div.bm-menu-wrap > div:nth-child(2) > div > button :hover{
   cursor: hand;
   cursor: pointer;
-  color: #4490bb;
+  color: rgba(255, 196, 12,0.7);
 }
+#root > div > div > div.header > div:nth-child(1) > div.bm-menu-wrap > div.bm-menu > nav > a:nth-child(5){
+  outline: none;
+}
+
 
 /* Change color on hover */
 .bm-item:hover {
@@ -63,6 +82,8 @@ body {
 
 /* Position and sizing of burger button */
 .bm-burger-button {
+  box-shadow: none;
+  outline: none;
     position: relative;
     width: 40px;
     height: 34px;
@@ -71,6 +92,10 @@ body {
     /* right: 0; */
     float: right;
 }
+button{
+  outline: none !important;
+}
+
 
 /* Color/shape of burger icon bars */
 .bm-burger-bars {
@@ -91,7 +116,7 @@ body {
 .bm-cross :hover{
   cursor: hand;
   cursor: pointer;
-  color: #4972a1;
+  color: rgba(255, 196, 12,0.7);
 }
 
 /* General sidebar styles */

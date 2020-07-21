@@ -8,8 +8,13 @@
  align-items: center;
  font-size: 25px;
  margin-left: 20px;
+ font-weight: bold;
 
 }
+.navbar-header h1{
+  text-shadow: 1px 1px rgba(255, 196, 12,0.7);
+}
+
 #idDivInput{
   text-align: center;
   margin: 50px;
@@ -103,6 +108,7 @@ margin-left: 4px;
 }
 
 #idMDBBtn{
+  border-radius: 80px;
 font-size: 15px;
 padding-left: 40px;
 padding-right: 40px;
@@ -110,6 +116,7 @@ background-color: rgba(255,196,12,0.7);
 }
 
 #idMDBBtnSave{
+  border-radius: 80px;
  float: left;
  background-color: rgba(255,196,12,0.7);
   font-size: 15px;
@@ -117,6 +124,7 @@ background-color: rgba(255,196,12,0.7);
 }
 
 #idMDBBtnEditEvents{
+  border-radius: 80px;
  float: right;
   font-size: 15px;
   background-color: rgba(255,196,12,0.7);
@@ -168,9 +176,14 @@ table.table.table-bordered.table-hover.table-striped.dataTable {
   font-family: sans-serif;
 }
 #IDMDBBTNn{
+  border-radius: 80px;
   font-size: 15px;
   background-color: rgba(255,196,12,0.7); 
-  
+  color:white;
+}
+
+#tblBtn{
+border-radius: 80px;
 }
 #input_checkbox{
   font-size: 10px;
@@ -179,10 +192,12 @@ table.table.table-bordered.table-hover.table-striped.dataTable {
 }
 #label_checkbox{
   font-size: 15px;
+  font-weight: normal;
 }
 #IDH2{
   text-align: right;
   margin-top: 40px;
+  font-weight: bold;
 }
 #topDiv{
   display: contents;
@@ -192,12 +207,18 @@ table.table.table-bordered.table-hover.table-striped.dataTable {
   font-size: 30px;
   margin-bottom: 20px;
   width: 100%;
+  font-weight: bold;
 }
 .IDcheckbox {
   margin-right: 20px;
 }
 #IDMDBBTN{
+  border-radius: 80px;
   background-color: rgba(255,196,12,0.7);
+}
+#root > div > div > div:nth-child(2) > div > div:nth-child(2) > div > div > table > thead:nth-child(1){
+  background-color: rgba(255,196,12,0.7);
+
 }
 
 

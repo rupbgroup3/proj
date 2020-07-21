@@ -164,8 +164,14 @@ class CCResources extends Component {
           <img src="https://img.icons8.com/clouds/100/000000/task.png"/>
           סוגי-משימות
         </button>
-   
+
         </div>
+        <br/><br/><br/>
+        <footer>
+        <p id="copyright">Copyright, 2020 &#169; <br/> Bar, Almog and Ron.  All rights reserved. </p>
+
+     </footer>
+
       </div>
     );
   }

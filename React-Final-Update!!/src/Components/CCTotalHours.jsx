@@ -223,6 +223,7 @@ class CCTotalHours extends Component {
           </div>
   
               </div>
+              <br/>
               <nav className="navbar navbar-default">
           <div className="container-fluid">
             <div className="navbar-header">
@@ -270,14 +271,15 @@ class CCTotalHours extends Component {
                           </div>
                           <div className="Fotterdiv2BTN">
                             
-                            <button
-                              style={{ margin: 20 }}
+                            <MDBBtn
+                            color={"rgba(255,196,12,0.7)"}
+                              style={{ margin: 30 }}
                               type="submit"
-                              className="btn btn-primary btn-lg"
+                              
                               id="saveBTN"
                             >
                               הפק דו"ח
-                            </button>
+                            </MDBBtn>
                           </div>
                           </card >
         
@@ -292,18 +294,20 @@ class CCTotalHours extends Component {
                     <h1 id="h1three">{this.state.totalHours}</h1>
                       <div style={{padding:'0%'}}>
                     
-                <MDBBtn id="IDMDBBTN" onClick={()=>this.ChangeDatesSort()} color="success">בחירת תאריכים </MDBBtn>
+                <MDBBtn id="IDMDBBTN" color={"rgba(255,196,12,0.7)"} onClick={()=>this.ChangeDatesSort()}>בחירת תאריכים </MDBBtn>
+
 {
   this.state.ShowAllTasks?
-  <MDBBtn id="IDMDBBTN" onClick={()=>this.HideAllTasks()} color="info">הסתר פירוט משימות</MDBBtn> 
+  <MDBBtn id="IDMDBBTN" color={"rgba(255,196,12,0.7)"} onClick={()=>this.HideAllTasks()} >הסתר פירוט משימות</MDBBtn> 
   :
-  <MDBBtn id="IDMDBBTN" onClick={()=>this.ShowAllTasks()} color="info">הצג פירוט משימות</MDBBtn>
+  <MDBBtn id="IDMDBBTN" color={"rgba(255,196,12,0.7)"} onClick={()=>this.ShowAllTasks()} >הצג פירוט משימות</MDBBtn>
 }
 
      </div>           
                 {
                     this.state.ShowAllTasks?
                     <div>
+                      <br/>
                     <h1 > פירוט משימות</h1>
                     <MDBDataTable
                     
@@ -329,7 +333,11 @@ class CCTotalHours extends Component {
 
             </div>
         }
+<br/><br/><br/>
+        <footer>
+        <p id="copyright">Copyright, 2020 &#169; <br/> Bar, Almog and Ron.  All rights reserved. </p>
 
+     </footer>
             </div>
          );
     }

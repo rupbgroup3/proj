@@ -207,10 +207,11 @@ class CCCalendar extends Component {
 
            actions: (
              <div style={{ textAlign: "center" }}>
-               <MDBBtn onClick={() => this.EditTaskInEvent(data)} color="warning">
+               <MDBBtn id="tblBtn" onClick={() => this.EditTaskInEvent(data)} color="warning">
                <img src="https://img.icons8.com/android/17/000000/edit.png"/>
                </MDBBtn>
                <MDBBtn
+               id="tblBtn"
                  onClick={() => this.DeleteTaskInEvent(data)}
                  color="danger"
                >
@@ -236,15 +237,17 @@ class CCCalendar extends Component {
            actions: (
              <div style={{ textAlign: "center" }}>
                 <MDBBtn
+                id="tblBtn"
                  onClick={() => this.ShowTasksInEvents(data)}
                  color="info"
                >
                  <img src="https://img.icons8.com/material/17/000000/task.png"/>
                </MDBBtn>
-               <MDBBtn onClick={() => this.EditActualEvent(data)} color="warning">
+               <MDBBtn id="tblBtn" onClick={() => this.EditActualEvent(data)} color="warning">
                <img src="https://img.icons8.com/android/17/000000/edit.png"/>
                </MDBBtn>
                <MDBBtn
+               id="tblBtn"
                  onClick={() => this.DeleteActualEvent(data)}
                  color="danger"
                >
@@ -273,10 +276,11 @@ class CCCalendar extends Component {
         actions: (
           <div style={{ textAlign: "center" }}>
 
-            <MDBBtn onClick={() => this.EditActualTask(data)} color="warning">
+            <MDBBtn id="tblBtn" onClick={() => this.EditActualTask(data)} color="warning">
             <img src="https://img.icons8.com/android/17/000000/edit.png"/>
             </MDBBtn>
             <MDBBtn 
+            id="tblBtn"
               onClick={() => this.DeleteActualTask(data)}
               color="danger"
             >
@@ -298,10 +302,11 @@ class CCCalendar extends Component {
 
           actions: (
             <div style={{ textAlign: "center" }}>
-              <MDBBtn onClick={() => this.EditTaskInEvent(data)} color="warning">
+              <MDBBtn id="tblBtn" onClick={() => this.EditTaskInEvent(data)} color="warning">
               <img src="https://img.icons8.com/android/17/000000/edit.png"/>
               </MDBBtn>
               <MDBBtn
+              id="tblBtn"
                 onClick={() => this.DeleteTaskInEvent(data)}
                 color="danger"
               >
@@ -331,16 +336,18 @@ class CCCalendar extends Component {
 
            actions: (
              <div style={{ textAlign: "center" }}>
-                <MDBBtn 
+                <MDBBtn
+                id="tblBtn" 
                  onClick={() => this.ShowTasksInEvents(data)}
                  color="info"
                >
                  <img src="https://img.icons8.com/material/17/000000/task.png"/>
                </MDBBtn>
-               <MDBBtn onClick={() => this.EditActualEvent(data)} color="warning">
+               <MDBBtn id="tblBtn" onClick={() => this.EditActualEvent(data)} color="warning">
                <img src="https://img.icons8.com/android/17/000000/edit.png"/>
                </MDBBtn>
-               <MDBBtn 
+               <MDBBtn
+               id="tblBtn" 
                  onClick={() => this.DeleteActualEvent(data)}
                  color="danger"
                >
@@ -368,10 +375,11 @@ class CCCalendar extends Component {
         actions: (
           <div style={{ textAlign: "center" }}>
 
-            <MDBBtn onClick={() => this.EditActualTask(data)} color="warning">
+            <MDBBtn id="tblBtn" onClick={() => this.EditActualTask(data)} color="warning">
             <img src="https://img.icons8.com/android/17/000000/edit.png"/>
             </MDBBtn>
             <MDBBtn 
+            id="tblBtn"
               onClick={() => this.DeleteActualTask(data)}
               color="danger"
             >
@@ -393,10 +401,11 @@ class CCCalendar extends Component {
 
           actions: (
             <div style={{ textAlign: "center" }}>
-              <MDBBtn onClick={() => this.EditTaskInEvent(data)} color="warning">
+              <MDBBtn id="tblBtn" onClick={() => this.EditTaskInEvent(data)} color="warning">
               <img src="https://img.icons8.com/android/17/000000/edit.png"/>
               </MDBBtn>
               <MDBBtn
+              id="tblBtn"
                 onClick={() => this.DeleteTaskInEvent(data)}
                 color="danger"
               >
@@ -824,7 +833,11 @@ selectRange={this.state.ToggleRange}
                 />
 </div>:""
 }
+<br/><br/><br/>
+        <footer>
+        <p id="copyright">Copyright, 2020 &#169; <br/> Bar, Almog and Ron.  All rights reserved. </p>
 
+     </footer>
 </div>
      
 

@@ -40,9 +40,9 @@ body{
   background-clip: border-box;
   border: 1px solid transparent;
   border-radius: 220px;
-  height: 220px;
-  width: 220px;
-  font-size: calc(20px + 2vmin);
+  height: 230px;
+  width: 230px;
+  font-size: calc(19px + 2vmin);
  align-items:center;
  justify-content: center;
  margin-top: 100px;
@@ -168,6 +168,45 @@ align-items: center;
   text-align: right;
   margin-top: 15px;
 }
+#LoginForm > button{
+  width: 100%;
+}
+#BTNLogin{
+  border-radius: 90px;
+     width: 100%;
+     font-size: 20px;
+     display: block;
+     margin-left: auto;
+     margin-right: auto;
+     color: black;
+     background-color: rgba(255,196,12,0.7);
+     height: 50px;
+     margin-bottom: 30px;
+     font-weight: 500;
+     margin-top: 20px;
+ }
+ #BTNLogin:hover{
+     border:3px solid black;
+     color:black;
+     border-radius: 90px;
+     width: 100%;
+     font-size: 20px;
+     display: block;
+     margin-left: auto;
+     margin-right: auto;
+     background-color: rgba(255,196,12,0.7);
+     height: 50px;
+     margin-bottom: 30px;
+     font-weight: 500;
+     margin-top: 20px;
+ }
+ #copyright{
+    bottom: 0px;
+   font-size: 14px;
+   text-align: center;
+   text-decoration-line: underline;
+   font-weight:300;
+ }
 
 
 

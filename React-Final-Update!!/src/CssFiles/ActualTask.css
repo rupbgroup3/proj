@@ -22,6 +22,7 @@ div#container{
     float:right;
     margin-left: 10px;
     margin-bottom: 50px;
+    font-weight: bold;
 }
 .ImgActualType{
     float:right;
@@ -78,4 +79,5 @@ div#container{
 }
 #deleteFromTask{
     font-size: 15px;
+    border-radius: 80px;
 }

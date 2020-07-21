@@ -118,10 +118,11 @@ class CCEquipmentType extends React.Component {
               Quantity: data.Quantity,
               actions: (
                 <div style={{ textAlign: "center" }}>
-                  <MDBBtn onClick={() => this.editUser(data)} color={"rgba(255,196,12,0.7)"}>
+                  <MDBBtn id="tblBtn" onClick={() => this.editUser(data)} color={"rgba(255,196,12,0.7)"}>
                     <img src="https://img.icons8.com/android/25/000000/edit.png" />
                   </MDBBtn>
                   <MDBBtn
+                    id="tblBtn"
                     onClick={() => this.deleteUser(data.Name)}
                     color={"rgba(255,196,12,0.7)"}
                   >
@@ -154,10 +155,11 @@ class CCEquipmentType extends React.Component {
               Quantity: data.Quantity,
               actions: (
                 <div style={{ textAlign: "center" }}>
-                  <MDBBtn onClick={() => this.editUser(data)} color={"rgba(255,196,12,0.7)"}>
+                  <MDBBtn id="tblBtn" onClick={() => this.editUser(data)} color={"rgba(255,196,12,0.7)"}>
                     <img src="https://img.icons8.com/android/25/000000/edit.png" />
                   </MDBBtn>
                   <MDBBtn
+                  id="tblBtn"
                     onClick={() => this.deleteUser(data.Name)}
                     color={"rgba(255,196,12,0.7)"}
                   >
@@ -189,10 +191,10 @@ class CCEquipmentType extends React.Component {
             Quantity: data.Quantity,
             actions: (
               <div style={{ textAlign: "center" }}>
-                <MDBBtn onClick={() => this.editUser(data)} color="warning">
+                <MDBBtn id="tblBtn" onClick={() => this.editUser(data)} color="warning">
                   <img src="https://img.icons8.com/android/25/000000/edit.png" />
                 </MDBBtn>
-                <MDBBtn
+                <MDBBtn id="tblBtn"
                   onClick={() => this.deleteUser(data.Name)}
                   color="danger"
                 >
@@ -584,7 +586,7 @@ class CCEquipmentType extends React.Component {
           <div style={{ padding: "0%" }}>
             {this.props.PrevLocation == "/EquipAndTaskInActualEvent" &&
             this.props.location.state != undefined ? (
-              <MDBBtn id="IDMDBBTN" onClick={this.MoveBack} color="info">
+              <MDBBtn id="IDMDBBTN" onClick={this.MoveBack} color={"rgba(255,196,12,0.7)"}>
                 חזור לאירוע
               </MDBBtn>
             ) : (
@@ -594,21 +596,18 @@ class CCEquipmentType extends React.Component {
               <MDBBtn
                 id="IDMDBBTN"
                 onClick={this.MoveBackToEventType}
-                color="info"
+                color={"rgba(255,196,12,0.7)"}
               >
                 חזור לסוג אירוע
               </MDBBtn>
             ) : (
               ""
             )}
-            <MDBBtn style={{backgroundColor: "rgba(255,196,12,0.7)"}}
-              id="IDMDBBTN"
-              color={"rgba(255,196,12,0.7)"}
-              onClick={() => this.addNewUser("Ashton Cox")}
-             
-            >
-              הוסף סוג ציוד חדש
-            </MDBBtn>
+                      <img
+                       id="IDMDBBTNAddNewPerson"
+                       onClick={() => this.addNewUser("Ashton Cox")}
+                       src="https://img.icons8.com/material-outlined/30/000000/plus.png"
+                     />
             <MDBDataTable
               theadColor="#B5DBF8"
               paging={true}
@@ -625,6 +624,11 @@ class CCEquipmentType extends React.Component {
             />
           </div>
         )}
+        <br/><br/><br/>
+        <footer>
+        <p id="copyright">Copyright, 2020 &#169; <br/> Bar, Almog and Ron.  All rights reserved. </p>
+
+     </footer>
       </div>
     );
   }

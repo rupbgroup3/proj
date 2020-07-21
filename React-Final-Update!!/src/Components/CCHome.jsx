@@ -6,8 +6,8 @@ import Menulogo from "../image/Menu-512.png"
 import Swal from "sweetalert2";
 import { stack as Menu } from "react-burger-menu";
 
-
 const buttonHome = { margin: 30 };
+
 
 class CCHome extends Component {
   state = {
@@ -47,6 +47,7 @@ class CCHome extends Component {
   
 
   render() {
+    
     return (
       <div>
 
@@ -146,9 +147,14 @@ class CCHome extends Component {
             <img src="https://img.icons8.com/clouds/100/000000/appointment-reminders.png"/>
             פעילויות
           </button>
-        
+
       </div>
-      </div>
+      <br/><br/><br/>
+        <footer>
+        <p id="copyright">Copyright, 2020 &#169; <br/> Bar, Almog and Ron.  All rights reserved. </p>
+
+     </footer>
+      </div> 
     );
   }
 }

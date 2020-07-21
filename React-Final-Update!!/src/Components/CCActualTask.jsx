@@ -5,6 +5,8 @@ import Agodit from "../image/Agodit.png";
 import Swal from "sweetalert2";
 import "../CssFiles/ActualTask.css";
 import { stack as Menu } from "react-burger-menu";
+import ProgressBar from 'react-bootstrap/ProgressBar'
+
 
 
 class CCActualTask extends Component {
@@ -408,7 +410,7 @@ DeletePerson_plan_TasksInEvent=async(Person_plan_TasksInEvent)=>{
 
         this.props.MyPreviousLocation('/ActualTask');
         this.props.history.push({
-         pathname:'/'
+         pathname:'/ManageActivities'
        }) 
 
 let timerInterval
@@ -525,7 +527,7 @@ Swal.fire({
               ISEMPLOYEE: data.IsEmployee==0? "מתנדב": "עובד",
               actions: <div style={{textAlign:'center'}}>
                                         
-                                  <MDBBtn onClick={()=>this.AddPersonToActualTask(data)} color="warning">שבץ למשימה</MDBBtn>
+                                  <MDBBtn id="tblBtn" onClick={()=>this.AddPersonToActualTask(data)} color="warning">שבץ למשימה</MDBBtn>
                       </div>
             }
             newRows.push(SpecificPerson)
@@ -682,7 +684,7 @@ Swal.fire({
             ISEMPLOYEE: data.IsEmployee==0? "מתנדב": "עובד",
             actions: <div style={{textAlign:'center'}}>
                         
-                        <MDBBtn onClick={()=>this.AddPersonToActualTask(data)} color="warning">שבץ למשימה</MDBBtn>
+                        <MDBBtn id="tblBtn" onClick={()=>this.AddPersonToActualTask(data)} color="warning">שבץ למשימה</MDBBtn>
                     </div>
           }
           :""
@@ -742,7 +744,7 @@ Swal.fire({
             TaskClickedArr: this.props.location.state.TaskClickedArr,
             EquipClickedArr: this.props.location.state.EquipClickedArr,
             EventName:this.props.location.state.EventName,
-            Barcode: this.props.location.state.Barcode            
+            Barcode: this.props.location.state.Barcode
           })
         }
         else if(this.props.PrevLocation=='/Calendar'){
@@ -785,7 +787,7 @@ Swal.fire({
               ISEMPLOYEE: data.IsEmployee==0? "מתנדב": "עובד",
               actions: <div style={{textAlign:'center'}}>
                           
-                          <MDBBtn onClick={()=>this.AddPersonToActualTask(data)} color="warning">שבץ למשימה</MDBBtn>
+                          <MDBBtn id="tblBtn" onClick={()=>this.AddPersonToActualTask(data)} color="warning">שבץ למשימה</MDBBtn>
                       </div>
             }
             ))}) 
@@ -1442,6 +1444,7 @@ Swal.fire({
 >
   <div className="form-group row">
     <div className="form-group_col-sm-3">
+
     <nav className="navbar navbar-default">
           <div className="container-fluid">
             <div className="navbar-header">
@@ -1456,7 +1459,7 @@ Swal.fire({
           </div>
         </nav>
     <div style={{padding:'0%'}}>
-                <MDBBtn  color={"rgba(255,196,12,0.7)"} id="IDMDBBTNn" onClick={()=>this.MoveBackToActualTask()} >המשך  </MDBBtn>
+                <button  color={"rgba(255,196,12,0.7)"} id="IDMDBBTNn" onClick={()=>this.MoveBackToActualTask()} >המשך  </button>
                 <MDBDataTable
                 
                 theadColor="#B5DBF8"
@@ -1483,8 +1486,14 @@ Swal.fire({
 <br/>
 <br/>
 <form  onSubmit={this.SaveActualTask}>
+{
+  this.props.PrevLocation=='/EquipAndTaskInActualEvent'&& this.state.TaskIndex!=this.props.location.state.TaskClickedArr.length-1?
+  <div id="progressDiv"><ProgressBar style={{height: 24}} animated now={85} label={"75%"} variant="success"/></div>:this.props.PrevLocation=='/EquipAndTaskInActualEvent'&& this.state.TaskIndex==this.props.location.state.TaskClickedArr.length-1?
+  <div id="progressDiv"><ProgressBar style={{height: 24}} animated now={95} label={"95%"} variant="success"/></div>:""}
   <div id="container">
+
  {this.props.PrevLocation=='/EquipAndTaskInActualEvent'?
+ 
   <h1 id="H1Header">הגדרת משימה: {this.props.location.state.TaskClickedArr[this.state.TaskIndex].TaskName}</h1>
 
  :this.props.PrevLocation=='/Calendar'|| this.props.PrevLocation=='/Calendar2'? <h1 id="H1Header">עדכון משימה: {this.props.location.state.data== undefined?"":
@@ -1492,6 +1501,7 @@ Swal.fire({
   :<h1 id="H1Header">הגדרת משימה: {this.props.location.state.data== undefined?"":
  this.props.location.state.data.TaskName}</h1> 
 }
+
 
 <label>
 <input className="inputActualTask" type="date" name="Date" min={this.state.today} onChange={this.DateChanged} value={this.state.DateEx} required />
@@ -1516,7 +1526,7 @@ Swal.fire({
 {/* <img   className="ImgActualType" src="https://img.icons8.com/office/30/000000/employee-card.png"/> */}
 {
   this.props.PrevLocation!='/Calendar'&& this.props.PrevLocation!= '/Calendar2'?
-  <button id="BTNActualTask" onClick={this.ChooseTaskRules}><b>בחר מבצעי משימה</b> </button> :""
+  <MDBBtn color={"rgba(255,196,12,0.7)"} id="BTNActualTask" onClick={this.ChooseTaskRules}><b>בחר מבצעי משימה</b> </MDBBtn> :""
 }
 
 
@@ -1524,7 +1534,7 @@ Swal.fire({
 
 {
     this.props.PrevLocation!='/Calendar' && this.props.PrevLocation!='/Calendar2'?
-    <MDBBtn id="MDBBtnActualTask_save" type="submit" value="Submit"   ><b>שמור משימה חדשה</b>  </MDBBtn>:
+    <MDBBtn id="MDBBtnActualTask_save" color={"rgba(255,196,12,0.7)"} type="submit" value="Submit"   ><b>שמור משימה חדשה</b>  </MDBBtn>:
     <MDBBtn id="MDBBtnActualTask_save" type="submit" value="Submit"  color={"rgba(255,196,12,0.7)"} ><b>עדכן משימה</b>  </MDBBtn>
 }
 
@@ -1533,7 +1543,11 @@ Swal.fire({
 </div>
 }
 
-                
+<br/><br/><br/>
+        <footer>
+        <p id="copyright">Copyright, 2020 &#169; <br/> Bar, Almog and Ron.  All rights reserved. </p>
+
+     </footer>    
             </div>
         );
     }

@@ -229,10 +229,16 @@ this.setState({searchedEnter:e.target.value})
                
                 </div>:""
               ))}
+                      <footer>
+        <p id="copyright">Copyright, 2020 &#169; <br/> Bar, Almog and Ron.  All rights reserved. </p>
+
+     </footer>
         </div>
         </div>
         </div>
       </div>
+
+
       </div>
     );
   }
